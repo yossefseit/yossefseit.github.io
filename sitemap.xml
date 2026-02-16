@@ -2,43 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage -->
   <url>
-    <loc>https://merlin339.github.io/portfolio/</loc>
-    <lastmod>2025-03-31</lastmod>
+    <loc>https://ym-ali.github.io/portfolio/</loc>
+    <lastmod>2026-02-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <!-- About Section -->
   <url>
-    <loc>https://merlin339.github.io/portfolio/#about</loc>
-    <lastmod>2025-03-31</lastmod>
+    <loc>https://ym-ali.github.io/portfolio/#about</loc>
+    <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- Experience Section -->
   <url>
-    <loc>https://merlin339.github.io/portfolio/#experience</loc>
-    <lastmod>2025-03-31</lastmod>
+    <loc>https://ym-ali.github.io/portfolio/#experience</loc>
+    <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- Education Section -->
   <url>
-    <loc>https://merlin339.github.io/portfolio/#education</loc>
-    <lastmod>2025-03-31</lastmod>
+    <loc>https://ym-ali.github.io/portfolio/#education</loc>
+    <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- Certifications Section -->
   <url>
-    <loc>https://merlin339.github.io/portfolio/#certifications</loc>
-    <lastmod>2025-03-31</lastmod>
+    <loc>https://ym-ali.github.io/portfolio/#certifications</loc>
+    <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- Contact Section -->
   <url>
-    <loc>https://merlin339.github.io/portfolio/#contact</loc>
-    <lastmod>2025-03-31</lastmod>
+    <loc>https://ym-ali.github.io/portfolio/#contact</loc>
+    <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

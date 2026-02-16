@@ -1,399 +1,843 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yossef Mohamed Ali - IT Infrastructure & Cloud Computing Professional</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=1350&q=80" as="image">
-    <link rel="canonical" href="https://ym-ali.github.io/">
-    <script src="script.js" defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Yossef Mohamed Ali — Systems Engineer (Infrastructure, Virtualization, Networking, Storage/Backup/DR, VMS/Access Control Support)." />
+  <meta name="theme-color" content="#0b1220" />
+
+  <meta property="og:title" content="Yossef Mohamed Ali — Systems Engineer" />
+  <meta property="og:description" content="Infrastructure • Virtualization • Networking • Storage/Backup/DR • VMS/Access Control Support" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ym-ali.github.io/" />
+
+  <title>Yossef Mohamed Ali | Systems Engineer</title>
+
+  <style>
+    .cert-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:12px;
+  margin-top:14px;
+}
+@media (max-width: 920px){
+  .cert-grid{ grid-template-columns: 1fr; }
+}
+.cert-img{
+  display:block;
+  border-radius: var(--radius);
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--panel) 70%, transparent);
+  overflow:hidden;
+}
+.cert-img:hover{ transform: translateY(-1px); }
+.cert-img img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  display:block;
+  background: color-mix(in srgb, var(--panel2) 70%, transparent);
+}
+.cert-cap{ padding:12px; }
+.cert-title{ font-weight:800; font-size:13px; }
+.cert-sub{ color:var(--muted2); font-size:12px; margin-top:4px; }
+
+    .cert-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+  margin-top:12px;
+}
+.badge-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:18px;
+  align-items:start;
+  margin-top:12px;
+}
+.subhead{ margin-top:22px; }
+.muted{ opacity:.8; font-size:.95rem; margin-top:12px; }
+
+    .cert-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:12px;
+  margin-top:14px;
+}
+@media (max-width: 920px){
+  .cert-grid{ grid-template-columns: 1fr; }
+}
+.cert{
+  display:block;
+  padding:14px;
+  border-radius: var(--radius);
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--panel) 70%, transparent);
+}
+.cert:hover{ transform: translateY(-1px); }
+.cert-title{ font-weight:800; font-size:13px; }
+.cert-sub{ color:var(--muted2); font-size:12px; margin-top:4px; }
+
+.badge-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:12px;
+  margin-top:14px;
+}
+@media (max-width: 920px){
+  .badge-grid{ grid-template-columns: 1fr; }
+}
+.badge{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:12px;
+  border-radius: var(--radius);
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--panel) 70%, transparent);
+}
+.badge:hover{ transform: translateY(-1px); }
+.badge img{
+  width:44px;
+  height:44px;
+  object-fit:contain;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--panel2) 70%, transparent);
+  border:1px solid var(--border);
+  padding:6px;
+}
+.badge-title{ font-weight:800; font-size:13px; }
+.badge-sub{ color:var(--muted2); font-size:12px; margin-top:2px; }
+
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1a2e;
+      --panel2:#0c1628;
+      --text:#eaf0ff;
+      --muted:#b9c6e6;
+      --muted2:#93a4cc;
+      --border:rgba(255,255,255,.10);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --accent:#7aa2ff;
+      --accent2:#66ffd1;
+      --ring: rgba(122,162,255,.25);
+      --chip: rgba(122,162,255,.14);
+      --ok: rgba(102,255,209,.18);
+      --warn: rgba(255,209,102,.18);
+      --danger: rgba(255,102,145,.18);
+      --radius: 18px;
+      --radius2: 22px;
+      --max: 1100px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    [data-theme="light"]{
+      --bg:#f6f8ff;
+      --panel:#ffffff;
+      --panel2:#f3f6ff;
+      --text:#0b1220;
+      --muted:#33446b;
+      --muted2:#4a5a84;
+      --border:rgba(11,18,32,.10);
+      --shadow: 0 10px 30px rgba(11,18,32,.10);
+      --accent:#3b6cff;
+      --accent2:#00a37a;
+      --ring: rgba(59,108,255,.18);
+      --chip: rgba(59,108,255,.10);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      background:
+        radial-gradient(900px 400px at 20% 10%, rgba(122,162,255,.18), transparent 55%),
+        radial-gradient(700px 350px at 85% 25%, rgba(102,255,209,.14), transparent 55%),
+        radial-gradient(700px 450px at 50% 95%, rgba(122,162,255,.12), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:24px}
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      background: color-mix(in srgb, var(--bg) 70%, transparent);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{max-width:var(--max); margin:0 auto; padding:12px 24px; display:flex; align-items:center; justify-content:space-between; gap:14px}
+    .brand{display:flex; align-items:center; gap:12px}
+    .dot{
+      width:12px; height:12px; border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 6px var(--ring);
+    }
+    .brand strong{font-size:14px; letter-spacing:.2px}
+    .small{font-size:12px; color:var(--muted2)}
+    .links{display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:flex-end}
+    .links a{
+      font-size:13px; color:var(--muted);
+      padding:8px 10px; border-radius:999px;
+      border:1px solid transparent;
+    }
+    .links a:hover{border-color:var(--border); background: color-mix(in srgb, var(--panel) 65%, transparent)}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px; padding:10px 14px; border-radius:999px;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 72%, transparent), color-mix(in srgb, var(--panel2) 62%, transparent));
+      box-shadow: 0 8px 18px rgba(0,0,0,.18);
+      font-size:13px;
+      color:var(--text);
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .btn:active{transform: translateY(0px)}
+    .hero{
+      padding:38px 0 18px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    @media (max-width: 920px){
+      .hero{grid-template-columns: 1fr; padding-top:26px}
+      .nav-inner{padding:12px 16px}
+      .wrap{padding:16px}
+    }
+    .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 82%, transparent), color-mix(in srgb, var(--panel2) 70%, transparent));
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:18px;
+    }
+    .title{font-size:34px; line-height:1.12; margin:0 0 8px}
+    .subtitle{color:var(--muted); margin:0 0 14px; font-size:15px}
+    .row{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      background: color-mix(in srgb, var(--chip) 75%, transparent);
+      border:1px solid var(--border);
+      color:var(--muted);
+      font-size:12px;
+    }
+    .pill b{color:var(--text); font-weight:600}
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+    .chip{
+      font-size:12px;
+      padding:7px 9px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: color-mix(in srgb, var(--panel) 70%, transparent);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .grid{
+      display:grid; gap:16px;
+      grid-template-columns: repeat(12, 1fr);
+      margin-top:16px;
+    }
+    .span-7{grid-column: span 7}
+    .span-5{grid-column: span 5}
+    .span-6{grid-column: span 6}
+    .span-12{grid-column: span 12}
+    @media (max-width: 920px){
+      .span-7,.span-5,.span-6{grid-column: span 12}
+      .title{font-size:30px}
+    }
+    h2{
+      margin:34px 0 12px;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+    h3{margin:0 0 10px}
+    .section-note{color:var(--muted); font-size:13px; margin-top:-6px}
+    .list{margin:10px 0 0; padding:0 0 0 16px; color:var(--muted)}
+    .list li{margin:6px 0}
+    .kpi{
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:10px;
+      margin-top:10px;
+    }
+    .kpi .box{
+      border:1px solid var(--border);
+      background: color-mix(in srgb, var(--panel2) 65%, transparent);
+      border-radius: var(--radius);
+      padding:12px;
+    }
+    .kpi .n{font-weight:800; font-size:18px}
+    .kpi .t{color:var(--muted2); font-size:12px}
+    .stack{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+    .tag{
+      font-family: var(--mono);
+      font-size:11px;
+      padding:7px 9px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: color-mix(in srgb, var(--panel) 68%, transparent);
+      color:var(--muted);
+    }
+    .tag.ok{background: var(--ok)}
+    .tag.warn{background: var(--warn)}
+    .tag.danger{background: var(--danger)}
+    .divider{height:1px; background:var(--border); margin:16px 0}
+    .footer{
+      margin:34px 0 16px;
+      color:var(--muted2);
+      font-size:12px;
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    }
+    .cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .cta a.btn-primary{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border:0;
+      color:#06101d;
+      font-weight:800;
+    }
+    .mono{font-family: var(--mono)}
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Yossef Mohamed Ali",
+    "jobTitle":"Systems Engineer",
+    "url":"https://ym-ali.github.io/",
+    "sameAs":[
+      "https://ym-ali.github.io/",
+      "https://github.com/ym-ali",
+      "https://www.linkedin.com/in/yossef-m-ali-3999b7356/",
+      "https://www.credly.com/users/yossef-m-ali"
+    ]
+  }
+  </script>
 </head>
+
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <span>Yossef M. Ali</span>
-            </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#education" class="nav-link">Education</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
-            <div class="nav-toggle" id="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <div>
+          <strong>Yossef Mohamed Ali</strong><br/>
+          <span class="small">Systems Engineer — Infrastructure & VMS/Access Control Support</span>
         </div>
-    </nav>
-    
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">
-                        <span class="greeting">Hello, I'm</span>
-                        <span class="name">Yossef Mohamed Ali</span>
-                    </h1>
-                    <h2 class="hero-subtitle">IT Infrastructure & Cloud Computing Professional</h2>
-                    <p class="hero-description">
-                        Dedicated IT professional with over 3 years of experience in system administration, 
-                        network management, and cloud engineering. Specialized in optimizing IT infrastructure 
-                        and driving operational excellence.
-                    </p>
-                    <div class="hero-buttons">
-                        <a href="#contact" class="btn btn-primary">Get In Touch</a>
-                        <a href="#projects" class="btn btn-secondary">View Projects</a>
-                    </div>
-                    <div class="hero-social">
-                        <a href="https://github.com/ym-ali" class="social-link" target="_blank" title="See My Repos 🖤">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/yossef-m-ali-ali-3999b7356/" class="social-link" target="_blank" title="Check My LinkedIn 🖤">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="mailto:yossefali67@gmail.com" class="social-link" target="_blank" title="E-Mail Me 🖤">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                        <a href="https://wa.me/201553041880" class="social-link" target="_blank" title="WhatsApp Me 🖤">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        <a href="/Yossef%20M%20Ali.pdf" class="social-link" target="_blank" title="Download My CV 🖤">
-                            <i class="fas fa-download"></i>
-                        </a>
-                        <a href="https://www.credly.com/users/yossef-m-ali" class="social-link" target="_blank" title="Get my Badges 🖤">
-                            <i class="fas fa-certificate"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+      </div>
+
+      <nav class="links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#training">Training</a>
+        <a href="#skills">Skills</a>
+        <a href="#Certifications">Certifications</a>
+        <button class="btn" id="themeBtn" type="button" aria-label="Toggle theme">
+          <span class="mono">Theme</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="top">
+      <div class="card">
+        <h1 class="title">Systems Engineer focused on reliable infrastructure — plus VMS support.</h1>
+        <p class="subtitle">
+          Infrastructure-focused Systems Engineer with hands-on experience across Windows/Linux administration, virtualization,
+          networking, storage, backup/DR, and physical security systems. Strong in tier-2/3 troubleshooting, root cause analysis,
+          system hardening, and delivering end-user/admin training with clear documentation and automation (PowerShell). Building
+          cloud engineering depth through practical Azure work with a security-first operations mindset.
+        </p>
+
+        <div class="row">
+          <span class="pill"><b>Location</b> Cairo Governorate, Egypt</span>
+          <span class="pill"><b>Phone</b> (+20) 155 304 1880</span>
+          <span class="pill"><b>Email</b> yossefali67@gmail.com</span>
         </div>
-        <div class="hero-scroll">
-            <a href="#about" class="scroll-down" aria-label="Scroll to About section"><i class="fas fa-chevron-down"></i></a>
+
+        <div class="divider"></div>
+
+        <div class="kpi" aria-label="Highlights">
+          <div class="box">
+            <div class="n">~28K</div>
+            <div class="t">CCTV cameras supported (Genetec)</div>
+          </div>
+          <div class="box">
+            <div class="n">90+</div>
+            <div class="t">Servers supported</div>
+          </div>
+          <div class="box">
+            <div class="n">~8PB</div>
+            <div class="t">Storage exposure</div>
+          </div>
         </div>
+
+        <div class="stack">
+          <span class="tag ok">VMware vCenter/ESXi</span>
+          <span class="tag ok">Proxmox + PBS</span>
+          <span class="tag">Hyper-V</span>
+          <span class="tag">Cisco ISE</span>
+          <span class="tag">FortiGate</span>
+          <span class="tag">OPNsense</span>
+          <span class="tag">WireGuard</span>
+          <span class="tag">Genetec</span>
+          <span class="tag">Milestone</span>
+          <span class="tag">LenSec</span>
+          <span class="tag warn">SQL Server</span>
+          <span class="tag">IBM SAN (FC)</span>
+        </div>
+      </div>
+
+      <aside class="card" id="about">
+        <h2>About</h2>
+        <p class="section-note">
+          I focus on troubleshooting, change validation, and stable operations across servers, virtualization, networking,
+          storage/backup, and VMS platforms.
+        </p>
+
+        <ul class="list">
+          <li><span class="mono">Core strengths:</span> tier-2/3 troubleshooting, RCA, system hardening, documentation (SOP/KB), training delivery.</li>
+          <li><span class="mono">Platforms:</span> Windows Server, Ubuntu/RHEL, VMware, Proxmox, Hyper-V.</li>
+          <li><span class="mono">Security systems:</span> Genetec VMS, Milestone, LenSec (project details may be sanitized).</li>
+        </ul>
+
+        <div class="divider"></div>
+
+        <h2 style="margin-top:14px">Quick Links</h2>
+        <div class="cta" aria-label="Links">
+          <a class="btn" href="assets/Yossef-M-Ali.pdf" target="_blank" rel="noreferrer">CV</a>
+          <a class="btn" href="https://github.com/ym-ali" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/yossef-m-ali-3999b7356/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="btn" href="https://www.credly.com/users/yossef-m-ali" target="_blank" rel="noreferrer">Credly</a>
+          <a class="btn" href="https://wa.me/201553041880" target="_blank" rel="noreferrer">WhatsApp</a>
+          <a class="btn" href="mailto:yossefali67@gmail.com">Email</a>
+        </div>
+
+        <p class="small" style="margin-top:12px">
+          Note: Some project descriptions are intentionally sanitized for confidentiality.
+        </p>
+      </aside>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">About Me</h2>
-                <p class="section-subtitle">Professional Background & Expertise</p>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>
-                        I am a dedicated and certified IT professional with over three years of experience 
-                        in system administration, network management, and cloud engineering. My expertise 
-                        spans across IT infrastructure, security, and cloud technologies, with a proven 
-                        track record of optimizing systems and driving operational excellence.
-                    </p>
-                    <p>
-                        Currently serving as a System Administrator during my Military Service and running 
-                        my own IT consulting practice, I specialize in designing robust network solutions, 
-                        implementing security measures, and managing cloud-based infrastructures using 
-                        Microsoft Azure and other enterprise technologies.
-                    </p>
-                    <div class="about-stats">
-                        <div class="stat">
-                            <span class="stat-number">3+</span>
-                            <span class="stat-label">Years Experience</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">50+</span>
-                            <span class="stat-label">Projects Completed</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">10+</span>
-                            <span class="stat-label">Certifications</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <img src="workspace.jpg" alt="Professional Workspace" class="about-img">
-                </div>
-            </div>
+    <section id="experience">
+      <h2>Experience</h2>
+
+      <div class="grid">
+        <div class="card span-12">
+          <h3>Aegis Integrated Security Solutions — ICT / Systems Engineer (Infrastructure & Physical Security Systems)</h3>
+          <p class="small">Jun 2025 – Present • New Cairo, Egypt</p>
+          <ul class="list">
+            <li>Tier-2/3 support for Genetec VMS at scale (approx. 28K CCTV cameras); troubleshooting, validation, and post-change verification.</li>
+            <li>Supported infrastructure at scale (90+ servers, approx. 8PB storage); operated VMware vCenter/ESXi and Proxmox; backup/restore validation with Proxmox Backup Server (PBS).</li>
+            <li>Implemented secure operations: Windows Server core services (AD DS/DNS/DHCP/GPO/File), network controls (VLANs/routing/firewall policies, Cisco ISE, FortiGate), training delivery, and SOP/KB documentation.</li>
+          </ul>
         </div>
+
+        <div class="card span-6">
+          <h3>Independent — IT Consulting</h3>
+          <p class="small">Aug 2024 – Present • Cairo, Egypt</p>
+          <ul class="list">
+            <li>Delivered firewall and VPN solutions (FortiGate, OPNsense; SSL-VPN/WireGuard) including segmentation, NAT/routing, policy hardening, and operational troubleshooting.</li>
+            <li>Supported platform operations including storage/backup/database tasks (IBM SAN FC, SQL Server administration workflows, backup/restore validation) with handover runbooks.</li>
+          </ul>
+        </div>
+
+        <div class="card span-6">
+          <h3>Ministry of Interior of Egypt — System Administrator</h3>
+          <p class="small">May 2024 – Nov 2025 • Cairo, Egypt</p>
+          <ul class="list">
+            <li>Administered Windows Server infrastructure (AD DS/Domain Controller, DNS, DHCP, GPO, File/Print services) and user access/permissions.</li>
+            <li>Deployed and maintained Linux web hosting for internal systems using Apache (PHP/Laravel) and MySQL; installation, configuration, and troubleshooting.</li>
+            <li>Managed Hyper-V and Proxmox virtualization with RAID operations, backup/restore validation, and documentation.</li>
+          </ul>
+        </div>
+
+        <div class="card span-12">
+          <h3>El Mostafa for Master Batch — IT Specialist</h3>
+          <p class="small">Jul 2022 – Apr 2024 • Badr City, Cairo, Egypt</p>
+          <ul class="list">
+            <li>Managed day-to-day IT operations supporting Windows environments and end users (hardware/software troubleshooting).</li>
+            <li>Provided infrastructure support including Active Directory, DNS, DHCP, and file services.</li>
+            <li>Troubleshot network and system issues; coordinated vendors and supported IT asset lifecycle.</li>
+            <li>Documented procedures and improved internal IT workflows to increase consistency and speed of support.</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Technical Skills</h2>
-                <p class="section-subtitle">Technologies & Expertise</p>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <div class="skill-icon">
-                            <i class="fas fa-network-wired"></i>
-                        </div>
-                        <h3>Networking</h3>
-                    </div>
-                    <div class="skill-list">
-                        <span class="skill-tag">Cisco</span>
-                        <span class="skill-tag">Fortinet</span>
-                        <span class="skill-tag">Sophos</span>
-                        <span class="skill-tag">MikroTik</span>
-                        <span class="skill-tag">VLANs</span>
-                        <span class="skill-tag">Firewalls</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <div class="skill-icon">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <h3>System Administration</h3>
-                    </div>
-                    <div class="skill-list">
-                        <span class="skill-tag">Active Directory</span>
-                        <span class="skill-tag">DNS/DHCP</span>
-                        <span class="skill-tag">PowerShell</span>
-                        <span class="skill-tag">WSUS/WDS</span>
-                        <span class="skill-tag">IIS</span>
-                        <span class="skill-tag">Veeam</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <div class="skill-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>Security</h3>
-                    </div>
-                    <div class="skill-list">
-                        <span class="skill-tag">Endpoint Security</span>
-                        <span class="skill-tag">Network Security</span>
-                        <span class="skill-tag">Sophos Management</span>
-                        <span class="skill-tag">IPS/IDS</span>
-                        <span class="skill-tag">SSL/VPN</span>
-                        <span class="skill-tag">DDoS Protection</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <div class="skill-icon">
-                            <i class="fas fa-cloud"></i>
-                        </div>
-                        <h3>Cloud Computing</h3>
-                    </div>
-                    <div class="skill-list">
-                        <span class="skill-tag">Microsoft Azure</span>
-                        <span class="skill-tag">Office 365</span>
-                        <span class="skill-tag">VMware</span>
-                        <span class="skill-tag">Hyper-V</span>
-                        <span class="skill-tag">Azure RBAC</span>
-                        <span class="skill-tag">IaC</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section id="projects">
+      <h2>Projects</h2>
+
+      <div class="grid">
+        <article class="card span-12">
+          <h3>Aegis Infrastructure & Physical Security Operations (Sanitized)</h3>
+          <p class="small">2025 • Aegis Integrated Security Solutions • Egypt</p>
+          <ul class="list">
+            <li>Operated VMware vCenter & ESXi and Proxmox environments (VM provisioning, snapshots, migrations, troubleshooting, and performance tuning).</li>
+            <li>Supported production infrastructure spanning 90+ servers and approx. 8PB storage; performed health checks and coordinated changes to maintain availability.</li>
+            <li>Implemented backup workflows using Proxmox Backup Server (PBS) and executed restore validation for critical workloads.</li>
+            <li>Implemented secure network configurations (VLANs, routing, NAT, firewall policies) and worked with enterprise access controls including Cisco ISE & FortiGate; executed upgrades/patches/firmware with post-change verification.</li>
+            <li>Deployed LenSec VMS and Milestone for secure sites (including 18 cameras) on a 2-server HA design with RAID 1 (OS) and RAID 5 (archive); delivered admin/end-user training and authored SOPs/KB playbooks.</li>
+          </ul>
+          <div class="stack">
+            <span class="tag ok">vCenter/ESXi</span>
+            <span class="tag ok">Proxmox + PBS</span>
+            <span class="tag">Cisco ISE</span>
+            <span class="tag">FortiGate</span>
+            <span class="tag">LenSec</span>
+            <span class="tag">Milestone</span>
+          </div>
+        </article>
+
+        <article class="card span-12">
+          <h3>Government Sector (System Administration & Platform Operations)</h3>
+          <p class="small">Jun 2025 – Oct 2025 • GMPCH (General Management for Police Clubs and Hotels) • Egypt</p>
+          <ul class="list">
+            <li>Implemented a WireGuard-based VPN overlay to securely interconnect distributed servers across many locations with centralized administration.</li>
+            <li>Deployed and validated configurations using OPNsense and Sophos firewalls, ensuring consistent routing, access policies, and operational stability.</li>
+            <li>Supported ERP/POS platforms (Comsys / Optima / Gala): incident troubleshooting, service continuity, and coordination with stakeholders for resolution.</li>
+            <li>Performed SQL Server platform tasks: installation/configuration, access management, executing operational queries, backups, and restore validation to protect business data.</li>
+            <li>Built GitLab CI/CD pipelines to automate configuration/script delivery, enforce standard validation steps, and enable repeatable rollouts across environments.</li>
+            <li>Standardized provisioning and documentation (configuration baselines, troubleshooting steps, and escalation notes) for repeatable support.</li>
+          </ul>
+          <div class="stack">
+            <span class="tag ok">WireGuard</span>
+            <span class="tag">OPNsense</span>
+            <span class="tag">Sophos</span>
+            <span class="tag warn">GitLab CI/CD</span>
+            <span class="tag warn">SQL Server</span>
+          </div>
+        </article>
+
+        <article class="card span-12">
+          <h3>IBM SAN Storage Deployment (Fibre Channel) (Sanitized)</h3>
+          <p class="small">2024 – 2025 • Independent Consulting • Egypt</p>
+          <ul class="list">
+            <li>Planned and deployed an IBM SAN storage solution over Fibre Channel supporting Windows File Services, SQL Server data, and backup repositories.</li>
+            <li>Configured storage resources (pools/volumes/LUNs) and host mappings (WWPN zoning/masking as applicable) aligned with availability and performance requirements.</li>
+            <li>Integrated FC storage with Windows Server (File Server) and SQL Server workloads; validated connectivity, baseline performance, and redundancy behavior.</li>
+            <li>Implemented backup storage placement on the SAN and verified restore-readiness through documented validation steps.</li>
+            <li>Produced handover documentation (topology, mappings, operational runbooks, and troubleshooting procedures) for ongoing support.</li>
+          </ul>
+          <div class="stack">
+            <span class="tag ok">Fibre Channel</span>
+            <span class="tag">IBM SAN</span>
+            <span class="tag">Windows File Services</span>
+            <span class="tag warn">SQL Server</span>
+          </div>
+        </article>
+
+        <article class="card span-12">
+          <h3>Multi-Site Connectivity + Core IT Services Buildout (Sanitized)</h3>
+          <p class="small">2024 – 2025 • Independent Consulting • Egypt</p>
+          <ul class="list">
+            <li>Delivered secure multi-site connectivity using remote-access VPN for branch connectivity and centralized services; later transitioned from SSL-VPN to a WireGuard-based design for simpler operations and performance.</li>
+            <li>Implemented core Windows services: AD DS/Domain Controller, DNS, DHCP, Group Policy, and centralized access/permissions.</li>
+            <li>Deployed and maintained File/Print services (shared resources, permissions, and printing workflows) for end-user operations.</li>
+            <li>Installed, configured, and maintained Microsoft SQL Server; supported query execution and operational troubleshooting for application backends.</li>
+            <li>Led a database workload migration from Windows Server to Linux (Ubuntu Server 24.04), coordinating cutover steps, validation, and rollback planning.</li>
+            <li>Configured OPNsense firewall policies (routing, NAT, segmentation, rule hardening, logging) to support secure access and troubleshooting.</li>
+            <li>Implemented backup/restore procedures and performed restore validation for critical services (AD/File/SQL) with documented runbooks.</li>
+          </ul>
+          <div class="stack">
+            <span class="tag">FortiGate</span>
+            <span class="tag ok">WireGuard</span>
+            <span class="tag">OPNsense</span>
+            <span class="tag warn">Ubuntu 24.04</span>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="experience">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Professional Experience</h2>
-                <p class="section-subtitle">Career Journey & Achievements</p>
-            </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>System Administrator</h3>
-                        <h4>Dar El-Marasm Club For Police Officers (Military Service)</h4>
-                        <p>Zamalek, Cairo Governorate</p>
-                        <div class="timeline-date">May 2024 - May 2025</div>
-                        <ul>
-                            <li>Installed, configured, and maintained Active Directory, DNS, DHCP, and File Servers</li>
-                            <li>Deployed and administered virtual machines using VMware and Hyper-V</li>
-                            <li>Configured Sophos security solutions for endpoint and network protection</li>
-                            <li>Managed backup processes and performed data recoveries</li>
-                            <li>Developed custom PowerShell scripts to enhance system efficiency</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>IT Consulting</h3>
-                        <h4>Self-Employment</h4>
-                        <p>Cairo, Egypt</p>
-                        <div class="timeline-date">Aug 2024 - Present</div>
-                        <ul>
-                            <li>Designed and deployed FortiGate-100E next-generation firewall</li>
-                            <li>Configured FortiOS with FortiAnalyzer integration for log management</li>
-                            <li>Implemented SSL/VPN, Application Control, and SD-WAN features</li>
-                            <li>Configured Cisco 3750 switches for optimal network performance</li>
-                            <li>Managed Windows Server 2019 configurations including GPOs</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>IT Specialist</h3>
-                        <h4>El Mostafa for Master Batch</h4>
-                        <p>Badr City, Cairo, Egypt</p>
-                        <div class="timeline-date">Jul 2022 - Apr 2024</div>
-                        <ul>
-                            <li>Managed day-to-day IT operations and troubleshooting</li>
-                            <li>Implemented network infrastructure with MikroTik devices</li>
-                            <li>Configured file sharing, print services, and user accounts</li>
-                            <li>Provided technical support and training to staff</li>
-                            <li>Coordinated with vendors for IT equipment procurement</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+    <section id="training">
+      <h2>Cloud & Technical Training</h2>
+
+      <div class="grid">
+        <div class="card span-12">
+          <h3>Cloud Computing Engineering</h3>
+          <p class="small">Mar 2025 – Jul 2025 • IT Gate Academy (Remote) • Nasr City, Cairo, Egypt</p>
+          <ul class="list">
+            <li>Designed and deployed cloud solutions using Microsoft Azure IaaS and PaaS fundamentals.</li>
+            <li>Configured virtual machines, storage, and networking with security best practices.</li>
+            <li>Implemented Azure RBAC concepts, firewall rules, and core monitoring practices.</li>
+            <li>Applied Infrastructure as Code (IaC) concepts and CI/CD fundamentals.</li>
+            <li>Completed training tracks aligned with AZ-900, AZ-104, AZ-700, AZ-500, and Veeam VMCE.</li>
+          </ul>
         </div>
+
+        <div class="card span-12">
+          <h3>Information Technology Infrastructure Engineer</h3>
+          <p class="small">Jan 2024 – Apr 2024 • IT Gate Academy (Hybrid) • Nasr City, Cairo, Egypt</p>
+          <ul class="list">
+            <li>Designed and managed LAN/WAN network environments and applied structured troubleshooting methodologies.</li>
+            <li>Configured firewalls and enforced security policies to safeguard digital assets.</li>
+            <li>Administered Windows Server Domain Controllers and managed user authentication and access control.</li>
+            <li>Participated in training modules aligned with CCNA 200-301, Windows Server 2019, NSE4, and Sophos Firewalls.</li>
+            <li>Strengthened documentation, teamwork, and problem-solving skills in a fast-paced environment.</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <!-- Education Section -->
-    <section id="education" class="education">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Education & Training</h2>
-                <p class="section-subtitle">Academic Background & Professional Development</p>
-            </div>
-            <div class="education-grid">
-                <div class="education-item">
-                    <div class="education-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h3>BSc. Management and Information System</h3>
-                    <h4>El Shorouk Academy</h4>
-                    <p class="education-date">Aug 2019 - Sep 2023</p>
-                    <p class="education-location">Al Shorouk City, Cairo</p>
-                </div>
-                <div class="education-item">
-                    <div class="education-icon">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-                    <h3>Cloud Computing Engineering Intern</h3>
-                    <h4>ITGate Academy (Remote)</h4>
-                    <p class="education-date">Mar 2025 - July 2025</p>
-                    <div class="education-skills">
-                        <span class="skill-tag">AZ-900</span>
-                        <span class="skill-tag">AZ-104</span>
-                        <span class="skill-tag">AZ-700</span>
-                        <span class="skill-tag">AZ-500</span>
-                        <span class="skill-tag">Veeam VMCE</span>
-                    </div>
-                </div>
-                <div class="education-item">
-                    <div class="education-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <h3>IT Infrastructure Engineer Intern</h3>
-                    <h4>ITGate Academy (Hybrid)</h4>
-                    <p class="education-date">Jan 2024 - Apr 2024</p>
-                    <div class="education-skills">
-                        <span class="skill-tag">CCNA 200-301</span>
-                        <span class="skill-tag">MCSA 2019</span>
-                        <span class="skill-tag">NSE4</span>
-                        <span class="skill-tag">Sophos Firewalls</span>
-                    </div>
-                </div>
-            </div>
+<section id="Certifications" class="section">
+  <h2>Certifications & Badges</h2>
+
+<div class="cert-grid" aria-label="Certificates">
+  <a class="cert-img" href="assets/Azure.pdf" target="_blank" rel="noreferrer" download>
+    <img src="assets/Azure.png" alt="Azure Certificate (PDF)" />
+    <div class="cert-cap">
+      <div class="cert-title">Azure Certificate</div>
+      <div class="cert-sub">Click to download (PDF)</div>
+    </div>
+  </a>
+
+  <a class="cert-img" href="assets/Infra.pdf" target="_blank" rel="noreferrer" download>
+    <img src="assets/Infra.png" alt="Infrastructure Certificate (PDF)" />
+    <div class="cert-cap">
+      <div class="cert-title">Infrastructure Certificate</div>
+      <div class="cert-sub">Click to download (PDF)</div>
+    </div>
+  </a>
+</div>
+
+  <h3 class="subhead">Credly Badges</h3>
+  <div class="badge-grid">
+    <div
+      data-iframe-width="150"
+      data-iframe-height="270"
+      data-share-badge-id="0ada6297-a179-48d9-acc5-c4b567693ec6"
+      data-share-badge-host="https://www.credly.com">
+    </div>
+
+    <div
+      data-iframe-width="150"
+      data-iframe-height="270"
+      data-share-badge-id="eee85981-f6c7-46c0-9316-fe61d621d907"
+      data-share-badge-host="https://www.credly.com">
+    </div>
+
+    <div
+      data-iframe-width="150"
+      data-iframe-height="270"
+      data-share-badge-id="6d393f7d-82fb-4e57-9b42-755527887b13"
+      data-share-badge-host="https://www.credly.com">
+    </div>
+      <div
+  data-iframe-width="150"
+  data-iframe-height="270"
+  data-share-badge-id="e52c1b76-ceb6-4d51-88c7-16f69a63e5d9"
+  data-share-badge-host="https://www.credly.com">
+</div>
+
+<div
+  data-iframe-width="150"
+  data-iframe-height="270"
+  data-share-badge-id="d15a0922-7f45-4a0c-8e17-1016f5cce872"
+  data-share-badge-host="https://www.credly.com">
+</div>
+
+<div
+  data-iframe-width="150"
+  data-iframe-height="270"
+  data-share-badge-id="6f2c0318-8f60-4847-bcf5-ff6894988327"
+  data-share-badge-host="https://www.credly.com">
+</div>
+  </div>
+</section>
+
+
+    <section id="skills">
+      <h2>Technical Skills</h2>
+
+      <div class="grid">
+        <div class="card span-6">
+          <h3>Physical Security Systems</h3>
+          <div class="chips">
+            <span class="chip">Genetec VMS</span>
+            <span class="chip">LenSec VMS</span>
+            <span class="chip">Milestone</span>
+            <span class="chip">VMS troubleshooting</span>
+            <span class="chip">Device/app integrations</span>
+            <span class="chip">End-user/admin training</span>
+          </div>
         </div>
+
+        <div class="card span-6">
+          <h3>Cloud Platforms</h3>
+          <div class="chips">
+            <span class="chip">Microsoft Azure</span>
+            <span class="chip">VMs</span>
+            <span class="chip">Networking</span>
+            <span class="chip">Basic deployments</span>
+            <span class="chip">Security basics</span>
+            <span class="chip">Monitoring fundamentals</span>
+          </div>
+        </div>
+
+        <div class="card span-6">
+          <h3>Operating Systems</h3>
+          <div class="chips">
+            <span class="chip">Windows Server</span>
+            <span class="chip">Linux (RHEL)</span>
+            <span class="chip">Linux (Ubuntu)</span>
+            <span class="chip">CLI</span>
+            <span class="chip">Users/permissions</span>
+            <span class="chip">Services</span>
+            <span class="chip">Networking</span>
+            <span class="chip">Package management</span>
+          </div>
+        </div>
+
+        <div class="card span-6">
+          <h3>Systems</h3>
+          <div class="chips">
+            <span class="chip">Active Directory</span>
+            <span class="chip">DNS</span>
+            <span class="chip">DHCP</span>
+            <span class="chip">GPO</span>
+            <span class="chip">File Services</span>
+            <span class="chip">Print Services</span>
+            <span class="chip">Apache (PHP/Laravel)</span>
+            <span class="chip">MySQL</span>
+          </div>
+        </div>
+
+        <div class="card span-12">
+          <h3>Networking & Security</h3>
+          <div class="chips">
+            <span class="chip">TCP/IP</span>
+            <span class="chip">VLANs</span>
+            <span class="chip">Routing</span>
+            <span class="chip">NAT</span>
+            <span class="chip">Subnetting</span>
+            <span class="chip">Cisco ISE</span>
+            <span class="chip">SSL-VPN</span>
+            <span class="chip">WireGuard</span>
+            <span class="chip">SD-WAN</span>
+            <span class="chip">IPS/Application Control</span>
+            <span class="chip">Firewalls: Cisco</span>
+            <span class="chip">Firewalls: FortiGate</span>
+            <span class="chip">Firewalls: Sophos</span>
+            <span class="chip">Firewalls: MikroTik</span>
+            <span class="chip">Firewalls: OPNsense</span>
+          </div>
+        </div>
+
+        <div class="card span-6">
+          <h3>Virtualization</h3>
+          <div class="chips">
+            <span class="chip">VMware vCenter</span>
+            <span class="chip">VMware ESXi</span>
+            <span class="chip">Proxmox</span>
+            <span class="chip">Hyper-V</span>
+            <span class="chip">Snapshots</span>
+            <span class="chip">Migrations</span>
+            <span class="chip">Performance tuning</span>
+          </div>
+        </div>
+
+        <div class="card span-6">
+          <h3>Storage & Backup/DR</h3>
+          <div class="chips">
+            <span class="chip">Proxmox Backup Server (PBS)</span>
+            <span class="chip">RAID</span>
+            <span class="chip">Ceph</span>
+            <span class="chip">IBM SAN (Fibre Channel)</span>
+            <span class="chip">Backup/restore operations</span>
+            <span class="chip">DR planning</span>
+            <span class="chip">Restore validation</span>
+          </div>
+        </div>
+
+        <div class="card span-6">
+          <h3>Automation & DevOps</h3>
+          <div class="chips">
+            <span class="chip">PowerShell scripting</span>
+            <span class="chip">Bash fundamentals</span>
+            <span class="chip">GitLab CI/CD</span>
+            <span class="chip">Pipeline-driven automation</span>
+            <span class="chip">Validation & repeatable rollouts</span>
+          </div>
+        </div>
+
+        <div class="card span-6">
+          <h3>Database Management</h3>
+          <div class="chips">
+            <span class="chip">Microsoft SQL Server</span>
+            <span class="chip">Installation/config</span>
+            <span class="chip">Operational queries</span>
+            <span class="chip">Backups</span>
+            <span class="chip">Restore validation</span>
+          </div>
+        </div>
+
+        <div class="card span-12">
+          <h3>Tools & Operations</h3>
+          <div class="chips">
+            <span class="chip">TeamViewer</span>
+            <span class="chip">AnyDesk</span>
+            <span class="chip">RustDesk</span>
+            <span class="chip">RDP</span>
+            <span class="chip">Tier-2/3 support</span>
+            <span class="chip">RCA</span>
+            <span class="chip">Corrective & preventive actions</span>
+            <span class="chip">Documentation/KB</span>
+            <span class="chip">Training delivery</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card span-6">
+          <h3>Personal Skills</h3>
+          <ul class="list">
+            <li>Strong decision-making and problem-solving skills.</li>
+            <li>Excellent analytical abilities and attention to detail.</li>
+            <li>Effective communication and training capabilities.</li>
+            <li>Team-oriented and organized.</li>
+          </ul>
+        </div>
+
+        <div class="card span-6">
+          <h3>Languages</h3>
+          <ul class="list">
+            <li><b>Arabic</b>: Native proficiency.</li>
+            <li><b>English</b>: Professional working proficiency.</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Key Projects</h2>
-                <p class="section-subtitle">Notable Implementations & Solutions</p>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="network-security.jpg" alt="FortiGate Firewall Implementation">
-                    </div>
-                    <div class="project-content">
-                        <h3>FortiGate-100E Firewall Deployment</h3>
-                        <p>Designed and deployed next-generation firewall solution with FortiAnalyzer integration, SSL/VPN, and SD-WAN features for enhanced network security and performance optimization.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">FortiGate</span>
-                            <span class="tech-tag">FortiOS</span>
-                            <span class="tech-tag">SSL/VPN</span>
-                            <span class="tech-tag">SD-WAN</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="cloud-infrastructure.png" alt="Azure Cloud Solutions">
-                    </div>
-                    <div class="project-content">
-                        <h3>Azure Cloud Infrastructure</h3>
-                        <p>Implemented comprehensive cloud-based solutions using Microsoft Azure, including virtual machines, storage, networking, and security measures with RBAC and DDoS protection.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Microsoft Azure</span>
-                            <span class="tech-tag">Azure RBAC</span>
-                            <span class="tech-tag">IaC</span>
-                            <span class="tech-tag">CI/CD</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="data-center.jpg" alt="Network Infrastructure">
-                    </div>
-                    <div class="project-content">
-                        <h3>Enterprise Network Optimization</h3>
-                        <p>Configured Cisco 3750 switches and implemented advanced routing protocols for robust LAN/WAN environments, ensuring seamless integration and optimal performance.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Cisco 3750</span>
-                            <span class="tech-tag">VLANs</span>
-                            <span class="tech-tag">Routing Protocols</span>
-                            <span class="tech-tag">Network Optimization</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="footer">
+      <span>© <span id="year"></span> Yossef Mohamed Ali</span>
+    </div>
+  </main>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">Let's discuss your IT infrastructure needs</p>
-            </div>
-              <div class="contact-row">
-                        <a href="https://github.com/ym-ali" class="social-link" target="_blank" title="See My Repos 🖤"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/yossef-m-ali-ali-3999b7356/" class="social-link" target="_blank" title="Check My LinkedIn 🖤"><i class="fab fa-linkedin"></i></a>
-                        <a href="mailto:yossefali67@gmail.com" class="social-link" title="E-Mail Me 🖤"><i class="fas fa-envelope"></i></a>
-                        <a href="https://wa.me/201553041880" class="social-link" target="_blank" title="WhatsApp Me 🖤"><i class="fab fa-whatsapp"></i></a>
-                        <a href="/Yossef%20M%20Ali.pdf" class="social-link" target="_blank" title="Download My CV 🖤"><i class="fas fa-download"></i></a>
-                        <a href="https://www.credly.com/users/yossef-m-ali" class="social-link" target="_blank" title="Get my Badges 🖤"><i class="fas fa-certificate"></i></a>
-              </div>
-            </div>
-    </section>
+  <script>
+    const root = document.documentElement;
+    const btn = document.getElementById('themeBtn');
+    const key = 'ym_theme';
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2025 Yossef Mohamed Ali. All rights reserved.</p>
-                <p>IT Infrastructure & Cloud Computing Professional</p>
-            </div>
-        </div>
-    </footer>
+    function setTheme(t){
+      root.setAttribute('data-theme', t);
+      localStorage.setItem(key, t);
+    }
+
+    const saved = localStorage.getItem(key);
+    if(saved) setTheme(saved);
+
+    btn.addEventListener('click', () => {
+      const cur = root.getAttribute('data-theme') || 'dark';
+      setTheme(cur === 'dark' ? 'light' : 'dark');
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 </body>
 </html>
