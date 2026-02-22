@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage -->
   <url>
-    <loc>https://ym-ali.github.io/portfolio/</loc>
+    <loc>https://yossefseit.github.io/</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <!-- About Section -->
   <url>
-    <loc>https://ym-ali.github.io/portfolio/#about</loc>
+    <loc>https://yossefseit.github.io/#about</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- Experience Section -->
   <url>
-    <loc>https://ym-ali.github.io/portfolio/#experience</loc>
+    <loc>https://yossefseit.github.io/#experience</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- Education Section -->
   <url>
-    <loc>https://ym-ali.github.io/portfolio/#education</loc>
+    <loc>https://yossefseit.github.io/#education</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- Certifications Section -->
   <url>
-    <loc>https://ym-ali.github.io/portfolio/#certifications</loc>
+    <loc>https://yossefseit.github.io/#certifications</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- Contact Section -->
   <url>
-    <loc>https://ym-ali.github.io/portfolio/#contact</loc>
+    <loc>https://yossefseit.github.io/#contact</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

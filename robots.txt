@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://ym-ali.github.io/sitemap.xml
+Sitemap: https://yossefseit.github.io/sitemap.xml
