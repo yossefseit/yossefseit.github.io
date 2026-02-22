@@ -736,6 +736,32 @@
 
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
-  <script async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+  <!-- Credly powers the embedded certification badges shown in the Certifications section. -->
+  <script>
+    (() => {
+      const credlySrc = "https://cdn.credly.com/assets/utilities/embed.js";
+      const certificationsSection = document.getElementById("Certifications");
+      const loadCredlyEmbed = () => {
+        if (document.querySelector(`script[src="${credlySrc}"]`)) return;
+        const script = document.createElement("script");
+        script.src = credlySrc;
+        script.async = true;
+        document.body.appendChild(script);
+      };
+
+      if (!certificationsSection || !('IntersectionObserver' in window)) {
+        loadCredlyEmbed();
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+        loadCredlyEmbed();
+        obs.disconnect();
+      }, { rootMargin: "200px 0px" });
+
+      observer.observe(certificationsSection);
+    })();
+  </script>
 </body>
 </html>
