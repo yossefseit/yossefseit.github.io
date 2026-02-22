@@ -299,6 +299,34 @@
       font-weight:800;
     }
     .mono{font-family: var(--mono)}
+    .skip-link{
+      position:absolute;
+      top:10px;
+      left:16px;
+      padding:10px 14px;
+      border-radius:12px;
+      background:var(--panel);
+      border:1px solid var(--border);
+      color:var(--text);
+      font-weight:700;
+      z-index:200;
+      transform:translateY(-180%);
+      transition:transform .2s ease;
+    }
+    .skip-link:focus-visible{
+      transform:translateY(0);
+      outline:3px solid var(--accent2);
+      outline-offset:2px;
+    }
+    .links a:focus-visible,
+    .btn:focus-visible,
+    .pill:focus-visible,
+    a:focus-visible,
+    button:focus-visible{
+      outline:3px solid var(--accent2);
+      outline-offset:2px;
+      box-shadow:0 0 0 4px var(--ring);
+    }
   </style>
 
   <script type="application/ld+json">
@@ -319,6 +347,7 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <header class="nav">
     <div class="nav-inner">
       <div class="brand">
@@ -343,7 +372,7 @@
     </div>
   </header>
 
-  <main class="wrap">
+  <main class="wrap" id="main-content" tabindex="-1">
     <section class="hero" id="top">
       <div class="card">
         <h1 class="title">IT Infrastructure Engineer focused on reliable infrastructure — plus VMS support.</h1>
@@ -356,8 +385,8 @@
 
         <div class="row">
           <span class="pill"><b>Location</b> Cairo Governorate, Egypt</span>
-          <span class="pill"><b>Phone</b> (+20) 155 304 1880</span>
-          <span class="pill"><b>Email</b> yossefali67@gmail.com</span>
+          <a class="pill" href="tel:+201553041880" aria-label="Call +20 155 304 1880"><b>Phone</b> (+20) 155 304 1880</a>
+          <a class="pill" href="mailto:yossefali67@gmail.com" aria-label="Email yossefali67@gmail.com"><b>Email</b> yossefali67@gmail.com</a>
         </div>
 
         <div class="divider"></div>
