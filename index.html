@@ -10,10 +10,266 @@
   <meta property="og:description" content="Systems & Network • Virtualization • Networking/Security • Storage/Backup/DR • VMS Support" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://yossefseit.github.io/" />
+  <meta property="og:image" content="https://yossefseit.github.io/assets/Infra.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://yossefseit.github.io/" />
 
   <title>Yossef Mohamed Ali | IT Infrastructure Engineer</title>
 
-    <link rel="stylesheet" href="assets/css/site.css" />
+  <style>
+    .cert-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:12px;
+      margin-top:14px;
+    }
+    .cert-img{
+      display:block;
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      background: color-mix(in srgb, var(--panel) 70%, transparent);
+      overflow:hidden;
+    }
+    .cert-img:hover{ transform: translateY(-1px); }
+    .cert-img img{
+      width:100%;
+      height:220px;
+      object-fit:cover;
+      display:block;
+      background: color-mix(in srgb, var(--panel2) 70%, transparent);
+    }
+    .cert-cap{ padding:12px; }
+    .cert-title{ font-weight:800; font-size:13px; }
+    .cert-sub{ color:var(--muted2); font-size:12px; margin-top:4px; }
+
+    .badge-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:18px;
+      align-items:start;
+      margin-top:14px;
+    }
+    .subhead{ margin-top:22px; }
+
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1a2e;
+      --panel2:#0c1628;
+      --text:#eaf0ff;
+      --muted:#b9c6e6;
+      --muted2:#93a4cc;
+      --border:rgba(255,255,255,.10);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --accent:#7aa2ff;
+      --accent2:#66ffd1;
+      --ring: rgba(122,162,255,.25);
+      --chip: rgba(122,162,255,.14);
+      --ok: rgba(102,255,209,.18);
+      --warn: rgba(255,209,102,.18);
+      --danger: rgba(255,102,145,.18);
+      --radius: 18px;
+      --radius2: 22px;
+      --max: 1100px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    [data-theme="light"]{
+      --bg:#f6f8ff;
+      --panel:#ffffff;
+      --panel2:#f3f6ff;
+      --text:#0b1220;
+      --muted:#33446b;
+      --muted2:#4a5a84;
+      --border:rgba(11,18,32,.10);
+      --shadow: 0 10px 30px rgba(11,18,32,.10);
+      --accent:#3b6cff;
+      --accent2:#00a37a;
+      --ring: rgba(59,108,255,.18);
+      --chip: rgba(59,108,255,.10);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      background:
+        radial-gradient(900px 400px at 20% 10%, rgba(122,162,255,.18), transparent 55%),
+        radial-gradient(700px 350px at 85% 25%, rgba(102,255,209,.14), transparent 55%),
+        radial-gradient(700px 450px at 50% 95%, rgba(122,162,255,.12), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:24px}
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      background: color-mix(in srgb, var(--bg) 70%, transparent);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{max-width:var(--max); margin:0 auto; padding:12px 24px; display:flex; align-items:center; justify-content:space-between; gap:14px}
+    .brand{display:flex; align-items:center; gap:12px}
+    .dot{
+      width:12px; height:12px; border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 6px var(--ring);
+    }
+    .brand strong{font-size:14px; letter-spacing:.2px}
+    .small{font-size:12px; color:var(--muted2)}
+    .links{display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:flex-end}
+    .links a{
+      font-size:13px; color:var(--muted);
+      padding:8px 10px; border-radius:999px;
+      border:1px solid transparent;
+    }
+    .links a:hover{border-color:var(--border); background: color-mix(in srgb, var(--panel) 65%, transparent)}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px; padding:10px 14px; border-radius:999px;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 72%, transparent), color-mix(in srgb, var(--panel2) 62%, transparent));
+      box-shadow: 0 8px 18px rgba(0,0,0,.18);
+      font-size:13px;
+      color:var(--text);
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .btn:active{transform: translateY(0px)}
+    .hero{
+      padding:38px 0 18px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    @media (max-width: 920px){
+      .hero{grid-template-columns: 1fr; padding-top:26px}
+      .nav-inner{padding:12px 16px}
+      .wrap{padding:16px}
+    }
+    .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 82%, transparent), color-mix(in srgb, var(--panel2) 70%, transparent));
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:18px;
+    }
+    .title{font-size:34px; line-height:1.12; margin:0 0 8px}
+    .subtitle{color:var(--muted); margin:0 0 14px; font-size:15px}
+    .row{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      background: color-mix(in srgb, var(--chip) 75%, transparent);
+      border:1px solid var(--border);
+      color:var(--muted);
+      font-size:12px;
+    }
+    .pill b{color:var(--text); font-weight:600}
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+    .chip{
+      font-size:12px;
+      padding:7px 9px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: color-mix(in srgb, var(--panel) 70%, transparent);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .grid{
+      display:grid; gap:16px;
+      grid-template-columns: repeat(12, 1fr);
+      margin-top:16px;
+    }
+    .span-7{grid-column: span 7}
+    .span-5{grid-column: span 5}
+    .span-6{grid-column: span 6}
+    .span-12{grid-column: span 12}
+    @media (max-width: 920px){
+      .span-7,.span-5,.span-6{grid-column: span 12}
+      .title{font-size:30px}
+    }
+    h2{
+      margin:34px 0 12px;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+    h3{margin:0 0 10px}
+    .section-note{color:var(--muted); font-size:13px; margin-top:-6px}
+    .list{margin:10px 0 0; padding:0 0 0 16px; color:var(--muted)}
+    .list li{margin:6px 0}
+    .kpi{
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:10px;
+      margin-top:10px;
+    }
+    .kpi .box{
+      border:1px solid var(--border);
+      background: color-mix(in srgb, var(--panel2) 65%, transparent);
+      border-radius: var(--radius);
+      padding:12px;
+    }
+    .kpi .n{font-weight:800; font-size:18px}
+    .kpi .t{color:var(--muted2); font-size:12px}
+    .stack{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+    .tag{
+      font-family: var(--mono);
+      font-size:11px;
+      padding:7px 9px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: color-mix(in srgb, var(--panel) 68%, transparent);
+      color:var(--muted);
+    }
+    .tag.ok{background: var(--ok)}
+    .tag.warn{background: var(--warn)}
+    .tag.danger{background: var(--danger)}
+    .divider{height:1px; background:var(--border); margin:16px 0}
+    .footer{
+      margin:34px 0 16px;
+      color:var(--muted2);
+      font-size:12px;
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    }
+    .cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .cta a.btn-primary{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border:0;
+      color:#06101d;
+      font-weight:800;
+    }
+    .mono{font-family: var(--mono)}
+    .skip-link{
+      position:absolute;
+      top:10px;
+      left:16px;
+      padding:10px 14px;
+      border-radius:12px;
+      background:var(--panel);
+      border:1px solid var(--border);
+      color:var(--text);
+      font-weight:700;
+      z-index:200;
+      transform:translateY(-180%);
+      transition:transform .2s ease;
+    }
+    .skip-link:focus-visible{
+      transform:translateY(0);
+      outline:3px solid var(--accent2);
+      outline-offset:2px;
+    }
+    .links a:focus-visible,
+    .btn:focus-visible,
+    .pill:focus-visible,
+    a:focus-visible,
+    button:focus-visible{
+      outline:3px solid var(--accent2);
+      outline-offset:2px;
+      box-shadow:0 0 0 4px var(--ring);
+    }
+  </style>
 
   <script type="application/ld+json">
   {
@@ -33,6 +289,7 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <header class="nav">
     <div class="nav-inner">
       <div class="brand">
@@ -57,7 +314,7 @@
     </div>
   </header>
 
-  <main class="wrap">
+  <main class="wrap" id="main-content" tabindex="-1">
     <section class="hero" id="top">
       <div class="card">
         <h1 class="title">IT Infrastructure Engineer focused on reliable infrastructure — plus VMS support.</h1>
@@ -70,8 +327,8 @@
 
         <div class="row">
           <span class="pill"><b>Location</b> Cairo Governorate, Egypt</span>
-          <span class="pill"><b>Phone</b> (+20) 155 304 1880</span>
-          <span class="pill"><b>Email</b> yossefali67@gmail.com</span>
+          <a class="pill" href="tel:+201553041880" aria-label="Call +20 155 304 1880"><b>Phone</b> (+20) 155 304 1880</a>
+          <a class="pill" href="mailto:yossefali67@gmail.com" aria-label="Email yossefali67@gmail.com"><b>Email</b> yossefali67@gmail.com</a>
         </div>
 
         <div class="divider"></div>
@@ -138,9 +395,7 @@
       </aside>
     </section>
 
-    <!-- SECTION: EXPERIENCE (edit items between START/END markers) -->
     <section id="experience">
-      <!-- EXPERIENCE: START -->
       <h2>Experience</h2>
 
       <div class="grid">
@@ -203,12 +458,9 @@
           </ul>
         </div>
       </div>
-      <!-- EXPERIENCE: END -->
     </section>
 
-    <!-- SECTION: PROJECTS (edit items between START/END markers) -->
     <section id="projects">
-      <!-- PROJECTS: START -->
       <h2>Projects</h2>
 
       <div class="grid">
@@ -320,7 +572,6 @@
           </ul>
         </div>
       </div>
-      <!-- PROJECTS: END -->
     </section>
 
 <section id="Certifications" class="section">
@@ -500,8 +751,49 @@
     </div>
   </main>
 
-  <script src="assets/js/site.js" defer></script>
+  <script>
+    // Theme toggle (persisted)
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('themeBtn');
+    const key = 'theme';
+    const saved = localStorage.getItem(key);
+    if(saved){ root.setAttribute('data-theme', saved); }
+    themeBtn.addEventListener('click', () => {
+      const cur = root.getAttribute('data-theme') || 'dark';
+      const next = cur === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem(key, next);
+      themeBtn.querySelector('.mono').textContent = (next === 'dark' ? 'Theme' : 'Theme');
+    });
 
-  <script async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <!-- Credly powers the embedded certification badges shown in the Certifications section. -->
+  <script>
+    (() => {
+      const credlySrc = "https://cdn.credly.com/assets/utilities/embed.js";
+      const certificationsSection = document.getElementById("Certifications");
+      const loadCredlyEmbed = () => {
+        if (document.querySelector(`script[src="${credlySrc}"]`)) return;
+        const script = document.createElement("script");
+        script.src = credlySrc;
+        script.async = true;
+        document.body.appendChild(script);
+      };
+
+      if (!certificationsSection || !('IntersectionObserver' in window)) {
+        loadCredlyEmbed();
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+        loadCredlyEmbed();
+        obs.disconnect();
+      }, { rootMargin: "200px 0px" });
+
+      observer.observe(certificationsSection);
+    })();
+  </script>
 </body>
 </html>
