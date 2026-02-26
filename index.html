@@ -109,7 +109,7 @@
       background: color-mix(in srgb, var(--bg) 70%, transparent);
       border-bottom:1px solid var(--border);
     }
-    .nav-inner{max-width:var(--max); margin:0 auto; padding:12px 24px; display:flex; align-items:center; justify-content:space-between; gap:14px}
+    .nav-inner{max-width:var(--max); margin:0 auto; padding:12px 24px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px}
     .brand{display:flex; align-items:center; gap:12px}
     .dot{
       width:12px; height:12px; border-radius:999px;
@@ -118,13 +118,25 @@
     }
     .brand strong{font-size:14px; letter-spacing:.2px}
     .small{font-size:12px; color:var(--muted2)}
-    .links{display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:flex-end}
+    .links{
+      width:100%;
+      order:3;
+      display:none;
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px solid var(--border);
+      gap:10px;
+      flex-direction:column;
+      align-items:stretch;
+    }
+    .links.open{display:flex}
     .links a{
       font-size:13px; color:var(--muted);
       padding:8px 10px; border-radius:999px;
       border:1px solid transparent;
     }
     .links a:hover{border-color:var(--border); background: color-mix(in srgb, var(--panel) 65%, transparent)}
+    .links a,.links .btn{width:100%; justify-content:flex-start}
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       gap:10px; padding:10px 14px; border-radius:999px;
@@ -270,24 +282,12 @@
       box-shadow:0 0 0 4px var(--ring);
     }
 
-    .nav-toggle{display:none}
-    .top-actions{display:flex; align-items:center; gap:10px}
+    .nav-toggle{display:inline-flex}
+    .top-actions{display:flex; align-items:center; gap:10px; margin-left:auto}
 
     @media (max-width: 980px){
       .nav-inner{align-items:flex-start}
       .brand{max-width:70%}
-      .top-actions{margin-left:auto}
-      .nav-toggle{display:inline-flex}
-      .links{
-        width:100%;
-        order:3;
-        display:none;
-        margin-top:10px;
-        padding-top:10px;
-        border-top:1px solid var(--border);
-      }
-      .links.open{display:flex}
-      .links a,.links .btn{width:100%; justify-content:flex-start}
     }
 
     @media (max-width: 700px){
@@ -717,7 +717,6 @@
 
     primaryNav?.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
-        if (window.innerWidth > 980) return;
         primaryNav.classList.remove('open');
         navToggle?.setAttribute('aria-expanded', 'false');
         if (navToggle) navToggle.querySelector('.mono').textContent = 'Menu';
