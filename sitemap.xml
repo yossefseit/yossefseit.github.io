@@ -1,44 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage -->
   <url>
     <loc>https://yossefseit.github.io/</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  <!-- About Section -->
   <url>
     <loc>https://yossefseit.github.io/#about</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- Experience Section -->
   <url>
     <loc>https://yossefseit.github.io/#experience</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- Education Section -->
+  <url>
+    <loc>https://yossefseit.github.io/#training</loc>
+    <lastmod>2026-02-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url>
     <loc>https://yossefseit.github.io/#education</loc>
-    <lastmod>2026-02-16</lastmod>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- Certifications Section -->
   <url>
-    <loc>https://yossefseit.github.io/#certifications</loc>
-    <lastmod>2026-02-16</lastmod>
+    <loc>https://yossefseit.github.io/#Certifications</loc>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- Contact Section -->
   <url>
-    <loc>https://yossefseit.github.io/#contact</loc>
-    <lastmod>2026-02-16</lastmod>
+    <loc>https://yossefseit.github.io/#skills</loc>
+    <lastmod>2026-02-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yossefseit.github.io/#personal-skills</loc>
+    <lastmod>2026-02-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yossefseit.github.io/#languages</loc>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

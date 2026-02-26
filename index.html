@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,8 +13,19 @@
   <meta property="og:image" content="https://yossefseit.github.io/assets/Infra.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://yossefseit.github.io/" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
 
   <title>Yossef Mohamed Ali | IT Infrastructure Engineer</title>
+
+  <script>
+    document.documentElement.classList.remove('no-js');
+    try {
+      const saved = localStorage.getItem('theme');
+      document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+    } catch {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
 
   <style>
     .cert-grid{
@@ -48,6 +59,11 @@
       gap:18px;
       align-items:start;
       margin-top:14px;
+    }
+    .badge-grid > div{
+      width:150px;
+      min-height:270px;
+      justify-self:center;
     }
     .subhead{ margin-top:22px; }
 
@@ -137,6 +153,8 @@
     }
     .links a:hover{border-color:var(--border); background: color-mix(in srgb, var(--panel) 65%, transparent)}
     .links a,.links .btn{width:100%; justify-content:flex-start}
+    .no-js .links{display:flex}
+    .no-js .top-actions{display:none}
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       gap:10px; padding:10px 14px; border-radius:999px;
@@ -693,37 +711,69 @@
     const primaryNav = document.getElementById('primaryNav');
     const key = 'theme';
 
-    const setThemeLabel = (theme) => {
-      themeBtn.querySelector('.mono').textContent = theme === 'light' ? '☀️ Light' : '🌙 Dark';
+    const readTheme = () => {
+      try {
+        const saved = localStorage.getItem(key);
+        return saved === 'light' ? 'light' : 'dark';
+      } catch {
+        return root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      }
     };
 
-    const saved = localStorage.getItem(key) || 'dark';
-    root.setAttribute('data-theme', saved);
-    setThemeLabel(saved);
+    const writeTheme = (theme) => {
+      try {
+        localStorage.setItem(key, theme);
+      } catch {
+        // Ignore storage failures (private mode / blocked storage)
+      }
+    };
 
-    themeBtn.addEventListener('click', () => {
+    const setThemeLabel = (theme) => {
+      const mono = themeBtn?.querySelector('.mono');
+      if (mono) {
+        mono.textContent = theme === 'light' ? '☀️ Light' : '🌙 Dark';
+      }
+    };
+
+    const initialTheme = readTheme();
+    root.setAttribute('data-theme', initialTheme);
+    setThemeLabel(initialTheme);
+
+    themeBtn?.addEventListener('click', () => {
       const cur = root.getAttribute('data-theme') || 'dark';
       const next = cur === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
-      localStorage.setItem(key, next);
+      writeTheme(next);
       setThemeLabel(next);
     });
 
     navToggle?.addEventListener('click', () => {
+      if (!primaryNav) {
+        return;
+      }
       const isOpen = primaryNav.classList.toggle('open');
       navToggle.setAttribute('aria-expanded', String(isOpen));
-      navToggle.querySelector('.mono').textContent = isOpen ? 'Close' : 'Menu';
+      const mono = navToggle.querySelector('.mono');
+      if (mono) {
+        mono.textContent = isOpen ? 'Close' : 'Menu';
+      }
     });
 
     primaryNav?.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
         primaryNav.classList.remove('open');
         navToggle?.setAttribute('aria-expanded', 'false');
-        if (navToggle) navToggle.querySelector('.mono').textContent = 'Menu';
+        const mono = navToggle?.querySelector('.mono');
+        if (mono) {
+          mono.textContent = 'Menu';
+        }
       });
     });
 
-    document.getElementById('year').textContent = new Date().getFullYear();
+    const year = document.getElementById('year');
+    if (year) {
+      year.textContent = new Date().getFullYear();
+    }
   </script>
   <!-- Credly powers the embedded certification badges shown in the Certifications section. -->
   <script>
