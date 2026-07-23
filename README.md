@@ -1,21 +1,30 @@
-# yossefseit.github.io
+# Personal Portfolio
 
-My personal portfolio website.
+My personal portfolio website hosted on Azure Static Web Apps.
 
-## Live Site
-- https://yossefseit.github.io/
+## 🌐 Live Demo
 
-## What’s Inside
-- `index.html` — the full static site (no framework required)
-- `assets/` — CV/certificates and images used by the site
-  - `assets/Yossef-M-Ali.pdf` — CV (PDF)
-  - `assets/Azure.png` + `assets/Azure.pdf` — certificate thumbnail + PDF
-  - `assets/Infra.png` + `assets/Infra.pdf` — certificate thumbnail + PDF
+https://gentle-smoke-06d712d0f.7.azurestaticapps.net/
 
-## Edit Locally
-```bash
-git clone https://github.com/yossefseit/yossefseit.github.io.git
-cd yossefseit.github.io
-code .
-python3 -m http.server 8000
-```
+## 🚀 Features
+
+- Responsive design
+- HTML, CSS, JavaScript
+- Hosted on Azure Static Web Apps
+- Automated deployments with GitHub Actions
+
+## 🛠 Technologies
+
+- HTML5
+- CSS3
+- JavaScript
+- Microsoft Azure Static Web Apps
+- GitHub Actions
+
+## 📦 Deployment
+
+Every push to the `main` branch automatically deploys the latest version using GitHub Actions.
+
+## 📄 License
+
+MIT
