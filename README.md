@@ -29,13 +29,17 @@ This Azure Static Web App was initially connected through the Azure Portal. The 
 
 | Area | Status | Evidence |
 |---|---|---|
-| Azure production deployment | Live | Public Azure URL and successful main-branch workflow runs |
+| Azure production deployment | Live | Public Azure URL, redacted Portal overview, and successful main-branch workflow runs |
 | Static-site validation | Implemented | `scripts/validate_site.py` runs locally and before deployment |
 | GitHub Actions delivery | Implemented | Pinned actions, least permissions, static upload |
 | Bicep resource definition | Implemented | `infra/main.bicep` |
 | PR preview lifecycle | Configured | Workflow handles trusted same-repository open/update/reopen/close events |
 | PR preview smoke test | Pending | No public PR-triggered run has yet verified the complete lifecycle |
 | Additional Azure labs | Planned | See [Azure lab roadmap](docs/azure-lab-roadmap.md) |
+
+![Redacted Azure Portal overview showing portfolio-yossef ready in production on the Free plan](docs/screenshots/azure-static-web-app-overview-redacted.png)
+
+The resource owner supplied this redacted Portal overview. It confirms the live `portfolio-yossef` Static Web App, `rg-portfolio` resource group, production status, Free plan, GitHub source, and default hostname without publishing subscription metadata.
 
 ## Architecture
 
@@ -86,6 +90,9 @@ There is no application server, database, API, frontend framework, or package in
 │   ├── azure-lab-roadmap.md
 │   ├── validation.md
 │   └── screenshots/
+│       ├── azure-static-web-app-overview-redacted.png
+│       ├── portfolio-desktop.png
+│       └── portfolio-mobile.png
 ├── infra/
 │   └── main.bicep
 ├── scripts/

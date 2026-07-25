@@ -90,16 +90,20 @@ This bypasses Oryx instead of adding a package manifest and a no-op build purely
 `infra/main.bicep` defines the intended Static Web App shape:
 
 - resource-group deployment scope;
-- resource name and permitted regions;
+- confirmed target resource group `rg-portfolio`;
+- confirmed resource name `portfolio-yossef`;
+- ARM location `eastus2` and permitted alternative regions;
 - Free or Standard SKU;
 - root application path;
 - no API or output directory;
 - GitHub workflow generation disabled;
 - staging environments enabled.
 
-The production resource was initially connected through the Azure Portal. Bicep was added afterward to codify its intended state. There is no authenticated Bicep deployment or what-if result in this repository, so the accurate claim is **Bicep resource definition**, not **production provisioned by Bicep**.
+The production resource was initially connected through the Azure Portal. Bicep was added afterward to codify its intended state. A resource-owner-supplied [redacted Portal overview](screenshots/azure-static-web-app-overview-redacted.png) confirms that `portfolio-yossef` is ready in production on the Free plan with the documented default hostname. The Portal displays the service location as **Global**; the resource JSON reports the ARM deployment location as `eastus2`, which is the value used by Bicep.
 
-The template deliberately omits `repositoryUrl` and `repositoryToken`. The checked-in workflow owns delivery, and no repository token should be passed through the resource template.
+There is no authenticated Bicep deployment or what-if result in this repository, so the accurate claim is **Bicep resource definition**, not **production provisioned by Bicep**.
+
+The template deliberately omits `repositoryUrl` and `repositoryToken`, and `skipGithubActionWorkflowGeneration` remains enabled. The checked-in workflow owns delivery and must not be generated or rewritten by the resource template.
 
 ## Browser security model
 

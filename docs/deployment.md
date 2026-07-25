@@ -81,16 +81,24 @@ Before using the template to manage production, perform:
 ```bash
 az bicep build --file infra/main.bicep
 az deployment group validate \
-  --resource-group <resource-group> \
+  --resource-group rg-portfolio \
   --template-file infra/main.bicep \
-  --parameters staticWebAppName=<static-web-app-name>
+  --parameters \
+    staticWebAppName=portfolio-yossef \
+    location=eastus2 \
+    skuName=Free
 az deployment group what-if \
-  --resource-group <resource-group> \
+  --resource-group rg-portfolio \
   --template-file infra/main.bicep \
-  --parameters staticWebAppName=<static-web-app-name>
+  --parameters \
+    staticWebAppName=portfolio-yossef \
+    location=eastus2 \
+    skuName=Free
 ```
 
-These authenticated commands are intentionally not run automatically. Review the what-if output before any production change.
+These confirmed values come from the live resource JSON and the resource owner's [redacted Portal overview](screenshots/azure-static-web-app-overview-redacted.png). The Portal labels the service location **Global**, while ARM reports the deployable resource location as `eastus2`.
+
+These authenticated commands are intentionally not run automatically. Review the what-if output before any production change, with particular attention to the GitHub repository association, `main` branch, deployment authorization, and workflow-generation settings. Do not run `az deployment group create` until the result is understood.
 
 ## Secret handling
 

@@ -60,6 +60,19 @@ The scripted interaction audit confirmed:
 
 Firefox headless renders were also reviewed at desktop and mobile sizes. Current captures are stored in [`docs/screenshots/`](screenshots/).
 
+## Azure resource evidence
+
+A resource-owner-supplied [redacted Azure Portal overview](screenshots/azure-static-web-app-overview-redacted.png) confirms:
+
+- resource name `portfolio-yossef`;
+- resource group `rg-portfolio`;
+- production environment status `Ready`;
+- Free hosting plan;
+- GitHub `main` source;
+- default hostname `gentle-smoke-06d712d0f.7.azurestaticapps.net`.
+
+The supplied resource JSON reports the ARM deployment location as `eastus2`; the Portal overview displays the globally delivered service as **Global**. Subscription metadata was redacted before the evidence image was checked into the repository.
+
 ## Azure Static Web Apps emulation
 
 Azure Static Web Apps CLI 2.0.10 loaded the checked-in workflow and `staticwebapp.config.json` successfully.
