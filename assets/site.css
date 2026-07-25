@@ -336,8 +336,7 @@ main:focus {
 }
 
 .hero-actions,
-.project-actions,
-.contact-actions {
+.project-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
@@ -1152,16 +1151,28 @@ main:focus {
 }
 
 .contact-actions {
-  align-items: center;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 0.75rem;
 }
 
 .contact-actions .button {
-  flex: 1 1 8rem;
+  width: 100%;
+  min-width: 0;
+  padding-inline: 0.75rem;
+  white-space: nowrap;
 }
 
 .contact-link {
+  display: inline-flex;
+  width: 100%;
   min-height: 44px;
   padding: 0.55rem 0.2rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
   color: white;
   font-size: 0.88rem;
   font-weight: 700;
@@ -1520,10 +1531,6 @@ main:focus {
 
   .evidence-label {
     margin-bottom: 1.5rem;
-  }
-
-  .contact-actions .button {
-    flex-basis: 100%;
   }
 
   .footer-inner {
