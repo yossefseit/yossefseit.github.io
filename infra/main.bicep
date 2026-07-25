@@ -1,26 +1,31 @@
 targetScope = 'resourceGroup'
 
-// infra/main.bicep
-//
 // Deploy this file to the existing `rg-portfolio` resource group. `targetScope`
 // selects the deployment level; the resource-group name is supplied by the
 // deployment command.
 //
-// Declarative definition added after the Azure Static Web App was created
-// through the Azure Portal. It must not generate or rewrite the repository's
-// existing GitHub Actions workflow.
-//
-// Deliberately does NOT set `repositoryUrl` / `repositoryToken`. Those
-// properties let Azure Resource Manager manage its own GitHub Actions
-// workflow, but this repo already has a hand-maintained workflow under
-// .github/workflows/ that shouldn't be silently rewritten. This template
-// is intended to manage the *Azure resource* only after a reviewed what-if;
-// the workflow file remains the single source of truth for CI/CD.
+// This definition was added after the Azure Static Web App was created in the
+// Portal. It deliberately omits deployable repository/provider properties so
+// Azure Resource Manager cannot generate or rewrite the hand-maintained GitHub
+// Actions workflow. Run an authenticated what-if before any deployment.
+
+metadata existingAzureResource = {
+  resourceGroup: 'rg-portfolio'
+  resourceName: 'portfolio-yossef'
+  resourceLocation: 'eastus2'
+  portalDisplayLocation: 'Global'
+  sku: 'Free'
+  defaultHostname: 'gentle-smoke-06d712d0f.7.azurestaticapps.net'
+  sourceProvider: 'GitHub'
+  sourceRepository: 'https://github.com/yossefseit/yossefseit.github.io'
+  sourceBranch: 'main'
+  workflowManagedOutsideBicep: true
+}
 
 @description('Name of the Static Web App resource')
 param staticWebAppName string = 'portfolio-yossef'
 
-@description('Azure region. Static Web Apps only deploys to a subset of regions.')
+@description('Azure resource location from ARM JSON. The Portal displays this global service as "Global".')
 @allowed([
   'westus2'
   'centralus'
@@ -37,7 +42,7 @@ param location string = 'eastus2'
 ])
 param skuName string = 'Free'
 
-resource staticWebApp 'Microsoft.Web/staticSites@2023-12-01' = {
+resource staticWebApp 'Microsoft.Web/staticSites@2024-11-01' = {
   name: staticWebAppName
   location: location
   sku: {
@@ -45,16 +50,20 @@ resource staticWebApp 'Microsoft.Web/staticSites@2023-12-01' = {
     tier: skuName
   }
   properties: {
+    allowConfigFileUpdates: true
     buildProperties: {
       appLocation: '/'
       apiLocation: ''
       outputLocation: ''
       skipGithubActionWorkflowGeneration: true
     }
+    enterpriseGradeCdnStatus: 'Disabled'
     // Keeps PR preview environments enabled without generating a workflow.
     stagingEnvironmentPolicy: 'Enabled'
   }
 }
 
 output defaultHostname string = staticWebApp.properties.defaultHostname
+@description('Resource group supplied to the resource-group deployment command.')
+output resourceGroupName string = resourceGroup().name
 output resourceId string = staticWebApp.id
