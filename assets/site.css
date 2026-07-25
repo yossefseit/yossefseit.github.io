@@ -87,7 +87,6 @@ h3,
 h4 {
   color: var(--ink);
   line-height: 1.15;
-  text-wrap: balance;
 }
 
 h1 {
@@ -163,7 +162,6 @@ main:focus {
   min-height: var(--header-height);
   border-bottom: 1px solid rgb(215 226 235 / 85%);
   background: rgb(255 255 255 / 94%);
-  backdrop-filter: blur(16px);
 }
 
 .header-inner {
@@ -320,7 +318,6 @@ main:focus {
   color: #c8d9e8;
   font-size: clamp(1.3rem, 2.3vw, 1.8rem);
   line-height: 1.35;
-  text-wrap: balance;
 }
 
 .hero-role strong {
@@ -404,7 +401,6 @@ main:focus {
   border-radius: var(--radius-lg);
   background: rgb(255 255 255 / 7%);
   box-shadow: 0 24px 80px rgb(0 0 0 / 24%);
-  backdrop-filter: blur(12px);
 }
 
 .evidence-heading {
@@ -1460,7 +1456,7 @@ main:focus {
   .value-card,
   .value-card:last-child {
     grid-column: auto;
-    min-height: auto;
+    min-height: 0;
   }
 
   .value-number {
@@ -1487,7 +1483,7 @@ main:focus {
   }
 
   .architecture-flow li {
-    min-height: auto;
+    min-height: 0;
   }
 
   .flow-step {
@@ -1526,7 +1522,7 @@ main:focus {
   }
 
   .skill-group {
-    min-height: auto;
+    min-height: 0;
   }
 
   .evidence-label {
