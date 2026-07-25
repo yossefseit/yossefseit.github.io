@@ -1,3 +1,5 @@
+targetScope = 'resourceGroup'
+
 // infra/main.bicep
 //
 // Declarative definition of the Azure Static Web App that hosts this site.
@@ -40,7 +42,7 @@ resource staticWebApp 'Microsoft.Web/staticSites@2023-12-01' = {
     buildProperties: {
       appLocation: '/'
       apiLocation: ''
-      outputLocation: '/'
+      outputLocation: ''
       skipGithubActionWorkflowGeneration: true
     }
     // Keeps PR preview environments enabled — see docs/architecture.md

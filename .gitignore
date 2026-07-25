@@ -12,5 +12,9 @@ Thumbs.db
 # Logs
 *.log
 
+# Python validation artifacts
+__pycache__/
+*.py[cod]
+
 # Node (only relevant if build tooling is ever added)
 node_modules/
