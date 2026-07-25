@@ -1,163 +1,187 @@
-# yossefseit.github.io
+# Yossef Mohamed Ali — Azure Cloud Engineering Portfolio
 
-**Personal portfolio, engineered and documented as a small Azure reference project — not just a hosted website.**
+An evidence-backed portfolio for an infrastructure professional transitioning into Azure Cloud Engineering. The site presents professional infrastructure experience, completed training, inspectable lab work, and a deployed Azure reference project without claiming unsupported production cloud experience.
 
-[![Azure Static Web Apps CI/CD](https://github.com/yossefseit/yossefseit.github.io/actions/workflows/azure-static-web-apps-gentle-smoke-06d712d0f.yml/badge.svg)](https://github.com/yossefseit/yossefseit.github.io/actions/workflows/azure-static-web-apps-gentle-smoke-06d712d0f.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Validate and deploy Azure Static Web App](https://github.com/yossefseit/yossefseit.github.io/actions/workflows/azure-static-web-apps-gentle-smoke-06d712d0f.yml/badge.svg)](https://github.com/yossefseit/yossefseit.github.io/actions/workflows/azure-static-web-apps-gentle-smoke-06d712d0f.yml)
+[![License: MIT](https://img.shields.io/badge/code_license-MIT-5c6570.svg)](LICENSE)
 
-🌐 **Live:** https://gentle-smoke-06d712d0f.7.azurestaticapps.net/
+**Primary site:** [Azure Static Web Apps](https://gentle-smoke-06d712d0f.7.azurestaticapps.net/)
 
----
+**Canonical origin:** `https://gentle-smoke-06d712d0f.7.azurestaticapps.net/`
 
-## Table of Contents
+> GitHub Pages currently serves the same repository as a secondary mirror. Search metadata selects the Azure deployment as the single canonical origin.
 
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Technologies](#technologies)
-- [Architecture](#architecture)
-- [Repository Structure](#repository-structure)
-- [CI/CD Flow](#cicd-flow)
-- [Deployment Process](#deployment-process)
-- [Why Azure Static Web Apps](#why-azure-static-web-apps)
-- [Lessons Learned](#lessons-learned)
-- [Future Improvements](#future-improvements)
-- [Roadmap](#roadmap)
-- [Quick Reference](#quick-reference)
-- [License](#license)
+![Desktop preview of the Azure cloud engineering portfolio](docs/screenshots/portfolio-desktop.png)
 
----
+## What this repository demonstrates
 
-## Project Overview
+- A responsive, semantic, dependency-light portfolio built with HTML, CSS, and a small amount of vanilla JavaScript
+- Static delivery through **Azure Static Web Apps**
+- Pre-deployment validation and delivery through **GitHub Actions**
+- A reusable **Bicep resource definition** for the Static Web App
+- A restrictive content security policy and defense-in-depth HTTP headers
+- Documented deployment decisions, troubleshooting, evidence boundaries, and planned Azure labs
+- Clear separation between professional experience, training, lab work, and planned work
 
-This repo hosts my personal portfolio, but it's structured to demonstrate how it's deployed, not just what it looks like:
+This Azure Static Web App was initially connected through the Azure Portal. The resource configuration was subsequently codified in Bicep; this repository does not claim that the existing production resource was originally provisioned by the template.
 
-- Static hosting on **Azure Static Web Apps**
-- **GitHub Actions** CI/CD, including automatic PR preview environments
-- The hosting resource defined as code in **Bicep**, not created by hand in the Portal
-- Documented architecture and deployment decisions instead of undocumented click-ops
+## Project status
 
-No frontend framework and no build step — plain HTML/CSS/JS by design, so the CI/CD and infra pieces stay easy to follow on their own.
-
-## Features
-
-- Responsive single-page portfolio (About, Experience, Certifications, Skills)
-- Automatic deploys on push to `main`
-- Automatic **PR preview environments** — every pull request gets its own temporary URL before anything reaches production
-- Hardened HTTP response headers via `staticwebapp.config.json`
-- Static Web App resource defined as code in `infra/main.bicep`
-
-## Technologies
-
-| Layer | Choice |
-|---|---|
-| Frontend | HTML5, CSS3, vanilla JavaScript |
-| Hosting | Azure Static Web Apps (Free tier) |
-| CI/CD | GitHub Actions |
-| IaC | Bicep (`infra/main.bicep`) |
-| Config | `staticwebapp.config.json` — security headers, route caching |
+| Area | Status | Evidence |
+|---|---|---|
+| Azure production deployment | Live | Public Azure URL and successful main-branch workflow runs |
+| Static-site validation | Implemented | `scripts/validate_site.py` runs locally and before deployment |
+| GitHub Actions delivery | Implemented | Pinned actions, least permissions, static upload |
+| Bicep resource definition | Implemented | `infra/main.bicep` |
+| PR preview lifecycle | Configured | Workflow handles trusted same-repository open/update/reopen/close events |
+| PR preview smoke test | Pending | No public PR-triggered run has yet verified the complete lifecycle |
+| Additional Azure labs | Planned | See [Azure lab roadmap](docs/azure-lab-roadmap.md) |
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    Dev["Developer"] -->|"git push / PR"| GH["GitHub Repo"]
-    GH --> GHA["GitHub Actions"]
-    GHA -->|"skip_app_build: true"| SWA["Azure Static Web Apps"]
-    SWA --> Edge["Global edge network + managed TLS"]
-    Edge --> Users(("Users"))
+    Developer["Developer"] -->|"push or pull request"| Repository["GitHub repository"]
+    Repository --> Validation["Dependency-free validation"]
+    Validation -->|"pass"| Delivery["GitHub Actions deployment"]
+    Delivery -->|"static upload"| SWA["Azure Static Web Apps"]
+    SWA --> Edge["Managed TLS and global delivery"]
+    Edge --> Visitor["Recruiter or engineer"]
 
-    GH -.->|"PR opened or updated"| Preview["PR preview environment"]
-    GH -.->|"PR closed"| Teardown["Preview torn down"]
+    Repository -.-> Bicep["Bicep resource definition"]
+    Repository -.-> Docs["Architecture and deployment runbooks"]
+    Delivery -.-> Preview["Configured PR preview environment"]
 ```
 
-No build stage runs — the workflow uploads the static files directly, so GitHub Actions here is a *delivery* mechanism, not a build pipeline. Full write-up, including why that's a deliberate choice, in [`docs/architecture.md`](docs/architecture.md).
+There is no application server, database, API, frontend framework, or package installation in the site itself. Azure receives the repository as already-built static content. See [docs/architecture.md](docs/architecture.md) for design details.
 
-## Repository Structure
+## Technology choices
 
-```
-yossefseit.github.io
-├── .github/workflows/          # CI/CD pipeline (GitHub Actions → Azure SWA)
-├── assets/                     # Images, PDFs, certification badges
+| Layer | Implementation |
+|---|---|
+| Frontend | Semantic HTML5, modern CSS, vanilla JavaScript |
+| Hosting | Azure Static Web Apps Free tier |
+| CI/CD | GitHub Actions |
+| Infrastructure as Code | Bicep |
+| Validation | Python standard library |
+| Security | CSP, HSTS, COOP/CORP, Permissions Policy, referrer and MIME controls |
+| SEO | Canonical metadata, Open Graph/Twitter metadata, JSON-LD, sitemap, robots |
+
+## Repository structure
+
+```text
+.
+├── .github/workflows/
+│   └── azure-static-web-apps-gentle-smoke-06d712d0f.yml
+├── .cspell.json
+├── assets/
+│   ├── site.css
+│   ├── site.js
+│   ├── og-cover.png
+│   ├── Yossef-M-Ali.pdf
+│   └── training certificate assets
 ├── docs/
-│   ├── architecture.md         # Design decisions, CI/CD + CDN explained
-│   ├── deployment.md           # Deployment process & troubleshooting log
-│   └── screenshots/            # planned
+│   ├── architecture.md
+│   ├── deployment.md
+│   ├── azure-lab-roadmap.md
+│   ├── validation.md
+│   └── screenshots/
 ├── infra/
-│   └── main.bicep              # Static Web App defined as code
+│   └── main.bicep
+├── scripts/
+│   └── validate_site.py
+├── 404.html
 ├── index.html
-├── staticwebapp.config.json    # Security headers, route caching
-├── README.md
-├── LICENSE
-└── .gitignore
+├── robots.txt
+├── sitemap.xml
+└── staticwebapp.config.json
 ```
 
-## CI/CD Flow
+## Run locally
 
-1. Push to `main` (or open a PR) triggers `.github/workflows/azure-static-web-apps-gentle-smoke-06d712d0f.yml`
-2. The job requests a GitHub OIDC token and calls `Azure/static-web-apps-deploy@v1`
-3. `skip_app_build: true` tells Azure **not** to run Oryx — files are uploaded as-is
-4. On `main`: deploys straight to production
-5. On a PR: deploys to an isolated preview URL; closing the PR tears it down automatically
-
-## Deployment Process
-
-Full walkthrough — including the Oryx build failure and the fix — is in [`docs/deployment.md`](docs/deployment.md). Short version: this is a static site with no `package.json`, so Azure's default build detection is disabled explicitly rather than worked around.
-
-## Why Azure Static Web Apps
-
-- Free tier covers a personal site with managed TLS + global CDN included
-- GitHub Actions integration is native — no separate CI tool needed
-- Free, automatic PR preview environments for reviewing changes before they're live
-- Straightforward path to add an Azure Functions API later without switching hosting providers
-- Manageable as code via Bicep/ARM, same as any other Azure resource
-
-## Lessons Learned
-
-- **Oryx assumed Node.js.** With no `package.json`, Azure's build detection still tried an Oryx Node build and failed looking for a `build` script. Fix: `skip_app_build: true` plus explicit `app_location`/`output_location`, so Azure treats this as pre-built static content instead of guessing.
-- **A working deployment isn't a documented one.** The Portal-created resource worked fine but had no record of *why* it was configured that way — `infra/` and `docs/` exist to close that gap.
-- **CSP vs. no build step is a real trade-off.** The page has a few inline `<script>`/`<style>` blocks, so `staticwebapp.config.json` currently allows `'unsafe-inline'` for those directives instead of maintaining brittle per-block hashes by hand — a deliberate call, documented in `docs/architecture.md`, not an oversight.
-
-## Future Improvements
-
-- [ ] Extract inline `<script>`/`<style>` blocks to external files, then tighten the CSP (drop `'unsafe-inline'`)
-- [ ] Add a Terraform variant alongside the Bicep template
-- [ ] Custom domain
-- [ ] Basic Lighthouse/accessibility check as a CI step
-- [ ] Screenshots in `docs/screenshots/`
-
-## Roadmap
-
-First in a small set of Azure reference projects, each following the same template (README, architecture doc, deployment doc, Bicep/Terraform, CI/CD):
-
-- ✅ Azure Static Web Apps (this repo)
-- ⬜ Azure App Service + Azure Functions
-- ⬜ Azure Storage + Key Vault
-- ⬜ Azure Container Apps + Docker
-
-## Quick Reference
-
-Operating this resource directly (replace `<rg>` / `<app>` with your resource group / Static Web App name):
+No build step or dependency installation is required.
 
 ```bash
-# Resource details — default hostname, resource ID, SKU
-az staticwebapp show --name <app> --resource-group <rg>
-
-# List environments: production + every active PR preview
-az staticwebapp environment list --name <app> --resource-group <rg>
-
-# View/rotate the deployment token stored as the GitHub Actions secret
-az staticwebapp secrets list --name <app> --resource-group <rg>
-
-# Custom domains attached to this app
-az staticwebapp hostname list --name <app> --resource-group <rg>
-
-# Apply infra/main.bicep
-az deployment group create --resource-group <rg> --template-file infra/main.bicep
-
-# Run the site locally before pushing (Static Web Apps CLI)
-swa start .
+git clone https://github.com/yossefseit/yossefseit.github.io.git
+cd yossefseit.github.io
+python3 -m http.server 8000
 ```
 
-## License
+Open `http://localhost:8000`.
 
-MIT — see [LICENSE](LICENSE).
+Run the repository checks separately:
+
+```bash
+python3 scripts/validate_site.py
+```
+
+The validator checks:
+
+- local files, image sources, `srcset` entries, and in-page anchors
+- required document metadata and heading structure
+- JSON-LD parsing
+- new-tab link protections
+- JSON and XML configuration
+- canonical, sitemap, robots, CSP, and 404 consistency
+
+The latest measured browser, Lighthouse, workflow, Bicep, secret-scan, and emulator results are recorded in [docs/validation.md](docs/validation.md).
+
+## Delivery workflow
+
+For a push to `main`, or an open/update/reopened trusted same-repository pull request:
+
+1. GitHub checks out the repository with persisted credentials disabled.
+2. `scripts/validate_site.py` verifies the static site and deployment metadata.
+3. GitHub requests an identity token.
+4. `Azure/static-web-apps-deploy` uploads the repository as static content.
+5. A `main` push updates production; a trusted same-repository pull request is configured to receive a preview environment.
+6. A trusted pull-request close event calls the Azure action to remove the preview environment.
+
+Dependabot and fork pull requests still run validation, but skip preview deployment because GitHub does not expose the required Azure secret to those events. All third-party actions are pinned to full commit SHAs. The Azure deployment token remains in GitHub Actions secrets and is never stored in this repository.
+
+`skip_app_build: true` and an empty `output_location` intentionally bypass Oryx. This is a plain static site, so there is nothing to compile. The original build-detection failure and resolution are documented in [docs/deployment.md](docs/deployment.md).
+
+## Security decisions
+
+- The site has no form handler, API, analytics, third-party embed, or runtime data store.
+- Inline executable JavaScript and inline CSS are disallowed.
+- The one inline JSON-LD block is authorized by an explicit CSP hash.
+- Credly credentials use direct links instead of third-party scripts and iframes.
+- The CV is revalidated on each request instead of cached immutably for a year.
+- New-tab links use `noopener noreferrer`.
+- The workflow uses least-privilege job permissions and pinned action commits.
+- No credentials, tokens, or connection strings belong in tracked files.
+
+The repository is public and the Azure workflow uploads from its root, so tracked documentation and infrastructure files may also be publicly retrievable. They contain no secrets. A future build/output directory could narrow the published surface if GitHub Pages is retired.
+
+## Content integrity
+
+The current CV is the authority for employment, job titles, dates, education, and professional skills. Repository evidence supports the Azure Static Web Apps project and the separate Samba AD DC lab.
+
+The source CV uses a combined “Certifications & Training” heading. This portfolio applies a conservative evidence boundary: the IT Gate Academy PDFs are labelled as program-completion evidence, and vendor tracks are treated as training objectives unless a vendor-issued verification link or credential ID is published. Planned labs are labelled **Planned** and are not mixed with deployed or professional work.
+
+## Known limitations
+
+- The PR preview lifecycle is configured but still needs a real open/update/close smoke test.
+- `infra/main.bicep` compiles locally but still needs authenticated Azure `validate` and `what-if` checks before it should manage the existing production resource.
+- GitHub Pages remains a duplicate host until it is disabled in repository settings.
+- The CV and academy PDFs are text-extractable but untagged, which limits screen-reader structure.
+- Public vendor credential verification IDs were not available in this repository.
+- The source CV's combined “Certifications & Training” section remains ambiguous; reconcile it with vendor verification links or explicit training labels before publishing this branch.
+- Lighthouse must be rerun whenever visual or loading behavior changes; results should only be stated when an actual browser audit has completed.
+
+## Planned Azure evidence
+
+The next projects are designed to demonstrate role-relevant depth without representing lab work as employment:
+
+1. Hub-and-spoke Azure networking with Bicep
+2. Hybrid identity with AD DS and Microsoft Entra ID
+3. Azure Monitor, Log Analytics, alerts, and incident response
+4. Azure Backup with a documented restore test
+5. Modular Bicep with validation and gated GitHub Actions delivery
+
+Implementation order, acceptance criteria, security controls, and cost guardrails are in [docs/azure-lab-roadmap.md](docs/azure-lab-roadmap.md).
+
+## License and personal documents
+
+Source code and original documentation are available under the [MIT License](LICENSE). The CV, academy certificates, and third-party marks are personal or issuer-provided documents and are not granted for reuse by the MIT license.
