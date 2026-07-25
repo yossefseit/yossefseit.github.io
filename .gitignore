@@ -1,0 +1,16 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Azure / Bicep tooling
+.azure/
+
+# Logs
+*.log
+
+# Node (only relevant if build tooling is ever added)
+node_modules/
