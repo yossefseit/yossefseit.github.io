@@ -10,7 +10,7 @@
 // truth for the CI/CD pipeline itself.
 
 @description('Name of the Static Web App resource')
-param staticWebAppName string = 'yossefseit-portfolio'
+param staticWebAppName string = 'portfolio-yossef'
 
 @description('Azure region. Static Web Apps only deploys to a subset of regions.')
 @allowed([
