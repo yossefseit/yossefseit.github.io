@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Yossef Mohamed Ali — Azure Cloud and Infrastructure Engineering</title>
+  <desc id="desc">Professional social preview for an Azure cloud engineering portfolio.</desc>
+  <defs>
+    <pattern id="grid" width="46" height="46" patternUnits="userSpaceOnUse">
+      <path d="M46 0H0V46" fill="none" stroke="#57d4ff" stroke-opacity=".07"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#081a2c"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <circle cx="1125" cy="-45" r="255" fill="none" stroke="#57d4ff" stroke-opacity=".16"/>
+  <circle cx="1125" cy="-45" r="182" fill="none" stroke="#57d4ff" stroke-opacity=".1"/>
+
+  <rect x="72" y="70" width="48" height="48" rx="10" fill="#0078d4"/>
+  <text x="96" y="101" fill="#fff" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="700" text-anchor="middle">YM</text>
+  <text x="140" y="91" fill="#57d4ff" font-family="DejaVu Sans Mono, monospace" font-size="16" font-weight="700" letter-spacing="2">AZURE CLOUD ENGINEERING PORTFOLIO</text>
+
+  <text x="72" y="234" fill="#fff" font-family="DejaVu Sans, Arial, sans-serif" font-size="68" font-weight="700" letter-spacing="-2">Yossef Mohamed Ali</text>
+  <text x="72" y="299" fill="#c8d9e8" font-family="DejaVu Sans, Arial, sans-serif" font-size="31">Infrastructure Engineer transitioning into</text>
+  <text x="72" y="343" fill="#fff" font-family="DejaVu Sans, Arial, sans-serif" font-size="31" font-weight="700">Azure Cloud Engineering</text>
+
+  <line x1="72" y1="402" x2="718" y2="402" stroke="#57d4ff" stroke-opacity=".35"/>
+
+  <g font-family="DejaVu Sans Mono, monospace" font-size="15" font-weight="700">
+    <rect x="72" y="442" width="222" height="52" rx="8" fill="#102b45" stroke="#2e506d"/>
+    <text x="183" y="475" fill="#dce8f1" text-anchor="middle">AZURE STATIC WEB APPS</text>
+    <rect x="310" y="442" width="112" height="52" rx="8" fill="#102b45" stroke="#2e506d"/>
+    <text x="366" y="475" fill="#dce8f1" text-anchor="middle">BICEP</text>
+    <rect x="438" y="442" width="182" height="52" rx="8" fill="#102b45" stroke="#2e506d"/>
+    <text x="529" y="475" fill="#dce8f1" text-anchor="middle">GITHUB ACTIONS</text>
+  </g>
+
+  <g transform="translate(805 205)">
+    <rect x="0" y="0" width="265" height="74" rx="12" fill="#102b45" stroke="#31516c"/>
+    <circle cx="34" cy="37" r="10" fill="#57d4ff"/>
+    <text x="60" y="32" fill="#fff" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="700">Infrastructure</text>
+    <text x="60" y="53" fill="#9fb3c5" font-family="DejaVu Sans, Arial, sans-serif" font-size="13">Identity · Network · Compute</text>
+
+    <path d="M132 74v34" stroke="#57d4ff" stroke-width="2"/>
+    <path d="m126 102 6 7 6-7" fill="none" stroke="#57d4ff" stroke-width="2"/>
+
+    <rect x="0" y="108" width="265" height="74" rx="12" fill="#102b45" stroke="#31516c"/>
+    <circle cx="34" cy="145" r="10" fill="#58df9b"/>
+    <text x="60" y="140" fill="#fff" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="700">Automation</text>
+    <text x="60" y="161" fill="#9fb3c5" font-family="DejaVu Sans, Arial, sans-serif" font-size="13">Bicep · PowerShell · CI/CD</text>
+
+    <path d="M132 182v34" stroke="#57d4ff" stroke-width="2"/>
+    <path d="m126 210 6 7 6-7" fill="none" stroke="#57d4ff" stroke-width="2"/>
+
+    <rect x="0" y="216" width="265" height="74" rx="12" fill="#0078d4"/>
+    <circle cx="34" cy="253" r="10" fill="#fff"/>
+    <text x="60" y="248" fill="#fff" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="700">Azure Operations</text>
+    <text x="60" y="269" fill="#e1f2ff" font-family="DejaVu Sans, Arial, sans-serif" font-size="13">Secure · Monitor · Recover</text>
+  </g>
+
+  <text x="72" y="570" fill="#8fa8bc" font-family="DejaVu Sans Mono, monospace" font-size="15">CAIRO, EGYPT  ·  CLOUD INFRASTRUCTURE  ·  HYBRID OPERATIONS</text>
+</svg>
