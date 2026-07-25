@@ -132,7 +132,7 @@ First in a small set of Azure reference projects, each following the same templa
 - ✅ Azure Static Web Apps (this repo)
 - ⬜ Azure App Service + Azure Functions
 - ⬜ Azure Storage + Key Vault
-- ⬜ Azure Container Apps + Docker — [blueprint drafted](docs/roadmap-container-apps.md)
+- ⬜ Azure Container Apps + Docker
 
 ## Quick Reference
 
