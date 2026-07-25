@@ -60,14 +60,14 @@ No frontend framework and no build step — plain HTML/CSS/JS by design, so the 
 
 ```mermaid
 flowchart LR
-    Dev[Developer] -->|git push / PR| GH[GitHub Repo]
-    GH --> GHA[GitHub Actions]
-    GHA -->|skip_app_build: true| SWA[Azure Static Web Apps]
-    SWA --> Edge[Global edge network + managed TLS]
-    Edge --> Users((Users))
+    Dev["Developer"] -->|"git push / PR"| GH["GitHub Repo"]
+    GH --> GHA["GitHub Actions"]
+    GHA -->|"skip_app_build: true"| SWA["Azure Static Web Apps"]
+    SWA --> Edge["Global edge network + managed TLS"]
+    Edge --> Users(("Users"))
 
-    GH -.PR opened/updated.-> Preview[PR preview environment]
-    GH -.PR closed.-> Teardown[Preview torn down]
+    GH -.->|"PR opened or updated"| Preview["PR preview environment"]
+    GH -.->|"PR closed"| Teardown["Preview torn down"]
 ```
 
 No build stage runs — the workflow uploads the static files directly, so GitHub Actions here is a *delivery* mechanism, not a build pipeline. Full write-up, including why that's a deliberate choice, in [`docs/architecture.md`](docs/architecture.md).

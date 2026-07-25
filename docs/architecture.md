@@ -7,22 +7,22 @@ A static portfolio site (HTML/CSS/JS, no framework, no build step) hosted on Azu
 ```mermaid
 flowchart TD
     subgraph Source
-        Dev[Developer] -->|push / PR| Repo[GitHub Repository]
+        Dev["Developer"] -->|"push / PR"| Repo["GitHub Repository"]
     end
 
-    subgraph CICD[CI/CD]
-        Repo --> Workflow[GitHub Actions Workflow]
-        Workflow -->|OIDC token + deployment token| Deploy[Azure/static-web-apps-deploy@v1]
+    subgraph CICD["CI/CD"]
+        Repo --> Workflow["GitHub Actions Workflow"]
+        Workflow -->|"OIDC token + deployment token"| Deploy["Azure/static-web-apps-deploy@v1"]
     end
 
     subgraph Azure
-        Deploy -->|"skip_app_build: true, upload as-is"| SWA[Azure Static Web Apps]
-        SWA --> Edge[Global edge network + managed TLS]
+        Deploy -->|"skip_app_build: true, upload as-is"| SWA["Azure Static Web Apps"]
+        SWA --> Edge["Global edge network + managed TLS"]
     end
 
-    Edge --> Users((Users))
-    Repo -.PR opened/updated.-> Preview[Ephemeral preview environment]
-    Repo -.PR closed.-> Teardown[Preview environment removed]
+    Edge --> Users(("Users"))
+    Repo -.->|"PR opened or updated"| Preview["Ephemeral preview environment"]
+    Repo -.->|"PR closed"| Teardown["Preview environment removed"]
 ```
 
 ## Azure Static Web Apps
