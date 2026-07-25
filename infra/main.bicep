@@ -1,14 +1,5 @@
 targetScope = 'resourceGroup'
 
-// Deploy this file to the existing `rg-portfolio` resource group. `targetScope`
-// selects the deployment level; the resource-group name is supplied by the
-// deployment command.
-//
-// This definition was added after the Azure Static Web App was created in the
-// Portal. It deliberately omits deployable repository/provider properties so
-// Azure Resource Manager cannot generate or rewrite the hand-maintained GitHub
-// Actions workflow. Run an authenticated what-if before any deployment.
-
 metadata existingAzureResource = {
   resourceGroup: 'rg-portfolio'
   resourceName: 'portfolio-yossef'
