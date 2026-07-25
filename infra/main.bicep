@@ -20,7 +20,7 @@ param staticWebAppName string = 'yossefseit-portfolio'
   'westeurope'
   'eastasia'
 ])
-param location string = 'westeurope'
+param location string = 'eastus2'
 
 @description('Pricing plan for the Static Web App')
 @allowed([
