@@ -1565,6 +1565,501 @@ main:focus {
   }
 }
 
+/* Animated Azure architecture project */
+.project-cloud {
+  margin-top: 1.25rem;
+  border-top: 4px solid #00b7c3;
+}
+
+.azure-architecture {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  padding: clamp(1.2rem, 3vw, 2rem);
+  border: 1px solid rgb(87 212 255 / 18%);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(circle at 82% 8%, rgb(87 212 255 / 12%), transparent 28%),
+    linear-gradient(rgb(87 212 255 / 5%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(87 212 255 / 5%) 1px, transparent 1px),
+    var(--navy);
+  background-size: auto, 34px 34px, 34px 34px, auto;
+  color: white;
+}
+
+.architecture-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.architecture-label {
+  margin-bottom: 0.3rem;
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.architecture-heading h4 {
+  margin-bottom: 0;
+  color: white;
+  font-size: clamp(1.2rem, 2.5vw, 1.75rem);
+}
+
+.architecture-state {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.38rem 0.62rem;
+  border: 1px solid rgb(88 223 155 / 28%);
+  border-radius: 999px;
+  background: rgb(88 223 155 / 9%);
+  color: #9ff4c8;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+
+.architecture-state > span {
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 50%;
+  background: #58df9b;
+  box-shadow: 0 0 0 0 rgb(88 223 155 / 45%);
+  animation: architecture-pulse 2s ease-out infinite;
+}
+
+.pipeline-row {
+  display: grid;
+  grid-template-columns: minmax(8rem, 1fr) 2.4rem minmax(8rem, 1fr) 2.4rem minmax(8rem, 1fr) 2.4rem minmax(8rem, 1fr);
+  align-items: stretch;
+  margin-bottom: 2rem;
+}
+
+.pipeline-node {
+  position: relative;
+  min-height: 7.4rem;
+  padding: 1rem;
+  border: 1px solid rgb(255 255 255 / 13%);
+  border-radius: 10px;
+  background: rgb(255 255 255 / 6%);
+}
+
+.pipeline-node-azure {
+  border-color: rgb(87 212 255 / 45%);
+  background: rgb(0 120 212 / 18%);
+  box-shadow: 0 0 32px rgb(0 120 212 / 12%);
+}
+
+.pipeline-number {
+  display: block;
+  margin-bottom: 1.1rem;
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 800;
+}
+
+.pipeline-node strong,
+.pipeline-node small {
+  display: block;
+}
+
+.pipeline-node strong {
+  color: white;
+  font-size: 0.9rem;
+}
+
+.pipeline-node small {
+  margin-top: 0.18rem;
+  color: #9fb3c5;
+  font-size: 0.7rem;
+}
+
+.pipeline-connector {
+  position: relative;
+  align-self: center;
+  height: 2px;
+  overflow: visible;
+  background: rgb(87 212 255 / 28%);
+}
+
+.pipeline-connector::after {
+  position: absolute;
+  top: -3px;
+  right: 0;
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid var(--cyan);
+  border-right: 2px solid var(--cyan);
+  content: "";
+  transform: rotate(45deg);
+}
+
+.pipeline-connector > span {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px rgb(87 212 255 / 85%);
+  animation: architecture-packet 2.4s ease-in-out infinite;
+}
+
+.pipeline-connector:nth-of-type(2) > span {
+  animation-delay: 0.35s;
+}
+
+.pipeline-connector:nth-of-type(3) > span {
+  animation-delay: 0.7s;
+}
+
+.network-map {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+  padding: 1.4rem;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 12px;
+  background: rgb(3 17 31 / 55%);
+}
+
+.network-node {
+  position: relative;
+  z-index: 2;
+  min-height: 6.4rem;
+  padding: 1rem;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 10px;
+  background: #102b45;
+}
+
+.network-node > span,
+.network-node strong,
+.network-node small {
+  display: block;
+}
+
+.network-node > span {
+  margin-bottom: 0.8rem;
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.network-node strong {
+  color: white;
+  font-size: 0.9rem;
+}
+
+.network-node small {
+  margin-top: 0.15rem;
+  color: #9fb3c5;
+  font-size: 0.7rem;
+}
+
+.network-hub {
+  grid-column: 1 / -1;
+  width: min(100%, 24rem);
+  justify-self: center;
+  border-color: rgb(87 212 255 / 55%);
+  background: linear-gradient(145deg, rgb(0 120 212 / 26%), rgb(16 43 69 / 96%));
+  animation: architecture-hub-glow 3.2s ease-in-out infinite;
+}
+
+.network-app,
+.network-data {
+  margin-top: 2.2rem;
+}
+
+.network-services {
+  z-index: 2;
+  display: flex;
+  grid-column: 1 / -1;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.network-services span,
+.architecture-guardrails li {
+  padding: 0.35rem 0.58rem;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 5%);
+  color: #c6d7e5;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+}
+
+.network-connector {
+  position: absolute;
+  z-index: 1;
+  top: 8.25rem;
+  width: calc(25% - 0.6rem);
+  height: 4rem;
+  border-top: 1px dashed rgb(87 212 255 / 45%);
+}
+
+.network-connector-left {
+  left: 25%;
+  border-left: 1px dashed rgb(87 212 255 / 45%);
+  border-top-left-radius: 10px;
+}
+
+.network-connector-right {
+  right: 25%;
+  border-right: 1px dashed rgb(87 212 255 / 45%);
+  border-top-right-radius: 10px;
+}
+
+.network-connector > span {
+  position: absolute;
+  top: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px rgb(87 212 255 / 75%);
+  animation: network-packet 3s ease-in-out infinite;
+}
+
+.network-connector-left > span {
+  right: 0;
+}
+
+.network-connector-right > span {
+  left: 0;
+  animation-delay: 0.6s;
+}
+
+.architecture-guardrails {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.architecture-guardrails li {
+  border-color: rgb(88 223 155 / 20%);
+  color: #9ff4c8;
+}
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-copy {
+  animation: hero-rise 650ms ease both;
+}
+
+.hero-evidence {
+  animation: hero-rise 650ms 120ms ease both;
+}
+
+.status-dot {
+  animation: status-pulse 2.4s ease-out infinite;
+}
+
+@keyframes architecture-packet {
+  0%,
+  15% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateX(2rem);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(2rem);
+  }
+}
+
+@keyframes network-packet {
+  0%,
+  15% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateX(3rem);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(3rem);
+  }
+}
+
+@keyframes architecture-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(88 223 155 / 45%);
+  }
+
+  70% {
+    box-shadow: 0 0 0 8px rgb(88 223 155 / 0%);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgb(88 223 155 / 0%);
+  }
+}
+
+@keyframes architecture-hub-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgb(87 212 255 / 0%);
+  }
+
+  50% {
+    box-shadow: 0 0 34px rgb(87 212 255 / 12%);
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes status-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(88 223 155 / 35%);
+  }
+
+  70% {
+    box-shadow: 0 0 0 9px rgb(88 223 155 / 0%);
+  }
+
+  100% {
+    box-shadow: 0 0 0 5px rgb(88 223 155 / 12%);
+  }
+}
+
+@media (max-width: 860px) {
+  .architecture-heading {
+    display: grid;
+  }
+
+  .architecture-state {
+    justify-self: start;
+  }
+
+  .pipeline-row {
+    grid-template-columns: 1fr;
+  }
+
+  .pipeline-connector {
+    width: 2px;
+    height: 2.2rem;
+    justify-self: center;
+  }
+
+  .pipeline-connector::after {
+    top: auto;
+    right: -3px;
+    bottom: 0;
+    transform: rotate(135deg);
+  }
+
+  .pipeline-connector > span {
+    top: 0;
+    left: -3px;
+    animation-name: architecture-packet-mobile;
+  }
+}
+
+@media (max-width: 560px) {
+  .azure-architecture {
+    padding: 1rem;
+  }
+
+  .network-map {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .network-hub,
+  .network-services {
+    grid-column: 1;
+    width: 100%;
+  }
+
+  .network-app,
+  .network-data {
+    margin-top: 0;
+  }
+
+  .network-connector {
+    display: none;
+  }
+}
+
+@keyframes architecture-packet-mobile {
+  0%,
+  15% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateY(1.8rem);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(1.8rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1574,6 +2069,8 @@ main:focus {
   *::before,
   *::after {
     scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
