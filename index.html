@@ -243,7 +243,7 @@
           </p>
         </div>
 
-        <article class="project project-featured">
+        <article class="project project-featured" data-reveal>
           <header class="project-header">
             <div>
               <span class="status status-live">Deployed</span>
@@ -317,14 +317,137 @@
           </div>
         </article>
 
-        <article class="project project-lab">
+        <article class="project project-cloud" data-reveal>
+          <header class="project-header">
+            <div>
+              <span class="status status-lab">Validated infrastructure code</span>
+              <p class="project-kicker">Azure networking · Private Link · Bicep · GitHub Actions</p>
+              <h3>Secure Azure Hub-Spoke Reference Lab</h3>
+            </div>
+            <span class="project-index" aria-hidden="true">02</span>
+          </header>
+
+          <p class="project-lead">
+            An original, private-by-default Azure network foundation expressed as modular Bicep.
+            Repository automation validates the templates and shell tooling; Azure deployment and
+            runtime evidence remain pending until an authorized subscription is available.
+          </p>
+
+          <div class="azure-architecture" aria-labelledby="azure-architecture-title">
+            <div class="architecture-heading">
+              <div>
+                <p class="architecture-label">Animated delivery path</p>
+                <h4 id="azure-architecture-title">From commit to private cloud foundation</h4>
+              </div>
+              <span class="architecture-state"><span aria-hidden="true"></span> CI validated</span>
+            </div>
+
+            <div class="pipeline-row" aria-label="Infrastructure delivery pipeline">
+              <div class="pipeline-node">
+                <span class="pipeline-number">01</span>
+                <strong>Engineer</strong>
+                <small>Commit modular Bicep</small>
+              </div>
+              <span class="pipeline-connector" aria-hidden="true"><span></span></span>
+              <div class="pipeline-node">
+                <span class="pipeline-number">02</span>
+                <strong>GitHub Actions</strong>
+                <small>Lint, compile, ShellCheck</small>
+              </div>
+              <span class="pipeline-connector" aria-hidden="true"><span></span></span>
+              <div class="pipeline-node">
+                <span class="pipeline-number">03</span>
+                <strong>Bicep + ARM</strong>
+                <small>Validate and what-if</small>
+              </div>
+              <span class="pipeline-connector" aria-hidden="true"><span></span></span>
+              <div class="pipeline-node pipeline-node-azure">
+                <span class="pipeline-number">04</span>
+                <strong>Azure</strong>
+                <small>Guarded deployment</small>
+              </div>
+            </div>
+
+            <div class="network-map" aria-label="Hub-spoke network topology">
+              <div class="network-node network-hub">
+                <span>Hub</span>
+                <strong>10.0.0.0/16</strong>
+                <small>Management + shared services</small>
+              </div>
+              <span class="network-connector network-connector-left" aria-hidden="true"><span></span></span>
+              <span class="network-connector network-connector-right" aria-hidden="true"><span></span></span>
+              <div class="network-node network-app">
+                <span>App spoke</span>
+                <strong>10.10.0.0/16</strong>
+                <small>Workload + private endpoint</small>
+              </div>
+              <div class="network-node network-data">
+                <span>Data spoke</span>
+                <strong>10.20.0.0/16</strong>
+                <small>Segmented data workloads</small>
+              </div>
+              <div class="network-services">
+                <span>Private DNS</span>
+                <span>Private Endpoint</span>
+                <span>Azure Monitor</span>
+                <span>Log Analytics</span>
+              </div>
+            </div>
+
+            <ul class="architecture-guardrails" aria-label="Architecture guardrails">
+              <li>No public IPs by default</li>
+              <li>NSG segmentation</li>
+              <li>Private storage access</li>
+              <li>Cost-aware optional services</li>
+            </ul>
+          </div>
+
+          <div class="project-details project-details-compact">
+            <div>
+              <h4>Architecture</h4>
+              <p>Creates hub, application, and data VNets with bidirectional peerings, subnet-level controls, centralized private DNS, and private storage access.</p>
+            </div>
+            <div>
+              <h4>Delivery safety</h4>
+              <p>Deployment scripts pin the subscription, run validation and Resource Manager what-if, require confirmation, and keep teardown scoped to project resource groups.</p>
+            </div>
+            <div>
+              <h4>Evidence boundary</h4>
+              <p>Bicep lint, ARM compilation, and ShellCheck pass in GitHub Actions. No successful Azure runtime deployment is claimed yet.</p>
+            </div>
+          </div>
+
+          <ul class="technology-list" aria-label="Technologies used">
+            <li>Azure VNets</li>
+            <li>Private Link</li>
+            <li>Private DNS</li>
+            <li>NSGs</li>
+            <li>Bicep</li>
+            <li>GitHub Actions</li>
+            <li>Azure Monitor</li>
+          </ul>
+
+          <div class="project-actions">
+            <a class="text-link" href="https://github.com/yossefseit/azure-secure-hub-spoke" target="_blank" rel="noopener noreferrer">
+              Review project repository <span aria-hidden="true">↗</span>
+            </a>
+            <a class="text-link" href="https://github.com/yossefseit/azure-secure-hub-spoke/blob/main/docs/architecture.md" target="_blank" rel="noopener noreferrer">
+              Read architecture <span aria-hidden="true">↗</span>
+            </a>
+            <a class="text-link" href="https://github.com/yossefseit/azure-secure-hub-spoke/blob/main/docs/validation.md" target="_blank" rel="noopener noreferrer">
+              Review validation record <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="project project-lab" data-reveal>
           <header class="project-header">
             <div>
               <span class="status status-lab">Lab repository</span>
               <p class="project-kicker">Identity · Linux · Automation</p>
               <h3>Samba Active Directory Domain Controller Lab</h3>
             </div>
-            <span class="project-index" aria-hidden="true">02</span>
+            <span class="project-index" aria-hidden="true">03</span>
           </header>
 
           <p class="project-lead">
@@ -370,7 +493,7 @@
           </div>
           <div class="roadmap-summary">
             <span class="status status-planned">Planned — not completed experience</span>
-            <p>Hub-and-spoke networking, hybrid identity, monitoring, and recovery labs are specified with acceptance criteria, security controls, teardown steps, and cost guardrails.</p>
+            <p>Hybrid identity, deeper observability, and recovery labs remain on the roadmap with acceptance criteria, security controls, teardown steps, and cost guardrails.</p>
             <a class="text-link text-link-dark" href="https://github.com/yossefseit/yossefseit.github.io/blob/main/docs/azure-lab-roadmap.md">
               Review the implementation roadmap <span aria-hidden="true">→</span>
             </a>
