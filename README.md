@@ -1,4 +1,4 @@
-# Yossef Mohamed Ali — Azure Cloud Engineering Portfolio
+# Yossef Mohammed Ali — Azure Cloud Engineering Portfolio
 
 An evidence-backed portfolio for an infrastructure professional transitioning into Azure Cloud Engineering. The site presents professional infrastructure experience, completed training, inspectable lab work, and a deployed Azure reference project without claiming unsupported production cloud experience.
 
