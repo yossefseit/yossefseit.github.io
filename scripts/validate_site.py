@@ -307,7 +307,7 @@ def main() -> int:
     validate_sitemap_and_robots()
 
     required_files = (
-        "assets/Yossef-M-Ali.pdf",
+        "assets/cv.pdf",
         "assets/og-cover.png",
         "assets/favicon.svg",
         "assets/site.css",

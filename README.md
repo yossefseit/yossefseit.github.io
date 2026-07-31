@@ -82,7 +82,7 @@ There is no application server, database, API, frontend framework, or package in
 │   ├── site.css
 │   ├── site.js
 │   ├── og-cover.png
-│   ├── Yossef-M-Ali.pdf
+│   ├── cv.pdf
 │   └── training certificate assets
 ├── docs/
 │   ├── architecture.md
