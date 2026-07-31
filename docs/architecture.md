@@ -17,7 +17,8 @@ flowchart TD
     end
 
     subgraph Delivery["GitHub Actions"]
-        Validator -->|"pass"| Upload["Azure Static Web Apps deploy action"]
+        Validator -->|"pass"| Identity["Request GitHub identity token"]
+        Identity --> Upload["Azure Static Web Apps deploy action"]
         Repository -.->|"PR event configured"| Preview["Preview environment lifecycle"]
     end
 
@@ -64,7 +65,7 @@ Azure automatically removes a preview environment after its pull request closes.
 
 Third-party actions are pinned to full commit SHAs. Checkout does not persist credentials. Each job declares only the permissions it needs and has a timeout.
 
-The deployment action receives the Static Web Apps deployment token from GitHub Actions secrets. Unsupported `github_id_token` and `skip_api_build` inputs were removed after GitHub flagged them during pull request #8.
+The deployment action receives the Static Web Apps deployment token from GitHub Actions secrets and a short-lived GitHub identity token. Pull request #8 confirmed that upload fails without `github_id_token`, although the pinned action's `action.yml` does not declare that runtime-consumed input and GitHub therefore emits an annotation. The unsupported and unnecessary `skip_api_build` input was removed.
 
 No secret value is present in the repository.
 
