@@ -44,10 +44,13 @@ For a `main` push or trusted same-repository pull request:
 
 1. `actions/checkout` checks out the triggering commit without persisted credentials.
 2. Python standard-library checks validate the site.
-3. `Azure/static-web-apps-deploy` receives the repository's Static Web Apps deployment secret.
-4. Azure uploads `app_location` directly because `skip_app_build` is enabled.
+3. `actions/github-script` requests a short-lived GitHub identity token.
+4. `Azure/static-web-apps-deploy` receives that identity token and the repository's Static Web Apps deployment secret.
+5. Azure uploads `app_location` directly because `skip_app_build` is enabled.
 
 All actions are pinned to full commit SHAs. The deployment token is referenced by secret name only.
+
+The pinned Azure action's metadata does not list `github_id_token`, so GitHub annotates it as an unexpected input. Pull request #8 tested removal and the upload failed; restoring the token restored the previously successful authentication path. This known annotation is documented rather than hidden. The genuinely unused `skip_api_build` input was removed.
 
 The workflow does not run a separate close job. Pull request #7 showed that the redundant `action: close` call could return `BadRequest: No matching static site found` after a successful preview deployment. Microsoft documents pull request environments as automatically deleted when the pull request closes, so the workflow now relies on that platform lifecycle instead of issuing a second cleanup request. Confirm environment removal in the Azure portal after closing a pull request.
 
