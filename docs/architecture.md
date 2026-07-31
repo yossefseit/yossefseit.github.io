@@ -17,8 +17,7 @@ flowchart TD
     end
 
     subgraph Delivery["GitHub Actions"]
-        Validator -->|"pass"| Identity["Request GitHub identity token"]
-        Identity --> Upload["Azure Static Web Apps deploy action"]
+        Validator -->|"pass"| Upload["Azure Static Web Apps deploy action"]
         Repository -.->|"PR event configured"| Preview["Preview environment lifecycle"]
     end
 
@@ -65,10 +64,7 @@ Azure automatically removes a preview environment after its pull request closes.
 
 Third-party actions are pinned to full commit SHAs. Checkout does not persist credentials. Each job declares only the permissions it needs and has a timeout.
 
-The deployment action receives:
-
-- the Static Web Apps deployment token from GitHub Actions secrets; and
-- a short-lived GitHub identity token requested during the job.
+The deployment action receives the Static Web Apps deployment token from GitHub Actions secrets. Unsupported `github_id_token` and `skip_api_build` inputs were removed after GitHub flagged them during pull request #8.
 
 No secret value is present in the repository.
 
@@ -81,7 +77,6 @@ app_location: /
 api_location: ""
 output_location: ""
 skip_app_build: true
-skip_api_build: true
 ```
 
 This bypasses Oryx instead of adding a package manifest and a no-op build purely for the hosting platform.
