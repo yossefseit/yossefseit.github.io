@@ -50,24 +50,22 @@ Azure Static Web Apps supplies:
 - staging environments for pull requests;
 - a Free tier suitable for this portfolio.
 
-The workflow monitors `main` pushes and pull-request open, synchronize, reopen, and close events. Preview creation and cleanup are configured for trusted same-repository pull requests, but the repository has not yet recorded a PR-triggered Azure run. Dependabot and fork pull requests run validation without attempting a secret-backed preview deployment. Documentation therefore describes previews as **configured**, not proven through a completed lifecycle test.
+The workflow monitors `main` pushes and pull-request open, synchronize, and reopen events. Pull request #7 verified preview creation for a trusted same-repository branch. Azure Static Web Apps owns cleanup because preview environments are tied to the pull request and automatically deleted when it closes. Dependabot and fork pull requests run validation without attempting a secret-backed preview deployment.
 
-Concurrency groups use the branch reference for pushes and the pull-request number for the complete preview lifecycle. A merged pull request's cleanup event therefore cannot cancel the simultaneous `main` production deployment.
+Concurrency groups use the branch reference for pushes and the pull-request number for preview deployments. A pull request deployment therefore cannot cancel the simultaneous `main` production deployment.
 
 ## Validation and delivery
 
-The workflow has three jobs with distinct responsibilities:
+The workflow has two jobs with distinct responsibilities:
 
-1. **Validate static site** — checks local references, anchors, metadata, structured data, JSON/XML configuration, CSP, sitemap, and the custom 404.
+1. **Validate static site** — checks local references, anchors, metadata, structured data, JSON/XML configuration, CSP, sitemap, the custom 404, and JavaScript syntax.
 2. **Deploy to Azure Static Web Apps** — runs only after validation succeeds for a deployable event.
-3. **Remove preview environment** — runs on a closed pull request and passes the stored Azure deployment token to the close action.
+
+Azure automatically removes a preview environment after its pull request closes. A separate close action was removed after the first verified preview lifecycle returned `No matching static site found` from that redundant request.
 
 Third-party actions are pinned to full commit SHAs. Checkout does not persist credentials. Each job declares only the permissions it needs and has a timeout.
 
-The deployment action receives:
-
-- the Static Web Apps deployment token from GitHub Actions secrets; and
-- a short-lived GitHub identity token requested during the job.
+The deployment action receives the Static Web Apps deployment token from GitHub Actions secrets and a short-lived GitHub identity token. Pull request #8 confirmed that upload fails without `github_id_token`, although the pinned action's `action.yml` does not declare that runtime-consumed input and GitHub therefore emits an annotation. The unsupported and unnecessary `skip_api_build` input was removed.
 
 No secret value is present in the repository.
 
@@ -80,7 +78,6 @@ app_location: /
 api_location: ""
 output_location: ""
 skip_app_build: true
-skip_api_build: true
 ```
 
 This bypasses Oryx instead of adding a package manifest and a no-op build purely for the hosting platform.

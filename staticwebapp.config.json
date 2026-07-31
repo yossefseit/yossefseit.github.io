@@ -13,7 +13,7 @@
   },
   "routes": [
     {
-      "route": "/assets/Yossef-M-Ali.pdf",
+      "route": "/assets/cv.pdf",
       "headers": {
         "cache-control": "no-cache, must-revalidate"
       }

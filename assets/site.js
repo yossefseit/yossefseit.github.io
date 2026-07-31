@@ -21,9 +21,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setMenuState(false);
 
-    desktopNavigation.addEventListener("change", () => {
-      setMenuState(false);
-    });
+    const resetMenu = () => setMenuState(false);
+
+    if (typeof desktopNavigation.addEventListener === "function") {
+      desktopNavigation.addEventListener("change", resetMenu);
+    } else {
+      desktopNavigation.addListener(resetMenu);
+    }
 
     menuToggle.addEventListener("click", () => {
       const isOpen = menuToggle.getAttribute("aria-expanded") !== "true";
