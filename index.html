@@ -333,7 +333,7 @@
             runtime evidence remain pending until an authorized subscription is available.
           </p>
 
-          <div class="azure-architecture" aria-labelledby="azure-architecture-title">
+          <div class="azure-architecture" role="group" aria-labelledby="azure-architecture-title">
             <div class="architecture-heading">
               <div>
                 <p class="architecture-label">Animated delivery path</p>
@@ -342,7 +342,7 @@
               <span class="architecture-state"><span aria-hidden="true"></span> CI validated</span>
             </div>
 
-            <div class="pipeline-row" aria-label="Infrastructure delivery pipeline">
+            <div class="pipeline-row" role="group" aria-label="Infrastructure delivery pipeline">
               <div class="pipeline-node">
                 <span class="pipeline-number">01</span>
                 <strong>Engineer</strong>
@@ -368,7 +368,7 @@
               </div>
             </div>
 
-            <div class="network-map" aria-label="Hub-spoke network topology">
+            <div class="network-map" role="group" aria-label="Hub-spoke network topology">
               <div class="network-node network-hub">
                 <span>Hub</span>
                 <strong>10.0.0.0/16</strong>
@@ -405,7 +405,7 @@
           <div class="project-details project-details-compact">
             <div>
               <h4>Architecture</h4>
-              <p>Creates hub, application, and data VNets with bidirectional peerings, subnet-level controls, centralized private DNS, and private storage access.</p>
+              <p>Creates hub, application, and data VNets with bidirectional peering connections, subnet-level controls, centralized private DNS, and private storage access.</p>
             </div>
             <div>
               <h4>Delivery safety</h4>
