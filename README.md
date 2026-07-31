@@ -33,8 +33,8 @@ This Azure Static Web App was initially connected through the Azure Portal. The 
 | Static-site validation | Implemented | `scripts/validate_site.py` runs locally and before deployment |
 | GitHub Actions delivery | Implemented | Pinned actions, least permissions, static upload |
 | Bicep resource definition | Implemented | `infra/main.bicep` |
-| PR preview lifecycle | Configured | Workflow handles trusted same-repository open/update/reopen/close events |
-| PR preview smoke test | Pending | No public PR-triggered run has yet verified the complete lifecycle |
+| PR preview deployment | Verified | Trusted same-repository pull request #7 deployed successfully |
+| PR preview cleanup | Platform-managed | Azure ties preview environments to pull requests and deletes them on close; portal verification remains manual |
 | Additional Azure labs | Planned | See [Azure lab roadmap](docs/azure-lab-roadmap.md) |
 
 ![Redacted Azure Portal overview showing portfolio-yossef ready in production on the Free plan](docs/screenshots/azure-static-web-app-overview-redacted.png)
@@ -126,10 +126,13 @@ The validator checks:
 
 - local files, image sources, `srcset` entries, and in-page anchors
 - required document metadata and heading structure
+- accessible naming semantics for labelled generic containers
 - JSON-LD parsing
 - new-tab link protections
 - JSON and XML configuration
 - canonical, sitemap, robots, CSP, and 404 consistency
+
+The workflow also runs Node's built-in syntax check against the site JavaScript.
 
 The latest measured browser, Lighthouse, workflow, Bicep, secret-scan, and emulator results are recorded in [docs/validation.md](docs/validation.md).
 
@@ -139,10 +142,10 @@ For a push to `main`, or an open/update/reopened trusted same-repository pull re
 
 1. GitHub checks out the repository with persisted credentials disabled.
 2. `scripts/validate_site.py` verifies the static site and deployment metadata.
-3. GitHub requests an identity token.
-4. `Azure/static-web-apps-deploy` uploads the repository as static content.
+3. GitHub requests a short-lived identity token.
+4. `Azure/static-web-apps-deploy` receives the identity token and stored deployment token, then uploads the repository as static content.
 5. A `main` push updates production; a trusted same-repository pull request is configured to receive a preview environment.
-6. A trusted pull-request close event calls the Azure action to remove the preview environment.
+6. Azure automatically removes the preview environment when its pull request closes.
 
 Dependabot and fork pull requests still run validation, but skip preview deployment because GitHub does not expose the required Azure secret to those events. All third-party actions are pinned to full commit SHAs. The Azure deployment token remains in GitHub Actions secrets and is never stored in this repository.
 
@@ -169,7 +172,7 @@ The source CV uses a combined “Certifications & Training” heading. This port
 
 ## Known limitations
 
-- The PR preview lifecycle is configured but still needs a real open/update/close smoke test.
+- Pull request #7 verified preview deployment. Preview removal after close still needs confirmation in the Azure portal; the redundant close action was removed after it returned `No matching static site found`.
 - `infra/main.bicep` compiles locally but still needs authenticated Azure `validate` and `what-if` checks before it should manage the existing production resource.
 - GitHub Pages remains a duplicate host until it is disabled in repository settings.
 - The CV and academy PDFs are text-extractable but untagged, which limits screen-reader structure.
