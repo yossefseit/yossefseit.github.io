@@ -11,9 +11,9 @@ Use a feature branch and pull request for normal changes:
 5. review the preview URL;
 6. merge only after review;
 7. confirm the `main` deployment;
-8. confirm the preview environment is removed after the pull request closes.
+8. confirm Azure removes the preview environment after the pull request closes.
 
-The preview lifecycle is configured but has not yet been verified by a public PR-triggered workflow run. The first trusted same-repository pull request should be treated as a smoke test. Dependabot and fork pull requests run validation only because GitHub does not expose the Static Web Apps deployment secret to those events.
+The trusted same-repository preview upload was verified by pull request #7. Azure Static Web Apps ties the preview lifecycle to the pull request and automatically deletes the environment when the pull request closes. Dependabot and fork pull requests run validation only because GitHub does not expose the Static Web Apps deployment secret to those events.
 
 ## Local preview
 
@@ -50,7 +50,7 @@ For a `main` push or trusted same-repository pull request:
 
 All actions are pinned to full commit SHAs. The deployment token is referenced by secret name only.
 
-For a closed trusted pull request, a separate job calls the same Azure action with `action: close` and the deployment token so Azure can remove the associated staging environment. Dependabot and fork pull requests skip both upload and close jobs.
+The workflow does not run a separate close job. Pull request #7 showed that the redundant `action: close` call could return `BadRequest: No matching static site found` after a successful preview deployment. Microsoft documents pull request environments as automatically deleted when the pull request closes, so the workflow now relies on that platform lifecycle instead of issuing a second cleanup request. Confirm environment removal in the Azure portal after closing a pull request.
 
 ## Why `skip_app_build` is required
 
