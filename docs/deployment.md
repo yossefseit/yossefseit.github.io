@@ -44,9 +44,8 @@ For a `main` push or trusted same-repository pull request:
 
 1. `actions/checkout` checks out the triggering commit without persisted credentials.
 2. Python standard-library checks validate the site.
-3. `actions/github-script` requests a GitHub identity token.
-4. `Azure/static-web-apps-deploy` receives that identity token and the repository's Static Web Apps deployment secret.
-5. Azure uploads `app_location` directly because `skip_app_build` is enabled.
+3. `Azure/static-web-apps-deploy` receives the repository's Static Web Apps deployment secret.
+4. Azure uploads `app_location` directly because `skip_app_build` is enabled.
 
 All actions are pinned to full commit SHAs. The deployment token is referenced by secret name only.
 
@@ -67,7 +66,6 @@ app_location: /
 api_location: ""
 output_location: ""
 skip_app_build: true
-skip_api_build: true
 ```
 
 This avoids a synthetic dependency and build chain.
