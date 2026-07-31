@@ -80,6 +80,11 @@ class SiteHTMLParser(HTMLParser):
             elif not attrs.get("src"):
                 fail(f"{self.source.relative_to(ROOT)}: executable inline script is not allowed")
 
+        if tag == "div" and ("aria-label" in attrs or "aria-labelledby" in attrs) and not attrs.get("role"):
+            fail(
+                f"{self.source.relative_to(ROOT)}: labelled div requires an explicit semantic role"
+            )
+
         if tag == "a" and attrs.get("target") == "_blank":
             rel_tokens = set(attrs.get("rel", "").lower().split())
             missing = {"noopener", "noreferrer"} - rel_tokens
