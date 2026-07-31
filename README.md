@@ -142,9 +142,10 @@ For a push to `main`, or an open/update/reopened trusted same-repository pull re
 
 1. GitHub checks out the repository with persisted credentials disabled.
 2. `scripts/validate_site.py` verifies the static site and deployment metadata.
-3. `Azure/static-web-apps-deploy` authenticates with the stored deployment token and uploads the repository as static content.
-4. A `main` push updates production; a trusted same-repository pull request is configured to receive a preview environment.
-5. Azure automatically removes the preview environment when its pull request closes.
+3. GitHub requests a short-lived identity token.
+4. `Azure/static-web-apps-deploy` receives the identity token and stored deployment token, then uploads the repository as static content.
+5. A `main` push updates production; a trusted same-repository pull request is configured to receive a preview environment.
+6. Azure automatically removes the preview environment when its pull request closes.
 
 Dependabot and fork pull requests still run validation, but skip preview deployment because GitHub does not expose the required Azure secret to those events. All third-party actions are pinned to full commit SHAs. The Azure deployment token remains in GitHub Actions secrets and is never stored in this repository.
 
