@@ -319,7 +319,7 @@
         <article class="project project-cloud" data-reveal>
           <header class="project-header">
             <div>
-              <span class="status status-lab">Validated infrastructure code</span>
+              <span class="status status-lab">Locally and CI validated</span>
               <p class="project-kicker">Azure networking · Private Link · Bicep · GitHub Actions</p>
               <h3>Secure Azure Hub-Spoke Reference Lab</h3>
             </div>
@@ -408,11 +408,11 @@
             </div>
             <div>
               <h4>Delivery safety</h4>
-              <p>Deployment scripts pin the subscription, run validation and Resource Manager what-if, require confirmation, and keep teardown scoped to project resource groups.</p>
+              <p>Deployment scripts verify the active subscription, run validation and Resource Manager what-if, require confirmation, and use ownership-checked teardown.</p>
             </div>
             <div>
               <h4>Evidence boundary</h4>
-              <p>Bicep lint, ARM compilation, and ShellCheck pass in GitHub Actions. No successful Azure runtime deployment is claimed yet.</p>
+              <p>Bicep, parameters, Bash, PowerShell, links, and secret scanning pass in GitHub Actions. Azure deployment and runtime evidence remain pending.</p>
             </div>
           </div>
 
@@ -421,12 +421,22 @@
             <li>Private Link</li>
             <li>Private DNS</li>
             <li>NSGs</li>
+            <li>ASGs &amp; route tables</li>
             <li>Bicep</li>
             <li>GitHub Actions</li>
             <li>Azure Monitor</li>
           </ul>
 
+          <dl class="project-qualifiers">
+            <div><dt>Difficulty</dt><dd>Intermediate</dd></div>
+            <div><dt>Certification areas</dt><dd>AZ-104 · AZ-700 · AZ-500</dd></div>
+            <div><dt>Live status</dt><dd>Not yet deployed · evidence pending</dd></div>
+          </dl>
+
           <div class="project-actions">
+            <a class="button button-primary" href="/projects/azure-secure-hub-spoke/">
+              View project
+            </a>
             <a class="text-link" href="https://github.com/yossefseit/azure-secure-hub-spoke" target="_blank" rel="noopener noreferrer">
               Review project repository <span aria-hidden="true">↗</span>
             </a>

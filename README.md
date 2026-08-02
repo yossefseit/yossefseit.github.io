@@ -17,6 +17,8 @@ An evidence-backed portfolio for an infrastructure professional transitioning in
 
 - A responsive, semantic, dependency-light portfolio built with HTML, CSS, and a small amount of vanilla JavaScript
 - Static delivery through **Azure Static Web Apps**
+- Reusable Azure project catalogue at `/projects/`
+- Detailed Secure Azure Hub-and-Spoke case study at `/projects/azure-secure-hub-spoke/`
 - Pre-deployment validation and delivery through **GitHub Actions**
 - A reusable **Bicep resource definition** for the Static Web App
 - A restrictive content security policy and defense-in-depth HTTP headers
@@ -35,6 +37,7 @@ This Azure Static Web App was initially connected through the Azure Portal. The 
 | Bicep resource definition | Implemented | `infra/main.bicep` |
 | PR preview deployment | Verified | Trusted same-repository pull request #7 deployed successfully |
 | PR preview cleanup | Platform-managed | Azure ties preview environments to pull requests and deletes them on close; portal verification remains manual |
+| Secure Azure hub-and-spoke lab | Implemented and CI validated | [Public case study](projects/azure-secure-hub-spoke/) and [technical repository](https://github.com/yossefseit/azure-secure-hub-spoke); live Azure evidence pending |
 | Additional Azure labs | Planned | See [Azure lab roadmap](docs/azure-lab-roadmap.md) |
 
 ![Redacted Azure Portal overview showing portfolio-yossef ready in production on the Free plan](docs/screenshots/azure-static-web-app-overview-redacted.png)
@@ -97,6 +100,9 @@ There is no application server, database, API, frontend framework, or package in
 │   └── main.bicep
 ├── scripts/
 │   └── validate_site.py
+├── projects/
+│   ├── index.html
+│   └── azure-secure-hub-spoke/index.html
 ├── 404.html
 ├── index.html
 ├── robots.txt
@@ -166,7 +172,7 @@ The repository is public and the Azure workflow uploads from its root, so tracke
 
 ## Content integrity
 
-The current CV is the authority for employment, job titles, dates, education, and professional skills. Repository evidence supports the Azure Static Web Apps project and the separate Samba AD DC lab.
+The current CV is the authority for employment, job titles, dates, education, and professional skills. Repository evidence supports the Azure Static Web Apps project, the separate Secure Azure Hub-and-Spoke technical repository, and the Samba AD DC lab. Project pages do not repeat the CV's phone number or other unnecessary personal details.
 
 The source CV uses a combined “Certifications & Training” heading. This portfolio applies a conservative evidence boundary: the IT Gate Academy PDFs are labelled as program-completion evidence, and vendor tracks are treated as training objectives unless a vendor-issued verification link or credential ID is published. Planned labs are labelled **Planned** and are not mixed with deployed or professional work.
 
@@ -184,11 +190,11 @@ The source CV uses a combined “Certifications & Training” heading. This port
 
 The next projects are designed to demonstrate role-relevant depth without representing lab work as employment:
 
-1. Hub-and-spoke Azure networking with Bicep
-2. Hybrid identity with AD DS and Microsoft Entra ID
-3. Azure Monitor, Log Analytics, alerts, and incident response
+1. Complete live evidence for the implemented hub-and-spoke lab when an authorized Azure context is available
+2. Azure governance automation with Policy, RBAC, tags, budgets, and lifecycle controls
+3. Azure Monitor incident response and recovery validation
 4. Azure Backup with a documented restore test
-5. Modular Bicep with validation and gated GitHub Actions delivery
+5. Hybrid identity with AD DS and Microsoft Entra ID
 
 Implementation order, acceptance criteria, security controls, and cost guardrails are in [docs/azure-lab-roadmap.md](docs/azure-lab-roadmap.md).
 

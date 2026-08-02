@@ -1,6 +1,6 @@
 # Azure Lab Roadmap
 
-This roadmap prioritizes projects that strengthen Azure Cloud Engineer and Cloud Infrastructure interview evidence. Every project is currently **planned** unless a linked repository later supplies code, validation output, and deployment evidence.
+This roadmap prioritizes projects that strengthen Azure Cloud Engineer and Cloud Infrastructure interview evidence. The hub-and-spoke project is implemented and repository-validated; live Azure evidence remains pending. Other projects are **planned** unless a linked repository supplies code and validation evidence.
 
 No Azure resource should be deployed without a cost estimate, budget alert, teardown plan, and explicit review of the target subscription or tenant.
 
@@ -26,7 +26,12 @@ The acceptance bar is evidence that another engineer can inspect and reproduceâ€
 
 **Priority:** Highest
 
-**Status:** Planned
+**Status:** Implemented and locally/CI validated; live Azure evidence pending
+
+**Repository:** [azure-secure-hub-spoke](https://github.com/yossefseit/azure-secure-hub-spoke)
+
+**Portfolio case study:** [Secure Azure Hub-and-Spoke Infrastructure](/projects/azure-secure-hub-spoke/)
+
 **Role signal:** Azure networking, security, routing, Infrastructure as Code
 
 ### Scope
@@ -36,8 +41,8 @@ The acceptance bar is evidence that another engineer can inspect and reproduceâ€
 - bidirectional peering;
 - workload and management subnets;
 - network security groups;
-- user-defined routes;
-- Azure Bastion design;
+- route-table guardrails and Application Security Groups;
+- expensive production transit and management components documented but excluded;
 - Private DNS zone and links;
 - Network Watcher diagnostics;
 - modular Bicep with dev parameters.
@@ -46,15 +51,14 @@ The acceptance bar is evidence that another engineer can inspect and reproduceâ€
 
 - deny-by-default NSG rules;
 - no public workload IPs;
-- just-in-time or Bastion-only administration design;
-- documented Bastion hourly cost before deployment;
-- budget alert and same-day teardown option;
+- no public management endpoint; Azure Run Command for the optional validation VM;
+- USD 5 total deployment limit and ownership-verified teardown;
 - no production or employer address ranges.
 
 ### Acceptance evidence
 
 - `bicep build` and lint pass;
-- Azure `validate` and reviewed `what-if`;
+- Azure `validate` and reviewed `what-if` (pending authenticated context);
 - peering and effective-route output;
 - allowed and denied connectivity tests;
 - architecture and teardown documentation.
@@ -197,10 +201,10 @@ The acceptance bar is evidence that another engineer can inspect and reproduceâ€
 
 ## Recommended order
 
-1. Build the hub-and-spoke project because it aligns most directly with existing L2/L3, VLAN, firewall, and routing experience.
-2. Add monitoring to the same network lab to demonstrate day-two operations.
-3. Add backup and a real restore test.
-4. Build hybrid identity in a separate controlled tenant.
-5. Consolidate repeated infrastructure into modular Bicep and a gated pipeline.
+1. Complete live evidence for the implemented hub-and-spoke project when an authorized Azure context is available.
+2. Build governance and identity automation.
+3. Add monitoring incident response and recovery.
+4. Add backup and restore evidence.
+5. Build hybrid identity in a separate controlled tenant.
 
 This sequence converts existing infrastructure strengths into progressively stronger Azure evidence while keeping professional experience and lab work clearly separated.
