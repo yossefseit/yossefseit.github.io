@@ -5,6 +5,19 @@
 
 This record distinguishes checks that actually ran from checks that remain dependent on Azure credentials or a deployed pull request.
 
+The site validator recursively checks the homepage, 404 page, project catalogue, and Secure Azure Hub-and-Spoke detail route. It validates per-route canonical metadata, local references, accessibility structure, and sitemap coverage.
+
+On 2026-08-03, the feature branch passed:
+
+- dependency-free validation of four HTML documents and 47 local references;
+- JavaScript syntax and XML parsing;
+- local recursive link crawling for `/`, `/projects/`, and `/projects/azure-secure-hub-spoke/`;
+- Azure Static Web Apps CLI 2.0.10 direct-route tests, including the canonical trailing-slash redirect and custom 404;
+- desktop detail-page and mobile catalogue visual inspection;
+- security-header inspection through the Static Web Apps emulator.
+
+External links were not counted as passed by the local crawler because the execution environment did not return those remote requests. They remain subject to CI and production verification.
+
 ## Lighthouse
 
 Lighthouse 13.4.1 ran against the locally served site using its default mobile audit profile.

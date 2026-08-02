@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore the secure Azure hub-and-spoke Bicep lab: architecture, networking, security, monitoring, deployment workflow, tests, cost controls, and evidence status.">
+  <meta name="robots" content="index, follow">
+  <title>Secure Azure Hub-and-Spoke Project | Yossef Ali</title>
+  <link rel="canonical" href="https://gentle-smoke-06d712d0f.7.azurestaticapps.net/projects/azure-secure-hub-spoke/">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/site.css">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Secure Azure Hub-and-Spoke Infrastructure">
+  <meta property="og:description" content="A private-by-default Azure network lab implemented in modular Bicep with guarded deployment, validation, monitoring, and cleanup workflows.">
+  <meta property="og:url" content="https://gentle-smoke-06d712d0f.7.azurestaticapps.net/projects/azure-secure-hub-spoke/">
+  <meta property="og:image" content="https://gentle-smoke-06d712d0f.7.azurestaticapps.net/assets/azure-secure-hub-spoke.png">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="960">
+  <meta property="og:image:alt" content="Architecture diagram for the secure Azure hub-and-spoke infrastructure project">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Secure Azure Hub-and-Spoke Infrastructure">
+  <meta name="twitter:description" content="Architecture, Bicep, security controls, validation, and evidence status for a cost-conscious Azure networking lab.">
+  <meta name="twitter:image" content="https://gentle-smoke-06d712d0f.7.azurestaticapps.net/assets/azure-secure-hub-spoke.png">
+  <script src="/assets/site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">YM</span><span class="brand-copy"><strong>Yossef Mohammed Ali</strong><span>Cloud &amp; Infrastructure</span></span></a>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation"><span>Menu</span><span class="menu-icon" aria-hidden="true"></span></button>
+      <nav class="primary-navigation" id="primary-navigation" aria-label="Primary navigation">
+        <a href="/">Home</a><a href="/projects/">Projects</a><a href="#architecture">Architecture</a><a href="#validation">Validation</a><a class="nav-cv" href="/assets/cv.pdf" download>Download CV</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <section class="subpage-hero case-study-hero" aria-labelledby="project-title">
+      <div class="container narrow-container">
+        <p class="eyebrow eyebrow-light">Azure networking · AZ-104 · AZ-700 · AZ-500</p>
+        <h1 id="project-title">Secure Azure Hub-and-Spoke Infrastructure</h1>
+        <p>A cost-conscious, private-by-default Azure network foundation that translates enterprise networking and infrastructure operations experience into inspectable cloud infrastructure code.</p>
+        <div class="hero-actions"><a class="button button-primary" href="https://github.com/yossefseit/azure-secure-hub-spoke" target="_blank" rel="noopener noreferrer">View GitHub</a><a class="button button-secondary" href="#validation">Review evidence status</a></div>
+      </div>
+    </section>
+
+    <section class="status-band" aria-label="Current project status">
+      <div class="container status-band-grid">
+        <div><strong>Implemented</strong><span>Modular Bicep, scripts, CI, diagrams, documentation</span></div>
+        <div><strong>Locally + CI validated</strong><span>Build, lint, parameters, Bash, PowerShell, links, secrets</span></div>
+        <div><strong>Evidence pending</strong><span>Azure deployment, runtime checks, teardown, actual cost</span></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="overview-title">
+      <div class="container case-study-grid">
+        <article class="case-study-main">
+          <p class="eyebrow">01 · Overview</p><h2 id="overview-title">Business scenario and objectives</h2>
+          <p>The lab models a small organization that needs shared network foundations, isolated application and data areas, private access to Azure Storage, and centralized operational visibility without the standing cost of premium transit services.</p>
+          <ul class="check-list"><li>Use repeatable, parameterized Infrastructure as Code.</li><li>Separate trust boundaries and avoid public management endpoints.</li><li>Validate changes before deployment and make cleanup ownership-aware.</li><li>Document where a low-cost lab differs from production architecture.</li></ul>
+        </article>
+        <aside class="case-study-aside"><h2>Project profile</h2><dl class="facts-list"><div><dt>Difficulty</dt><dd>Intermediate</dd></div><div><dt>Role signal</dt><dd>Azure infrastructure and cloud operations</dd></div><div><dt>Default region</dt><dd>East US 2</dd></div><div><dt>Cost ceiling</dt><dd>USD 5 total before teardown</dd></div><div><dt>Live status</dt><dd>Not yet deployed</dd></div></dl></aside>
+      </div>
+    </section>
+
+    <section class="section section-tinted" id="architecture" aria-labelledby="architecture-title">
+      <div class="container">
+        <div class="section-heading split-heading"><div><p class="eyebrow">02 · Architecture</p><h2 id="architecture-title">Hub, isolated spokes, private PaaS, and monitoring</h2></div><p>The SVG is exported from the maintainable Draw.io source in the technical repository and matches merged Bicep on <code>main</code>.</p></div>
+        <figure class="architecture-figure"><img src="/assets/azure-secure-hub-spoke.png" width="1600" height="960" loading="eager" alt="Hub VNet peered to app and data spokes, with private storage and centralized monitoring in separate resource groups"><figcaption>Implemented baseline. Azure Firewall, gateways, Bastion, NAT Gateway, and DNS Private Resolver are not deployed.</figcaption></figure>
+        <div class="content-grid three-column">
+          <article><h3>Hub VNet</h3><p><code>10.0.0.0/16</code> with management and shared-services subnets. The hub has no transit appliance, so peering is deliberately non-transitive.</p></article>
+          <article><h3>Application spoke</h3><p><code>10.10.0.0/16</code> with workload and private-endpoint subnets, NSGs, ASG identity, route guardrails, and the Blob private endpoint.</p></article>
+          <article><h3>Data spoke</h3><p><code>10.20.0.0/16</code> with matching subnet segmentation. There is no direct app-to-data peering or baseline transit path.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="services-title">
+      <div class="container">
+        <p class="eyebrow">03 · Services and security</p><h2 id="services-title">Controls implemented for the lab</h2>
+        <div class="content-grid two-column">
+          <article><h3>Network controls</h3><p>Bidirectional hub-to-spoke peering, subnet NSGs, workload ASGs, and route tables that blackhole the other spoke CIDR. The guardrails limit accidental lateral reachability but are not inspected transit.</p></article>
+          <article><h3>Private data path</h3><p>Blob Storage disables public network access and shared-key authorization. A Private Endpoint and <code>privatelink.blob.core.windows.net</code> zone provide the private path and name resolution.</p></article>
+          <article><h3>Monitoring</h3><p>Log Analytics receives Blob audit logs and transaction metrics. Diagnostic storage supports optional VNet flow logs, and an Activity Log alert targets deletion of project resource groups.</p></article>
+          <article><h3>Automation safety</h3><p>Scripts verify—not silently change—the active subscription, run build/validation and ARM what-if, require explicit deployment confirmation, and refuse unsafe cleanup.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tinted" aria-labelledby="iac-title">
+      <div class="container case-study-grid">
+        <article class="case-study-main"><p class="eyebrow">04 · Infrastructure as Code</p><h2 id="iac-title">Focused Bicep modules and deployment workflow</h2><p>The subscription-scope entry point creates three tagged resource groups and composes modules for networking, peering, Private DNS, private storage, monitoring, optional VNet flow logs, and an optional validation VM.</p><pre class="code-tree"><code>infra/
+├── main.bicep
+├── environments/lab.bicepparam
+└── modules/
+    ├── hub-network.bicep
+    ├── spoke-network.bicep
+    ├── vnet-peering.bicep
+    ├── private-dns.bicep
+    ├── private-storage.bicep
+    ├── monitoring.bicep
+    ├── vnet-flow-logs.bicep
+    └── test-vm.bicep</code></pre></article>
+        <aside class="case-study-aside"><h2>Deployment gates</h2><ol class="number-list"><li>Confirm Azure context and policy.</li><li>Lint and compile Bicep and parameters.</li><li>Run ARM validation.</li><li>Review complete what-if output.</li><li>Confirm cost and ownership scope.</li><li>Type the explicit deployment phrase.</li></ol></aside>
+      </div>
+    </section>
+
+    <section class="section" id="validation" aria-labelledby="validation-title">
+      <div class="container">
+        <p class="eyebrow">05 · Testing and validation</p><h2 id="validation-title">What passed, and what still requires Azure</h2>
+        <div class="status-table-wrap"><table class="status-table"><thead><tr><th>Area</th><th>Status</th><th>Evidence</th></tr></thead><tbody>
+          <tr><td>Bicep lint, build, and parameters</td><td><span class="status status-live">Passed</span></td><td>GitHub Actions on merged Azure repository</td></tr>
+          <tr><td>Bash and PowerShell analysis</td><td><span class="status status-live">Passed</span></td><td>ShellCheck, parser, PSScriptAnalyzer</td></tr>
+          <tr><td>Links and secret scan</td><td><span class="status status-live">Passed</span></td><td>Lychee and Gitleaks</td></tr>
+          <tr><td>ARM validation and what-if</td><td><span class="status status-planned">Blocked</span></td><td>Requires authenticated Azure context</td></tr>
+          <tr><td>Peering, DNS, endpoint, diagnostics</td><td><span class="status status-planned">Evidence pending</span></td><td>Requires live Azure deployment</td></tr>
+          <tr><td>Cleanup and actual cost</td><td><span class="status status-planned">Evidence pending</span></td><td>Requires deployed project resources</td></tr>
+        </tbody></table></div>
+        <p class="source-link-row"><a class="text-link" href="https://github.com/yossefseit/azure-secure-hub-spoke/blob/main/docs/testing.md" target="_blank" rel="noopener noreferrer">Read the complete testing record <span aria-hidden="true">↗</span></a></p>
+      </div>
+    </section>
+
+    <section class="section section-tinted" aria-labelledby="operations-title">
+      <div class="container"><p class="eyebrow">06 · Operations</p><h2 id="operations-title">Troubleshooting, cost, cleanup, and lessons learned</h2><div class="content-grid two-column">
+        <article><h3>Troubleshooting</h3><p>The runbook covers subscription mismatches, policy or provider failures, Private DNS resolution, VM Run Command prerequisites, expected spoke isolation, and flow-log dependencies.</p></article>
+        <article><h3>Cost considerations</h3><p>Private Endpoint hours, storage operations, Log Analytics ingestion, and peering data are the baseline cost drivers. Premium networking and always-on compute are excluded.</p></article>
+        <article><h3>Cleanup</h3><p>Cleanup derives exactly three names, verifies canonical tags and resource ownership, removes optional flow logs from NetworkWatcherRG, and requires an exact confirmation phrase.</p></article>
+        <article><h3>Lessons learned</h3><p>Peering does not create transit; monitoring resources need connected data sources; configurable address spaces must keep subnet inputs aligned; safe deletion must fail closed when Azure checks error.</p></article>
+      </div></div>
+    </section>
+
+    <section class="section" aria-labelledby="evidence-title">
+      <div class="container"><p class="eyebrow">07 · Evidence gallery</p><h2 id="evidence-title">Sanitized evidence still to capture</h2><p class="section-intro">These are labelled placeholders—not screenshots or successful test claims. They will be replaced only after an authorized deployment.</p><div class="evidence-placeholder-grid">
+        <article><span>Evidence pending</span><h3>Resource groups and topology</h3><p>Three project groups, VNets, subnets, peerings, NSGs, ASGs, and route tables.</p></article>
+        <article><span>Evidence pending</span><h3>Private access</h3><p>Storage network restrictions, Private Endpoint approval, DNS A record, and private resolution.</p></article>
+        <article><span>Evidence pending</span><h3>Monitoring</h3><p>Diagnostic settings, Log Analytics records, optional flow logs, and the deletion alert.</p></article>
+        <article><span>Evidence pending</span><h3>Deployment and cleanup</h3><p>ARM validation, what-if, deployment outputs, live validation, teardown, and final cost.</p></article>
+      </div></div>
+    </section>
+
+    <section class="section project-cta" aria-labelledby="source-title"><div class="container narrow-container"><p class="eyebrow">Technical source of truth</p><h2 id="source-title">Inspect the complete implementation on GitHub</h2><p>The repository contains the Bicep modules, parameters, scripts, diagrams, security decisions, deployment guide, tests, troubleshooting, cost limits, and cleanup procedure.</p><div class="hero-actions"><a class="button button-primary" href="https://github.com/yossefseit/azure-secure-hub-spoke" target="_blank" rel="noopener noreferrer">Open Azure repository</a><a class="button button-secondary-dark" href="/projects/">Back to catalogue</a></div></div></section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><p>Project status is evidence-based · No production Azure employment is claimed</p><a href="/#contact">Contact</a></div></footer>
+</body>
+</html>

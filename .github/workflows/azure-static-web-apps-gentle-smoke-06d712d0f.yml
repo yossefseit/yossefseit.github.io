@@ -26,10 +26,17 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
       - name: Run dependency-free site checks
         run: python3 scripts/validate_site.py
       - name: Check JavaScript syntax
         run: node --check assets/site.js
+      - name: Check spelling
+        run: npx --yes cspell@9.2.1 --config .cspell.json "**/*.{html,md}"
+      - name: Scan repository for secrets
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build_and_deploy_job:
     if: >-

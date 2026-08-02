@@ -44,6 +44,7 @@ class SiteHTMLParser(HTMLParser):
         self.description = ""
         self.viewport = ""
         self.canonical = ""
+        self.metadata: dict[str, str] = {}
         self._capture_title = False
         self._json_ld_buffer: list[str] | None = None
         self.json_ld_blocks: list[str] = []
@@ -67,6 +68,9 @@ class SiteHTMLParser(HTMLParser):
             self.description = attrs.get("content", "").strip()
         elif tag == "meta" and attrs.get("name", "").lower() == "viewport":
             self.viewport = attrs.get("content", "").strip()
+        elif tag == "meta" and (attrs.get("name") or attrs.get("property")):
+            metadata_key = (attrs.get("name") or attrs.get("property") or "").lower()
+            self.metadata[metadata_key] = attrs.get("content", "").strip()
         elif tag == "link" and attrs.get("rel", "").lower() == "canonical":
             self.canonical = attrs.get("href", "").strip()
         elif tag == "img" and "alt" not in attrs:
@@ -172,13 +176,32 @@ def validate_html(source: Path) -> None:
     if not parser.viewport:
         fail(f"{relative}: missing viewport meta tag")
 
-    if source.name == "index.html":
+    if relative == Path("404.html"):
+        if parser.canonical:
+            fail(f"{relative}: 404 page should not declare a canonical URL")
+    else:
         if not 80 <= len(parser.description) <= 170:
             fail(f"{relative}: meta description should be 80–170 characters")
-        if parser.canonical != f"{PRIMARY_ORIGIN}/":
-            fail(f"{relative}: canonical URL does not match the Azure production origin")
-    elif parser.canonical:
-        fail(f"{relative}: non-index page should not declare a canonical URL")
+        route = "/" if relative == Path("index.html") else f"/{relative.parent.as_posix()}/"
+        expected_canonical = f"{PRIMARY_ORIGIN}{route}"
+        if parser.canonical != expected_canonical:
+            fail(f"{relative}: canonical URL should be {expected_canonical}")
+        required_social_metadata = (
+            "og:title",
+            "og:description",
+            "og:url",
+            "og:image",
+            "og:image:alt",
+            "twitter:card",
+            "twitter:title",
+            "twitter:description",
+            "twitter:image",
+        )
+        for metadata_key in required_social_metadata:
+            if not parser.metadata.get(metadata_key):
+                fail(f"{relative}: missing social metadata {metadata_key}")
+        if parser.metadata.get("og:url") != expected_canonical:
+            fail(f"{relative}: og:url should be {expected_canonical}")
 
     for block_number, block in enumerate(parser.json_ld_blocks, start=1):
         try:
@@ -194,7 +217,7 @@ def validate_html(source: Path) -> None:
             continue
 
         if (
-            source.name == "404.html"
+            relative != Path("index.html")
             and parsed.path
             and not parsed.path.startswith("/")
             and not parsed.scheme
@@ -284,9 +307,13 @@ def validate_sitemap_and_robots() -> None:
 
     namespace = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     locations = [node.text or "" for node in tree.findall(".//s:loc", namespace)]
-    expected = [f"{PRIMARY_ORIGIN}/"]
+    expected = [
+        f"{PRIMARY_ORIGIN}/",
+        f"{PRIMARY_ORIGIN}/projects/",
+        f"{PRIMARY_ORIGIN}/projects/azure-secure-hub-spoke/",
+    ]
     if locations != expected:
-        fail(f"sitemap.xml: expected only {expected[0]}")
+        fail(f"sitemap.xml: expected {expected}")
     if any("#" in location for location in locations):
         fail("sitemap.xml: fragment URLs are not indexable documents")
 
@@ -297,7 +324,11 @@ def validate_sitemap_and_robots() -> None:
 
 
 def main() -> int:
-    html_files = [ROOT / "index.html", ROOT / "404.html"]
+    html_files = sorted(
+        path
+        for path in ROOT.rglob("*.html")
+        if path.name != "google44e5d5b1f8d82e66.html" and ".git" not in path.parts
+    )
     for html_file in html_files:
         validate_html(html_file)
     for css_file in sorted((ROOT / "assets").glob("*.css")):
@@ -312,6 +343,9 @@ def main() -> int:
         "assets/favicon.svg",
         "assets/site.css",
         "assets/site.js",
+        "assets/azure-secure-hub-spoke.png",
+        "projects/index.html",
+        "projects/azure-secure-hub-spoke/index.html",
         "infra/main.bicep",
     )
     for relative in required_files:
