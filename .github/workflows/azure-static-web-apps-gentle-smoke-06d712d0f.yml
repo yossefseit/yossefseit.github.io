@@ -31,8 +31,18 @@ jobs:
         run: python3 scripts/validate_site.py
       - name: Check JavaScript syntax
         run: node --check assets/site.js
+      - name: Validate HTML semantics
+        run: npx --yes html-validate@11.6.2 index.html 404.html projects/index.html projects/azure-secure-hub-spoke/index.html
+      - name: Validate CSS syntax
+        run: npx --yes csstree-validator@4.0.1 assets/site.css
+      - name: Compile Bicep resource definition
+        run: |
+          az bicep install --version v0.46.1
+          az bicep build --file infra/main.bicep --stdout > /dev/null
+      - name: Check Markdown
+        run: npx --yes markdownlint-cli2@0.23.2 "**/*.md"
       - name: Check spelling
-        run: npx --yes cspell@9.2.1 --config .cspell.json "**/*.{html,md}"
+        run: npx --yes cspell@10.0.1 --config .cspell.json "**/*.{html,md}"
       - name: Scan repository for secrets
         uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
         env:

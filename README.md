@@ -19,6 +19,7 @@ An evidence-backed portfolio for an infrastructure professional transitioning in
 - Static delivery through **Azure Static Web Apps**
 - Reusable Azure project catalogue at `/projects/`
 - Detailed Secure Azure Hub-and-Spoke case study at `/projects/azure-secure-hub-spoke/`
+- Optimized, lazily loaded SVG architecture content with a separate PNG social-preview asset
 - Pre-deployment validation and delivery through **GitHub Actions**
 - A reusable **Bicep resource definition** for the Static Web App
 - A restrictive content security policy and defense-in-depth HTTP headers
@@ -38,6 +39,7 @@ This Azure Static Web App was initially connected through the Azure Portal. The 
 | PR preview deployment | Verified | Trusted same-repository pull request #7 deployed successfully |
 | PR preview cleanup | Platform-managed | Azure ties preview environments to pull requests and deletes them on close; portal verification remains manual |
 | Secure Azure hub-and-spoke lab | Implemented and CI validated | [Public case study](projects/azure-secure-hub-spoke/) and [technical repository](https://github.com/yossefseit/azure-secure-hub-spoke); live Azure evidence pending |
+| CV evidence language | Reconciled | Tagged, selectable PDF labels academy programs as training and separates deployed from CI-validated project evidence |
 | Additional Azure labs | Planned | See [Azure lab roadmap](docs/azure-lab-roadmap.md) |
 
 ![Redacted Azure Portal overview showing portfolio-yossef ready in production on the Free plan](docs/screenshots/azure-static-web-app-overview-redacted.png)
@@ -81,6 +83,8 @@ There is no application server, database, API, frontend framework, or package in
 ├── .github/workflows/
 │   └── azure-static-web-apps-gentle-smoke-06d712d0f.yml
 ├── .cspell.json
+├── .markdownlint-cli2.jsonc
+├── AGENTS.md
 ├── assets/
 │   ├── site.css
 │   ├── site.js
@@ -133,6 +137,7 @@ The validator checks:
 - local files, image sources, `srcset` entries, and in-page anchors
 - required document metadata and heading structure
 - accessible naming semantics for labelled generic containers
+- image alternative text, intrinsic dimensions, and the optimized/lazy case-study architecture asset
 - JSON-LD parsing
 - new-tab link protections
 - JSON and XML configuration
@@ -148,10 +153,11 @@ For a push to `main`, or an open/update/reopened trusted same-repository pull re
 
 1. GitHub checks out the repository with persisted credentials disabled.
 2. `scripts/validate_site.py` verifies the static site and deployment metadata.
-3. GitHub requests a short-lived identity token.
-4. `Azure/static-web-apps-deploy` receives the identity token and stored deployment token, then uploads the repository as static content.
-5. A `main` push updates production; a trusted same-repository pull request is configured to receive a preview environment.
-6. Azure automatically removes the preview environment when its pull request closes.
+3. CI checks JavaScript, HTML semantics, CSS, Markdown, spelling, the Bicep compile, and secrets.
+4. GitHub requests a short-lived identity token.
+5. `Azure/static-web-apps-deploy` receives the identity token and stored deployment token, then uploads the repository as static content.
+6. A `main` push updates production; a trusted same-repository pull request is configured to receive a preview environment.
+7. Azure automatically removes the preview environment when its pull request closes.
 
 Dependabot and fork pull requests still run validation, but skip preview deployment because GitHub does not expose the required Azure secret to those events. All third-party actions are pinned to full commit SHAs. The Azure deployment token remains in GitHub Actions secrets and is never stored in this repository.
 
@@ -174,16 +180,15 @@ The repository is public and the Azure workflow uploads from its root, so tracke
 
 The current CV is the authority for employment, job titles, dates, education, and professional skills. Repository evidence supports the Azure Static Web Apps project, the separate Secure Azure Hub-and-Spoke technical repository, and the Samba AD DC lab. Project pages do not repeat the CV's phone number or other unnecessary personal details.
 
-The source CV uses a combined “Certifications & Training” heading. This portfolio applies a conservative evidence boundary: the IT Gate Academy PDFs are labelled as program-completion evidence, and vendor tracks are treated as training objectives unless a vendor-issued verification link or credential ID is published. Planned labs are labelled **Planned** and are not mixed with deployed or professional work.
+The downloadable CV and portfolio use the same conservative evidence boundary: IT Gate Academy PDFs are program-completion evidence, and vendor tracks are training objectives unless a vendor-issued verification link or credential ID is published. The CV also distinguishes deployed work from authored and CI-validated lab work. Planned labs are labelled **Planned** and are not mixed with deployed or professional work.
 
 ## Known limitations
 
 - Pull request #7 verified preview deployment. Preview removal after close still needs confirmation in the Azure portal; the redundant close action was removed after it returned `No matching static site found`.
 - `infra/main.bicep` compiles locally but still needs authenticated Azure `validate` and `what-if` checks before it should manage the existing production resource.
 - GitHub Pages remains a duplicate host until it is disabled in repository settings.
-- The CV and academy PDFs are text-extractable but untagged, which limits screen-reader structure.
+- The CV is tagged and text-extractable; the issuer-provided academy PDFs remain untagged, which limits their screen-reader structure.
 - Public vendor credential verification IDs were not available in this repository.
-- The source CV's combined “Certifications & Training” section remains ambiguous; reconcile it with vendor verification links or explicit training labels before publishing this branch.
 - Lighthouse must be rerun whenever visual or loading behavior changes; results should only be stated when an actual browser audit has completed.
 
 ## Planned Azure evidence

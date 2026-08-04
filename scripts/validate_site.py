@@ -45,6 +45,7 @@ class SiteHTMLParser(HTMLParser):
         self.viewport = ""
         self.canonical = ""
         self.metadata: dict[str, str] = {}
+        self.images: list[dict[str, str]] = []
         self._capture_title = False
         self._json_ld_buffer: list[str] | None = None
         self.json_ld_blocks: list[str] = []
@@ -73,8 +74,12 @@ class SiteHTMLParser(HTMLParser):
             self.metadata[metadata_key] = attrs.get("content", "").strip()
         elif tag == "link" and attrs.get("rel", "").lower() == "canonical":
             self.canonical = attrs.get("href", "").strip()
-        elif tag == "img" and "alt" not in attrs:
-            fail(f"{self.source.relative_to(ROOT)}: image is missing an alt attribute")
+        elif tag == "img":
+            self.images.append(attrs)
+            if "alt" not in attrs:
+                fail(f"{self.source.relative_to(ROOT)}: image is missing an alt attribute")
+            if not attrs.get("width") or not attrs.get("height"):
+                fail(f"{self.source.relative_to(ROOT)}: image is missing width or height")
         elif tag == "style":
             fail(f"{self.source.relative_to(ROOT)}: inline <style> is not allowed")
         elif tag == "script":
@@ -208,6 +213,16 @@ def validate_html(source: Path) -> None:
             json.loads(block)
         except json.JSONDecodeError as exc:
             fail(f"{relative}: invalid JSON-LD block {block_number}: {exc}")
+
+    if relative == Path("projects/azure-secure-hub-spoke/index.html"):
+        architecture_images = [
+            image for image in parser.images
+            if image.get("src", "").endswith("azure-secure-hub-spoke.svg")
+        ]
+        if len(architecture_images) != 1:
+            fail(f"{relative}: expected one optimized SVG architecture image")
+        elif architecture_images[0].get("loading") != "lazy":
+            fail(f"{relative}: below-the-fold architecture image must load lazily")
 
     for attribute, reference in parser.references:
         parsed = urlparse(reference)
@@ -343,6 +358,7 @@ def main() -> int:
         "assets/favicon.svg",
         "assets/site.css",
         "assets/site.js",
+        "assets/azure-secure-hub-spoke.svg",
         "assets/azure-secure-hub-spoke.png",
         "projects/index.html",
         "projects/azure-secure-hub-spoke/index.html",
