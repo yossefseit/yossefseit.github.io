@@ -1,9 +1,9 @@
 # Validation Snapshot
 
 **Date:** 8 August 2026
-**Scope:** Local `main` worktree before publication
+**Scope:** Local and production validation of the 8 August case-study release
 
-This record distinguishes checks that actually ran from checks that remain dependent on Azure credentials or a deployed pull request.
+This record distinguishes checks that actually ran from checks that remain dependent on privileged Azure access or a deployed pull request.
 
 The site validator recursively checks the homepage, 404 page, project catalogue, and the governance, hub-spoke, and Samba detail routes. It validates per-route canonical metadata, local references, accessibility structure, optimized architecture-image use, and sitemap coverage.
 
@@ -15,7 +15,7 @@ On 2026-08-08, the worktree passed:
 - local Lighthouse diagnostics for the five indexable routes;
 - desktop and mobile visual review of the homepage and governance case study.
 
-External-link and Azure Static Web Apps emulator results are recorded separately below. The new production routes require a post-deployment recheck.
+External-link, Azure Static Web Apps emulator, deployment, and production results are recorded separately below.
 
 ## Lighthouse
 
@@ -104,11 +104,24 @@ Verified through the emulator:
 - no CSP refusal or browser console error on the tested `200` routes;
 - CV `Cache-Control: no-cache, must-revalidate`.
 
-The CLI warns that local emulation may not exactly match Azure, so production headers still require a post-deployment check.
+The CLI warns that local emulation may not exactly match Azure, so the headers were also checked on the production deployment.
+
+## Production deployment
+
+[GitHub Actions run 31267818137](https://github.com/yossefseit/yossefseit.github.io/actions/runs/31267818137) validated and deployed exact commit `a631f31490372367e5f81c006d6ec273910b1248` successfully.
+
+Post-deployment checks confirmed:
+
+- status `200` for the homepage, catalogue, and all three case studies;
+- status `404` with the custom document for a nested unknown route;
+- the checked-in CSP, HSTS, referrer, permissions, content-type, and cross-origin headers;
+- the production CV is byte-identical to the checked-in PDF at SHA-256 `4a110783aff60270de55329e67cecbde812c4438ee21e3adf0c17ca2df39272c`;
+- a 24-case route and viewport browser matrix under the production CSP had no overflow, missing images, console errors, page errors, or failed requests;
+- an Axe audit in a CSP-bypassed test context found no WCAG A/AA or best-practice violations. The bypass was used only because injecting the local audit library is correctly blocked by the production CSP.
 
 ## Link check
 
-A pre-deployment Linkinator 8.0.3 crawl checked 55 distinct targets and resolved every local route and asset plus all currently published external targets. The two new production case-study routes returned the expected `404` until this worktree is deployed; they require a post-deployment recheck.
+A production Linkinator 8.0.3 crawl checked 50 distinct targets and resolved every route, asset, fragment, and enforced external link.
 
 The absolute Open Graph image URL returns `200` on the current production deployment.
 
@@ -120,7 +133,6 @@ LinkedIn was excluded from automated status enforcement because it returns an an
 - authenticated `az deployment group what-if`;
 - deployment of `infra/main.bicep` to the existing production resource;
 - Azure portal confirmation that the pull request #7 preview environment was removed after close;
-- post-deployment verification of this branch's HTML and workflow changes;
 - PDF tagging remediation for the CV and issuer-provided academy certificates.
 
 No Azure resource deployment or billable cloud action was performed.
