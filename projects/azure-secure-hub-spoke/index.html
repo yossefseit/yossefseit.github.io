@@ -49,8 +49,8 @@
 
     <section class="status-band" aria-label="Current project status">
       <div class="container status-band-grid">
-        <div><strong>Implemented</strong><span>Modular Bicep, scripts, CI, diagrams, documentation</span></div>
-        <div><strong>Locally + CI validated</strong><span>Build, lint, parameters, Bash, PowerShell, links, secrets</span></div>
+        <div><strong>Authored</strong><span>Modular Bicep, scripts, CI, diagrams, documentation</span></div>
+        <div><strong>Linted, compiled, and CI validated</strong><span>Build, lint, parameters, Bash, PowerShell, links, secrets</span></div>
         <div><strong>Evidence pending</strong><span>Azure deployment, runtime checks, teardown, actual cost</span></div>
       </div>
     </section>
@@ -69,7 +69,7 @@
     <section class="section section-tinted" id="architecture" aria-labelledby="architecture-title">
       <div class="container">
         <div class="section-heading split-heading"><div><p class="eyebrow">02 · Architecture</p><h2 id="architecture-title">Hub, isolated spokes, private PaaS, and monitoring</h2></div><p>The SVG is exported from the maintainable Draw.io source in the technical repository and matches merged Bicep on <code>main</code>.</p></div>
-        <figure class="architecture-figure"><img src="/assets/azure-secure-hub-spoke.svg" width="1200" height="720" loading="lazy" decoding="async" alt="Hub VNet peered to app and data spokes, with private storage and centralized monitoring in separate resource groups"><figcaption>Implemented baseline. Azure Firewall, gateways, Bastion, NAT Gateway, and DNS Private Resolver are not deployed.</figcaption></figure>
+        <figure class="architecture-figure"><img src="/assets/azure-secure-hub-spoke.svg" width="1200" height="720" loading="lazy" decoding="async" alt="Hub VNet peered to app and data spokes, with private storage and centralized monitoring in separate resource groups"><figcaption>Authored IaC baseline; not Azure deployed. Azure Firewall, gateways, Bastion, NAT Gateway, and DNS Private Resolver are excluded.</figcaption></figure>
         <div class="content-grid three-column">
           <article><h3>Hub VNet</h3><p><code>10.0.0.0/16</code> with management and shared-services subnets. The hub has no transit appliance, so peering is deliberately non-transitive.</p></article>
           <article><h3>Application spoke</h3><p><code>10.10.0.0/16</code> with workload and private-endpoint subnets, NSGs, ASG identity, route guardrails, and the Blob private endpoint.</p></article>
@@ -80,11 +80,11 @@
 
     <section class="section" aria-labelledby="services-title">
       <div class="container">
-        <p class="eyebrow">03 · Services and security</p><h2 id="services-title">Controls implemented for the lab</h2>
+        <p class="eyebrow">03 · Services and security</p><h2 id="services-title">Controls authored for the lab</h2>
         <div class="content-grid two-column">
           <article><h3>Network controls</h3><p>Bidirectional hub-to-spoke peering, subnet NSGs, workload ASGs, and route tables that blackhole the other spoke CIDR. The guardrails limit accidental lateral reachability but are not inspected transit.</p></article>
-          <article><h3>Private data path</h3><p>Blob Storage disables public network access and shared-key authorization. A Private Endpoint and <code>privatelink.blob.core.windows.net</code> zone provide the private path and name resolution.</p></article>
-          <article><h3>Monitoring</h3><p>Log Analytics receives Blob audit logs and transaction metrics. Diagnostic storage supports optional VNet flow logs, and an Activity Log alert targets deletion of project resource groups.</p></article>
+          <article><h3>Private data path</h3><p>The Bicep disables Blob public network access and shared-key authorization, then declares a Private Endpoint and <code>privatelink.blob.core.windows.net</code> zone for private routing and name resolution.</p></article>
+          <article><h3>Monitoring</h3><p>The Bicep routes Blob audit logs and transaction metrics to Log Analytics, declares diagnostic storage for optional VNet flow logs, and targets project resource-group deletion with an Activity Log alert.</p></article>
           <article><h3>Automation safety</h3><p>Scripts verify—not silently change—the active subscription, run build/validation and ARM what-if, require explicit deployment confirmation, and refuse unsafe cleanup.</p></article>
         </div>
       </div>
@@ -92,7 +92,7 @@
 
     <section class="section section-tinted" aria-labelledby="iac-title">
       <div class="container case-study-grid">
-        <article class="case-study-main"><p class="eyebrow">04 · Infrastructure as Code</p><h2 id="iac-title">Focused Bicep modules and deployment workflow</h2><p>The subscription-scope entry point creates three tagged resource groups and composes modules for networking, peering, Private DNS, private storage, monitoring, optional VNet flow logs, and an optional validation VM.</p><pre class="code-tree"><code>infra/
+        <article class="case-study-main"><p class="eyebrow">04 · Infrastructure as Code</p><h2 id="iac-title">Focused Bicep modules and deployment workflow</h2><p>The subscription-scope entry point declares three tagged resource groups and composes modules for networking, peering, Private DNS, private storage, monitoring, optional VNet flow logs, and an optional validation VM.</p><pre class="code-tree" tabindex="0" aria-label="Hub-spoke Bicep repository structure"><code>infra/
 ├── main.bicep
 ├── environments/lab.bicepparam
 └── modules/

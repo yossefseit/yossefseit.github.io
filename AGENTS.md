@@ -18,7 +18,7 @@ When the relevant tools are available, also run:
 
 ```bash
 bicep build infra/main.bicep --stdout >/dev/null
-npx --yes html-validate@11.6.2 index.html 404.html projects/index.html projects/azure-secure-hub-spoke/index.html
+npx --yes html-validate@11.6.2 index.html 404.html projects/index.html projects/azure-governance-automation/index.html projects/azure-secure-hub-spoke/index.html projects/samba-ad-dc-lab/index.html
 npx --yes csstree-validator@4.0.1 assets/site.css
 npx --yes markdownlint-cli2@0.23.2 "**/*.md"
 npx --yes cspell@10.0.1 --config .cspell.json "**/*.{html,md}"

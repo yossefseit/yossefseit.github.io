@@ -1,22 +1,21 @@
 # Validation Snapshot
 
-**Date:** 4 August 2026
-**Scope:** Local `main` worktree before deployment
+**Date:** 8 August 2026
+**Scope:** Local `main` worktree before publication
 
 This record distinguishes checks that actually ran from checks that remain dependent on Azure credentials or a deployed pull request.
 
-The site validator recursively checks the homepage, 404 page, project catalogue, and Secure Azure Hub-and-Spoke detail route. It validates per-route canonical metadata, local references, accessibility structure, and sitemap coverage.
+The site validator recursively checks the homepage, 404 page, project catalogue, and the governance, hub-spoke, and Samba detail routes. It validates per-route canonical metadata, local references, accessibility structure, optimized architecture-image use, and sitemap coverage.
 
-On 2026-08-04, the worktree passed:
+On 2026-08-08, the worktree passed:
 
-- dependency-free validation of four HTML documents and 47 local references;
+- dependency-free validation of six HTML documents and 73 local references;
 - JavaScript syntax and XML parsing;
-- local recursive link crawling for `/`, `/projects/`, and `/projects/azure-secure-hub-spoke/`;
-- Azure Static Web Apps CLI 2.0.10 direct-route tests, including the canonical trailing-slash redirect and custom 404;
-- desktop and mobile visual inspection of every public route;
-- security-header inspection through the Static Web Apps emulator.
+- HTTP-served browser and Axe checks across all six routes at four viewport widths;
+- local Lighthouse diagnostics for the five indexable routes;
+- desktop and mobile visual review of the homepage and governance case study.
 
-External links were not counted as passed by the local crawler because the execution environment did not return those remote requests. They remain subject to CI and production verification.
+External-link and Azure Static Web Apps emulator results are recorded separately below. The new production routes require a post-deployment recheck.
 
 ## Lighthouse
 
@@ -25,16 +24,19 @@ Lighthouse 13.4.1 ran against the locally served site using its default mobile a
 | Route | Performance | Accessibility | Best Practices | SEO |
 |---|---:|---:|---:|---:|
 | Homepage | 100 | 100 | 100 | 100 |
+| Project catalogue | 100 | 100 | 100 | 100 |
+| Governance case study | 100 | 100 | 100 | 100 |
 | Hub-spoke case study | 100 | 100 | 100 | 100 |
+| Samba case study | 100 | 100 | 100 | 100 |
 
-The homepage measured 1.4 s FCP/LCP, 0 ms TBT, zero CLS, and 81 KiB transferred. The case study measured 1.3 s FCP, 1.4 s LCP, 0 ms TBT, zero CLS, and 64 KiB transferred. Replacing its eager 950 KB in-page PNG with a lazy 4.2 KB SVG raised the local performance score from 71 to 100. Scores are environment-specific diagnostics and must be rerun after material changes or production deployment.
+Every audited route measured 0 ms TBT and zero CLS. FCP ranged from 1.1 to 1.2 s, LCP from 1.2 to 1.4 s, and transferred content from 54 to 85 KiB. The hub-spoke page still uses the 4.2 KB SVG in-page rather than the former eager 950 KB PNG. Scores are environment-specific diagnostics, not production guarantees, and must be rerun after material changes.
 
 ## Source and configuration checks
 
 | Check | Result |
 |---|---|
 | `python3 scripts/validate_site.py` | Pass |
-| `html-validate` 11.6.2 on all four public HTML routes | Pass |
+| `html-validate` 11.6.2 on all six public HTML routes | Pass |
 | CSS Tree validator 4.0.1 on `assets/site.css` | Pass |
 | Node syntax check on `assets/site.js` | Pass |
 | `jq` parse of `staticwebapp.config.json` | Pass |
@@ -48,7 +50,7 @@ The homepage measured 1.4 s FCP/LCP, 0 ms TBT, zero CLS, and 81 KiB transferred.
 
 ## Browser checks
 
-Headless Chromium tested:
+Headless Chromium tested every route at:
 
 - 1440 × 1000 desktop;
 - 768 × 1024 tablet;
@@ -67,12 +69,13 @@ The scripted interaction audit confirmed:
 - the custom 404 document has the expected title;
 - critical project content remains rendered without JavaScript or reveal observers;
 - the SVG architecture loads when its below-the-fold section approaches the viewport;
+- every decoded local image succeeds after deliberate lazy-load activation;
 - reduced-motion mode stops repeating animation, disables smooth scrolling, and reveals all project content;
 - keyboard focus has a visible three-pixel outline;
 - light and dark site sections retain distinct computed backgrounds;
 - no console errors, page errors, request failures, or missing local assets.
 
-Current desktop and mobile Chromium captures are stored in [`docs/screenshots/`](screenshots/).
+Current desktop and mobile captures are retained privately under `/tmp`; the repository contains only deliberate deployment evidence in [`docs/screenshots/`](screenshots/).
 
 ## Azure resource evidence
 
@@ -98,14 +101,14 @@ Verified through the emulator:
 - custom 404 body;
 - root stylesheet status `200` when the nested 404 is displayed;
 - CSP and defense-in-depth headers;
-- no CSP refusal or browser console error;
+- no CSP refusal or browser console error on the tested `200` routes;
 - CV `Cache-Control: no-cache, must-revalidate`.
 
 The CLI warns that local emulation may not exactly match Azure, so production headers still require a post-deployment check.
 
 ## Link check
 
-Linkinator 8.0.3 crawled 38 links from the local site and resolved current local assets, the tagged CV, academy PDFs, GitHub repositories, the Azure production homepage, architecture links, and Credly records.
+A pre-deployment Linkinator 8.0.3 crawl checked 55 distinct targets and resolved every local route and asset plus all currently published external targets. The two new production case-study routes returned the expected `404` until this worktree is deployed; they require a post-deployment recheck.
 
 The absolute Open Graph image URL returns `200` on the current production deployment.
 
@@ -118,6 +121,6 @@ LinkedIn was excluded from automated status enforcement because it returns an an
 - deployment of `infra/main.bicep` to the existing production resource;
 - Azure portal confirmation that the pull request #7 preview environment was removed after close;
 - post-deployment verification of this branch's HTML and workflow changes;
-- remediation of the issuer-provided certificate PDF tagging.
+- PDF tagging remediation for the CV and issuer-provided academy certificates.
 
 No Azure resource deployment or billable cloud action was performed.

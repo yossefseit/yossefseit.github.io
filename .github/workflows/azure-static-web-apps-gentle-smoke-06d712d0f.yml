@@ -32,7 +32,14 @@ jobs:
       - name: Check JavaScript syntax
         run: node --check assets/site.js
       - name: Validate HTML semantics
-        run: npx --yes html-validate@11.6.2 index.html 404.html projects/index.html projects/azure-secure-hub-spoke/index.html
+        run: >-
+          npx --yes html-validate@11.6.2
+          index.html
+          404.html
+          projects/index.html
+          projects/azure-governance-automation/index.html
+          projects/azure-secure-hub-spoke/index.html
+          projects/samba-ad-dc-lab/index.html
       - name: Validate CSS syntax
         run: npx --yes csstree-validator@4.0.1 assets/site.css
       - name: Compile Bicep resource definition
@@ -44,7 +51,7 @@ jobs:
       - name: Check spelling
         run: npx --yes cspell@10.0.1 --config .cspell.json "**/*.{html,md}"
       - name: Scan repository for secrets
-        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

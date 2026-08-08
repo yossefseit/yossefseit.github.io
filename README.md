@@ -19,7 +19,9 @@ An evidence-backed portfolio for an infrastructure professional transitioning in
 - Static delivery through **Azure Static Web Apps**
 - Reusable Azure project catalogue at `/projects/`
 - Detailed Secure Azure Hub-and-Spoke case study at `/projects/azure-secure-hub-spoke/`
-- Optimized, lazily loaded SVG architecture content with a separate PNG social-preview asset
+- Detailed Azure Governance Automation case study at `/projects/azure-governance-automation/`
+- Detailed Samba AD DC case study at `/projects/samba-ad-dc-lab/`
+- Optimized, lazily loaded SVG architecture content with the separate hub-spoke PNG reserved for social previews
 - Pre-deployment validation and delivery through **GitHub Actions**
 - A reusable **Bicep resource definition** for the Static Web App
 - A restrictive content security policy and defense-in-depth HTTP headers
@@ -38,9 +40,11 @@ This Azure Static Web App was initially connected through the Azure Portal. The 
 | Bicep resource definition | Implemented | `infra/main.bicep` |
 | PR preview deployment | Verified | Trusted same-repository pull request #7 deployed successfully |
 | PR preview cleanup | Platform-managed | Azure ties preview environments to pull requests and deletes them on close; portal verification remains manual |
-| Secure Azure hub-and-spoke lab | Implemented and CI validated | [Public case study](projects/azure-secure-hub-spoke/) and [technical repository](https://github.com/yossefseit/azure-secure-hub-spoke); live Azure evidence pending |
-| CV evidence language | Reconciled | Tagged, selectable PDF labels academy programs as training and separates deployed from CI-validated project evidence |
-| Additional Azure labs | Planned | See [Azure lab roadmap](docs/azure-lab-roadmap.md) |
+| Secure Azure hub-and-spoke lab | Authored and CI validated | [Public case study](projects/azure-secure-hub-spoke/) and [technical repository](https://github.com/yossefseit/azure-secure-hub-spoke); live Azure evidence pending |
+| Azure governance automation lab | Authored and CI validated | [Public case study](projects/azure-governance-automation/) and [technical repository](https://github.com/yossefseit/azure-governance-automation); authenticated ARM validation, what-if, deployment, runtime, teardown, and cost evidence pending |
+| Samba AD DC lab | Authored and repository-CI validated | [Public case study](projects/samba-ad-dc-lab/) and [technical repository](https://github.com/yossefseit/samba-ad-dc-lab); runtime, recovery, rollback, and teardown evidence pending |
+| CV evidence language | Reconciled | Selectable two-page PDF labels academy programs as training and separates professional experience from lab projects |
+| Azure Monitor, backup/restore, Terraform, and hybrid identity | Planned | See [Azure lab roadmap](docs/azure-lab-roadmap.md) |
 
 ![Redacted Azure Portal overview showing portfolio-yossef ready in production on the Free plan](docs/screenshots/azure-static-web-app-overview-redacted.png)
 
@@ -89,6 +93,9 @@ There is no application server, database, API, frontend framework, or package in
 │   ├── site.css
 │   ├── site.js
 │   ├── og-cover.png
+│   ├── azure-governance-automation.svg
+│   ├── azure-secure-hub-spoke.svg
+│   ├── samba-ad-dc-architecture.svg
 │   ├── cv.pdf
 │   └── training certificate assets
 ├── docs/
@@ -106,7 +113,9 @@ There is no application server, database, API, frontend framework, or package in
 │   └── validate_site.py
 ├── projects/
 │   ├── index.html
-│   └── azure-secure-hub-spoke/index.html
+│   ├── azure-governance-automation/index.html
+│   ├── azure-secure-hub-spoke/index.html
+│   └── samba-ad-dc-lab/index.html
 ├── 404.html
 ├── index.html
 ├── robots.txt
@@ -178,16 +187,16 @@ The repository is public and the Azure workflow uploads from its root, so tracke
 
 ## Content integrity
 
-The current CV is the authority for employment, job titles, dates, education, and professional skills. Repository evidence supports the Azure Static Web Apps project, the separate Secure Azure Hub-and-Spoke technical repository, and the Samba AD DC lab. Project pages do not repeat the CV's phone number or other unnecessary personal details.
+The current CV is the authority for employment, job titles, dates, education, and professional skills. Repository evidence separately supports the Azure Static Web Apps project, Secure Azure Hub-and-Spoke lab, Azure Governance Automation lab, and Samba AD DC lab. Project pages do not repeat the CV's phone number or other unnecessary personal details.
 
-The downloadable CV and portfolio use the same conservative evidence boundary: IT Gate Academy PDFs are program-completion evidence, and vendor tracks are training objectives unless a vendor-issued verification link or credential ID is published. The CV also distinguishes deployed work from authored and CI-validated lab work. Planned labs are labelled **Planned** and are not mixed with deployed or professional work.
+The downloadable CV and portfolio use the same conservative evidence boundary: IT Gate Academy PDFs are program-completion evidence, and vendor tracks are training objectives unless a vendor-issued verification link or credential ID is published. The portfolio distinguishes deployed work from authored and CI-validated lab work. Planned labs are labelled **Planned** and are not mixed with deployed or professional work.
 
 ## Known limitations
 
 - Pull request #7 verified preview deployment. Preview removal after close still needs confirmation in the Azure portal; the redundant close action was removed after it returned `No matching static site found`.
 - `infra/main.bicep` compiles locally but still needs authenticated Azure `validate` and `what-if` checks before it should manage the existing production resource.
 - GitHub Pages remains a duplicate host until it is disabled in repository settings.
-- The CV is tagged and text-extractable; the issuer-provided academy PDFs remain untagged, which limits their screen-reader structure.
+- The CV and issuer-provided academy PDFs are text-extractable but not tagged, which limits their screen-reader structure.
 - Public vendor credential verification IDs were not available in this repository.
 - Lighthouse must be rerun whenever visual or loading behavior changes; results should only be stated when an actual browser audit has completed.
 
@@ -195,11 +204,11 @@ The downloadable CV and portfolio use the same conservative evidence boundary: I
 
 The next projects are designed to demonstrate role-relevant depth without representing lab work as employment:
 
-1. Complete live evidence for the implemented hub-and-spoke lab when an authorized Azure context is available
-2. Azure governance automation with Policy, RBAC, tags, budgets, and lifecycle controls
-3. Azure Monitor incident response and recovery validation
-4. Azure Backup with a documented restore test
-5. Hybrid identity with AD DS and Microsoft Entra ID
+1. Complete authenticated validation and live evidence for the hub-spoke and governance labs only in a verified, cost-approved personal subscription
+2. Azure Monitor incident response with KQL, alerting, failure injection, and an investigation runbook
+3. Azure Backup with an integrity-checked restore test
+4. Terraform implementation with secure state, plan review, drift, import, and teardown evidence
+5. Hybrid AD DS and Microsoft Entra ID only after tenant ownership and licensing are verified
 
 Implementation order, acceptance criteria, security controls, and cost guardrails are in [docs/azure-lab-roadmap.md](docs/azure-lab-roadmap.md).
 

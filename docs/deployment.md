@@ -32,8 +32,8 @@ python3 scripts/validate_site.py
 Additional optional checks:
 
 ```bash
-npx --yes html-validate@11.5.6 index.html 404.html
-npx --yes linkinator@8.0.2 http://localhost:8000 --recurse
+npx --yes html-validate@11.6.2 index.html 404.html projects/index.html projects/azure-governance-automation/index.html projects/azure-secure-hub-spoke/index.html projects/samba-ad-dc-lab/index.html
+npx --yes linkinator@8.0.3 http://localhost:8000 --recurse
 ```
 
 Run Lighthouse and an accessibility browser audit when Chromium is available. Do not state scores from expectation alone.
@@ -52,7 +52,7 @@ All actions are pinned to full commit SHAs. The deployment token is referenced b
 
 The pinned Azure action's metadata does not list `github_id_token`, so GitHub annotates it as an unexpected input. Pull request #8 tested removal and the upload failed; restoring the token restored the previously successful authentication path. This known annotation is documented rather than hidden. The genuinely unused `skip_api_build` input was removed.
 
-The workflow does not run a separate close job. Pull request #7 showed that the redundant `action: close` call could return `BadRequest: No matching static site found` after a successful preview deployment. Microsoft documents pull request environments as automatically deleted when the pull request closes, so the workflow now relies on that platform lifecycle instead of issuing a second cleanup request. Confirm environment removal in the Azure portal after closing a pull request.
+The workflow does not run a separate close job. Pull request #7 showed that the redundant `action: close` call could return `BadRequest: No matching static site found` after a successful preview deployment. Microsoft [documents pull request environments](https://learn.microsoft.com/en-us/azure/static-web-apps/review-publish-pull-requests) as automatically deleted when the pull request closes, so the workflow now relies on that platform lifecycle instead of issuing a second cleanup request. Confirm environment removal in the Azure portal after closing a pull request.
 
 ## Why `skip_app_build` is required
 

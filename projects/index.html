@@ -55,11 +55,11 @@
       <div class="container">
         <div class="section-heading split-heading">
           <div><p class="eyebrow">Available now</p><h2 id="available-title">Inspect the architecture, automation, and tests</h2></div>
-          <p>Certification tags show the Microsoft exam domains exercised by the project; they do not claim certification or production Azure employment.</p>
+          <p>Exam-domain tags show relevant Microsoft learning objectives; they do not claim certification or production Azure employment.</p>
         </div>
         <div class="catalogue-grid">
           <article class="catalogue-card catalogue-card-featured">
-            <div class="catalogue-card-top"><span class="status status-lab">Locally and CI validated</span><span class="difficulty">Intermediate</span></div>
+            <div class="catalogue-card-top"><span class="status status-lab">Authored and CI validated</span><span class="difficulty">Intermediate</span></div>
             <p class="project-kicker">AZ-104 · AZ-700 · AZ-500</p>
             <h3>Secure Azure Hub-and-Spoke Infrastructure</h3>
             <p>A private-by-default network foundation with hub/app/data VNets, segmentation, Private Link, Private DNS, monitoring, and guarded Bicep deployment workflows.</p>
@@ -73,15 +73,41 @@
             </div>
           </article>
 
-          <article class="catalogue-card catalogue-card-planned">
-            <div class="catalogue-card-top"><span class="status status-planned">Planned</span><span class="difficulty">Scope pending</span></div>
-            <p class="project-kicker">Future project</p><h3>Azure Governance Automation</h3>
-            <p>A future evidence project for policy, tagging, budgets, locks, and least-privilege role design. No implementation or deployment is claimed.</p>
+          <article class="catalogue-card">
+            <div class="catalogue-card-top"><span class="status status-lab">Authored and CI validated</span><span class="difficulty">Intermediate</span></div>
+            <p class="project-kicker">AZ-104 · AZ-500</p><h3>Azure Governance Automation</h3>
+            <p>A safe-by-default subscription baseline for Policy, tags, bounded RBAC, budget alerts, resource locks, and ownership-checked lifecycle automation.</p>
+            <ul class="technology-list" aria-label="Implemented technologies">
+              <li>Azure Policy</li><li>RBAC</li><li>Budgets</li><li>Action Groups</li><li>Locks</li><li>Bicep</li><li>Bash</li><li>PowerShell</li>
+            </ul>
+            <p class="evidence-note"><strong>Evidence boundary:</strong> Authenticated ARM validation, what-if, deployment, policy evaluation/remediation, teardown, and cost evidence remain pending.</p>
+            <div class="project-actions">
+              <a class="button button-primary" href="/projects/azure-governance-automation/">View project</a>
+              <a class="text-link" href="https://github.com/yossefseit/azure-governance-automation" target="_blank" rel="noopener noreferrer">View GitHub <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article class="catalogue-card">
+            <div class="catalogue-card-top"><span class="status status-lab">Authored and repository-CI validated</span><span class="difficulty">Intermediate</span></div>
+            <p class="project-kicker">Identity · DNS · Kerberos · Recovery</p><h3>Samba Active Directory Domain Controller</h3>
+            <p>A guarded Ubuntu first-forest lab with state-aware provisioning, AD DNS, Kerberos, signed time, verification, backup, recovery, and teardown runbooks.</p>
+            <ul class="technology-list" aria-label="Implemented technologies">
+              <li>Ubuntu 24.04</li><li>Samba AD DC</li><li>DNS</li><li>Kerberos</li><li>Chrony</li><li>Bash</li><li>Backup</li>
+            </ul>
+            <p class="evidence-note"><strong>Evidence boundary:</strong> Runtime provisioning, client authentication, recovery, rollback, and teardown evidence remain pending.</p>
+            <div class="project-actions">
+              <a class="button button-primary" href="/projects/samba-ad-dc-lab/">View project</a>
+              <a class="text-link" href="https://github.com/yossefseit/samba-ad-dc-lab" target="_blank" rel="noopener noreferrer">View GitHub <span aria-hidden="true">↗</span></a>
+            </div>
           </article>
           <article class="catalogue-card catalogue-card-planned">
             <div class="catalogue-card-top"><span class="status status-planned">Planned</span><span class="difficulty">Scope pending</span></div>
-            <p class="project-kicker">Future project</p><h3>Azure Monitoring and Recovery</h3>
-            <p>A future operational project for monitoring, alert investigation, backup, restore testing, and recovery evidence. No implementation is claimed.</p>
+            <p class="project-kicker">Future Azure project</p><h3>Azure Monitor and Incident Response</h3>
+            <p>A future operational lab for diagnostic settings, Log Analytics, KQL, alerts, a workbook, failure injection, and an investigation runbook. No implementation is claimed.</p>
+          </article>
+          <article class="catalogue-card catalogue-card-planned">
+            <div class="catalogue-card-top"><span class="status status-planned">Planned</span><span class="difficulty">Scope pending</span></div>
+            <p class="project-kicker">Future Azure project</p><h3>Azure Backup and Tested Restore</h3>
+            <p>A future recovery lab for backup policy, protection controls, job validation, isolated restore, integrity checks, and RPO/RTO evidence. No implementation is claimed.</p>
           </article>
         </div>
       </div>

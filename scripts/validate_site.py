@@ -27,6 +27,12 @@ LOCAL_ATTRIBUTES = {
 errors: list[str] = []
 checked_references = 0
 
+CASE_STUDY_ARCHITECTURE_IMAGES = {
+    Path("projects/azure-governance-automation/index.html"): "azure-governance-automation.svg",
+    Path("projects/azure-secure-hub-spoke/index.html"): "azure-secure-hub-spoke.svg",
+    Path("projects/samba-ad-dc-lab/index.html"): "samba-ad-dc-architecture.svg",
+}
+
 
 def fail(message: str) -> None:
     errors.append(message)
@@ -214,10 +220,11 @@ def validate_html(source: Path) -> None:
         except json.JSONDecodeError as exc:
             fail(f"{relative}: invalid JSON-LD block {block_number}: {exc}")
 
-    if relative == Path("projects/azure-secure-hub-spoke/index.html"):
+    architecture_filename = CASE_STUDY_ARCHITECTURE_IMAGES.get(relative)
+    if architecture_filename:
         architecture_images = [
             image for image in parser.images
-            if image.get("src", "").endswith("azure-secure-hub-spoke.svg")
+            if image.get("src", "").endswith(architecture_filename)
         ]
         if len(architecture_images) != 1:
             fail(f"{relative}: expected one optimized SVG architecture image")
@@ -326,6 +333,8 @@ def validate_sitemap_and_robots() -> None:
         f"{PRIMARY_ORIGIN}/",
         f"{PRIMARY_ORIGIN}/projects/",
         f"{PRIMARY_ORIGIN}/projects/azure-secure-hub-spoke/",
+        f"{PRIMARY_ORIGIN}/projects/azure-governance-automation/",
+        f"{PRIMARY_ORIGIN}/projects/samba-ad-dc-lab/",
     ]
     if locations != expected:
         fail(f"sitemap.xml: expected {expected}")
@@ -358,10 +367,14 @@ def main() -> int:
         "assets/favicon.svg",
         "assets/site.css",
         "assets/site.js",
+        "assets/azure-governance-automation.svg",
         "assets/azure-secure-hub-spoke.svg",
         "assets/azure-secure-hub-spoke.png",
+        "assets/samba-ad-dc-architecture.svg",
         "projects/index.html",
+        "projects/azure-governance-automation/index.html",
         "projects/azure-secure-hub-spoke/index.html",
+        "projects/samba-ad-dc-lab/index.html",
         "infra/main.bicep",
     )
     for relative in required_files:
