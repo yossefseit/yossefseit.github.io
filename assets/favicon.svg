@@ -1,5 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
-  <title id="title">Yossef Mohammed Ali</title>
-  <rect width="64" height="64" rx="14" fill="#0078d4"/>
-  <path d="M14 17h8l10 14 10-14h8L36 37v12h-8V37L14 17Z" fill="#fff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" role="img" aria-labelledby="title desc">
+  <title id="title">YM solar monogram</title>
+  <desc id="desc">An original gold angular Y and M inside a partial solar ring on deep navy.</desc>
+  <rect width="160" height="160" rx="32" fill="#09111e"/>
+  <g transform="translate(80 80)">
+    <circle r="59" fill="none" stroke="#d7b572" stroke-opacity=".18"/>
+    <path d="M-36-47A59 59 0 0 1 47 36M36 47A59 59 0 0 1-47-36" fill="none" stroke="#d7b572" stroke-width="2"/>
+    <path d="M-65 0H-59M59 0H65M0-65V-59M0 59V65" stroke="#d7b572" stroke-width="2"/>
+    <path d="M-29-22-10-3 8-22M-10-3V27M0 27V-14L18 4 36-14V27" fill="none" stroke="#d7b572" stroke-width="6" stroke-linejoin="miter"/>
+  </g>
 </svg>

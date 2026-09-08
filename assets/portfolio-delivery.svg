@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="570" viewBox="0 0 960 570" role="img" aria-labelledby="title description">
+  <title id="title">Portfolio delivery architecture</title>
+  <desc id="description">Source in GitHub passes dependency-free validation and GitHub Actions before static upload to Azure Static Web Apps. Azure serves the portfolio to visitors over managed HTTPS. A Bicep resource definition documents the intended existing Azure resource but did not originally provision it.</desc>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#2b3d50" stroke-width=".5" opacity=".35"/></pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#75dbed"/></marker>
+  </defs>
+  <rect width="960" height="570" rx="18" fill="#09111e"/><rect width="960" height="570" rx="18" fill="url(#grid)"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="34" y="47" fill="#eef3f6" font-size="27" font-weight="700">A small surface with a checked delivery path.</text>
+    <text x="34" y="75" fill="#d7b572" font-size="13" font-weight="700" letter-spacing="1.5">LIVE PORTFOLIO / AZURE STATIC WEB APPS</text>
+    <rect x="34" y="126" width="202" height="110" rx="12" fill="#101d2d" stroke="#75dbed"/>
+    <text x="56" y="158" fill="#75dbed" font-size="13" font-weight="700" letter-spacing="1">SOURCE</text><text x="56" y="190" fill="#eef3f6" font-size="22" font-weight="700">GitHub repository</text><text x="56" y="216" fill="#acbdca" font-size="14">HTML / CSS / JavaScript</text>
+    <rect x="283" y="126" width="202" height="110" rx="12" fill="#101d2d" stroke="#75dbed"/>
+    <text x="305" y="158" fill="#75dbed" font-size="13" font-weight="700" letter-spacing="1">GATE</text><text x="305" y="190" fill="#eef3f6" font-size="22" font-weight="700">Static validation</text><text x="305" y="216" fill="#acbdca" font-size="14">links / metadata / CSP</text>
+    <rect x="532" y="126" width="202" height="110" rx="12" fill="#101d2d" stroke="#d7b572"/>
+    <text x="554" y="158" fill="#d7b572" font-size="13" font-weight="700" letter-spacing="1">DELIVERY</text><text x="554" y="190" fill="#eef3f6" font-size="22" font-weight="700">GitHub Actions</text><text x="554" y="216" fill="#acbdca" font-size="14">checked static upload</text>
+    <rect x="781" y="126" width="145" height="110" rx="12" fill="#101d2d" stroke="#75dbed"/>
+    <text x="803" y="158" fill="#75dbed" font-size="13" font-weight="700" letter-spacing="1">AZURE</text><text x="803" y="190" fill="#eef3f6" font-size="21" font-weight="700">Static Web</text><text x="803" y="216" fill="#eef3f6" font-size="21" font-weight="700">Apps</text>
+    <g fill="none" stroke="#75dbed" stroke-width="2" marker-end="url(#arrow)"><path d="M236 181H283"/><path d="M485 181H532"/><path d="M734 181H781"/></g>
+    <rect x="532" y="298" width="202" height="92" rx="12" fill="#101d2d" stroke="#2b3d50"/>
+    <text x="554" y="330" fill="#d7b572" font-size="13" font-weight="700" letter-spacing="1">IDENTITY</text><text x="554" y="358" fill="#eef3f6" font-size="17" font-weight="700">SWA token + GitHub OIDC</text><text x="554" y="379" fill="#acbdca" font-size="13">short-lived GitHub token</text>
+    <path d="M633 298V236" fill="none" stroke="#d7b572" stroke-width="2" stroke-dasharray="5 5"/>
+    <rect x="781" y="298" width="145" height="92" rx="12" fill="#101d2d" stroke="#75dbed"/>
+    <text x="803" y="330" fill="#75dbed" font-size="13" font-weight="700" letter-spacing="1">VISITOR</text><text x="803" y="358" fill="#eef3f6" font-size="18" font-weight="700">Managed HTTPS</text><text x="803" y="379" fill="#acbdca" font-size="13">public static origin</text>
+    <path d="M854 236V298" fill="none" stroke="#75dbed" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="34" y="298" width="451" height="92" rx="12" fill="#101d2d" stroke="#2b3d50"/>
+    <text x="56" y="330" fill="#d7b572" font-size="13" font-weight="700" letter-spacing="1">INFRASTRUCTURE AS CODE BOUNDARY</text><text x="56" y="358" fill="#eef3f6" font-size="18" font-weight="700">Bicep records the intended existing resource shape.</text><text x="56" y="379" fill="#acbdca" font-size="13">No authenticated Bicep deployment or what-if is claimed.</text>
+    <path d="M259 298V261H853V236" fill="none" stroke="#d7b572" stroke-width="1.7" stroke-dasharray="5 5"/>
+    <rect x="34" y="451" width="892" height="72" rx="12" fill="#101d2d" stroke="#2b3d50"/>
+    <circle cx="60" cy="487" r="6" fill="#75dbed"/><text x="80" y="483" fill="#eef3f6" font-size="17" font-weight="700">Current origin confirmed 8 September 2026</text><text x="80" y="506" fill="#acbdca" font-size="14">A point-in-time reachability check, not an uptime or availability guarantee.</text>
+    <text x="34" y="551" fill="#acbdca" font-size="14">Source: checked-in workflow, static configuration, Bicep definition and repository architecture notes.</text>
+  </g>
+</svg>

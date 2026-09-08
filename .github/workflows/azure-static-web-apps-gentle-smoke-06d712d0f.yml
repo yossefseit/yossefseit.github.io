@@ -28,18 +28,27 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
       - name: Run dependency-free site checks
-        run: python3 scripts/validate_site.py
+        run: |
+          python3 scripts/build_site.py --check
+          python3 scripts/validate_site.py
       - name: Check JavaScript syntax
-        run: node --check assets/site.js
+        run: |
+          node --check assets/theme.js
+          node --check assets/site.js
       - name: Validate HTML semantics
         run: >-
           npx --yes html-validate@11.6.2
           index.html
           404.html
+          about/index.html
+          experience/index.html
+          infrastructure/index.html
           projects/index.html
+          projects/egypt-salary-calculator/index.html
           projects/azure-governance-automation/index.html
           projects/azure-secure-hub-spoke/index.html
           projects/samba-ad-dc-lab/index.html
+          skills/index.html
       - name: Validate CSS syntax
         run: npx --yes csstree-validator@4.0.1 assets/site.css
       - name: Compile Bicep resource definition

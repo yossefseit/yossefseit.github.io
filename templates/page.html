@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#09111e">
+  <link rel="canonical" href="{{canonical}}">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+  <script src="/assets/theme.js"></script>
+  <link rel="stylesheet" href="/assets/site.css">
+  <meta property="og:type" content="{{og_type}}">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Yossef Mohammed Ali | Infrastructure &amp; DevOps">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:url" content="{{canonical}}">
+  <meta property="og:image" content="{{social}}">
+  <meta property="og:image:type" content="{{social_type}}">
+  <meta property="og:image:width" content="{{social_width}}">
+  <meta property="og:image:height" content="{{social_height}}">
+  <meta property="og:image:alt" content="{{social_alt}}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{title}}">
+  <meta name="twitter:description" content="{{description}}">
+  <meta name="twitter:image" content="{{social}}">
+  <meta name="twitter:image:alt" content="{{social_alt}}">
+{{schema}}
+  <script src="/assets/site.js" defer></script>
+</head>
+<body id="top">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<aside class="sidebar" aria-label="Portfolio navigation">
+  <a class="brand" href="/"><img src="/assets/favicon.svg" width="43" height="43" alt=""><div><strong>Yossef Mohammed Ali</strong><span>Infrastructure / DevOps</span></div></a>
+  <button type="button" class="utility-button menu-toggle" data-menu-toggle aria-expanded="false" aria-controls="primary-navigation" hidden>Menu <span aria-hidden="true">☰</span></button>
+  <p class="meta nav-label">Explore the portfolio</p>
+  <nav class="primary-navigation" id="primary-navigation" aria-label="Primary navigation">{{nav}}</nav>
+  <div class="sidebar-bottom">
+    <a class="sidebar-cv" href="{{cv}}" download>↓ <span>Download CV</span></a>
+    <div class="sidebar-note"><strong>Cairo, Egypt</strong><br>Open to remote &amp; relocation<div class="sidebar-links"><a href="{{github}}">GitHub ↗</a><a href="mailto:yossefali67@gmail.com">Email ↗</a></div></div>
+  </div>
+</aside>
+<div class="app">
+  <header class="topbar">
+    <div class="breadcrumb"><span>YM / Portfolio</span><span aria-hidden="true">/</span><span>{{label}}</span></div>
+    <div class="topbar-controls">
+      <button class="utility-button" type="button" data-command-open aria-label="Open command palette" aria-haspopup="dialog" aria-controls="command-palette" hidden><svg class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><span class="command-label">Jump to…</span><kbd>Ctrl K</kbd></button>
+      <button class="utility-button" type="button" data-theme-toggle aria-pressed="false" hidden><svg class="icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"/></svg><span>Light theme</span></button>
+    </div>
+  </header>
+  <main id="main-content" class="main-inner" tabindex="-1">{{body}}</main>
+  <footer class="footer"><p>© 2026 Yossef Mohammed Ali · Built with intent.</p><a href="/about/#contact">Let’s connect ↗</a></footer>
+</div>
+<dialog class="command-palette" id="command-palette" aria-labelledby="command-title">
+  <div class="command-heading"><h2 id="command-title">Where would you like to go?</h2><button type="button" data-command-close aria-label="Close command palette">Close <kbd>Esc</kbd></button></div>
+  <div class="command-field"><label for="command-search">Search portfolio destinations</label><input id="command-search" type="search" aria-controls="command-options" autocomplete="off" placeholder="Try projects, CV or contact…"></div>
+  <ul class="command-options" id="command-options" aria-label="Portfolio destinations">{{commands}}</ul>
+  <p class="command-status" data-command-status role="status" aria-live="polite"></p>
+</dialog>
+</body>
+</html>

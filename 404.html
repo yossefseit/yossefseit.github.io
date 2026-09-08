@@ -1,34 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found | Yossef Mohammed Ali</title>
+  <meta name="description" content="The requested portfolio route could not be found. Return to Yossef Mohammed Ali's infrastructure and DevOps portfolio or browse the project collection.">
   <meta name="robots" content="noindex, follow">
-  <title>Page Not Found | Yossef Mohammed Ali</title>
+  <meta name="theme-color" content="#09111e">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <script src="/assets/theme.js"></script>
   <link rel="stylesheet" href="/assets/site.css">
+  <script src="/assets/site.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="/">
-        <span class="brand-mark" aria-hidden="true">YM</span>
-        <span class="brand-copy">
-          <strong>Yossef Mohammed Ali</strong>
-          <span>Cloud &amp; Infrastructure</span>
-        </span>
-      </a>
-    </div>
-  </header>
-
-  <main class="error-page" id="main-content" tabindex="-1">
-    <div class="container">
-      <p class="eyebrow eyebrow-light">Error 404</p>
-      <h1>This route is not part of the architecture.</h1>
-      <p>The page may have moved, or the address may be incorrect. Return to the portfolio to continue.</p>
-      <a class="button button-primary" href="/">Back to portfolio</a>
-    </div>
-  </main>
+  <aside class="sidebar" aria-label="Portfolio navigation">
+    <a class="brand" href="/"><img src="/assets/favicon.svg" width="43" height="43" alt=""><div><strong>Yossef Mohammed Ali</strong><span>Infrastructure / DevOps</span></div></a>
+    <nav class="primary-navigation" id="primary-navigation" aria-label="Primary navigation"><a href="/">Overview</a><a href="/projects/">Projects</a><a href="/infrastructure/">Infrastructure</a><a href="/experience/">Experience</a><a href="/skills/">Skills</a><a href="/about/">About &amp; contact</a></nav>
+  </aside>
+  <div class="app">
+    <header class="topbar"><div class="breadcrumb"><span>YM / Portfolio</span><span aria-hidden="true">/</span><span>404</span></div></header>
+    <main id="main-content" class="main-inner" tabindex="-1">
+      <section class="hero" aria-labelledby="not-found-title"><div><p class="eyebrow">Signal lost / 404</p><h1 id="not-found-title">This route is not in the topology<span class="gold">.</span></h1><p class="lede">The address may have changed, or the link may be incomplete. Return to the overview or continue with the project collection.</p><div class="actions"><a class="button button-primary" href="/">Return home</a><a class="button" href="/projects/">Browse projects</a></div></div><aside class="context-panel" aria-label="Recovery path"><img class="context-mark" src="/assets/favicon.svg" width="45" height="45" alt=""><div class="context-item"><span class="meta">Recovery path</span><strong>Start from a known route</strong><p>Overview · Projects · Infrastructure</p></div></aside></section>
+    </main>
+  </div>
 </body>
 </html>

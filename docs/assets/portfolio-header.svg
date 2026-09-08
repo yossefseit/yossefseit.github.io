@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330" role="img" aria-labelledby="title description">
+  <title id="title">Yossef Mohammed Ali infrastructure and DevOps portfolio</title>
+  <desc id="description">An original infrastructure command centre banner with a gold YM solar mark, cyan topology and Azure Static Web Apps delivery path.</desc>
+  <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#2b3d50" stroke-width=".5" opacity=".35"/></pattern><linearGradient id="surface" x2="1" y2="1"><stop stop-color="#09111e"/><stop offset="1" stop-color="#101d2d"/></linearGradient></defs>
+  <rect width="1200" height="330" rx="18" fill="url(#surface)"/><rect width="1200" height="330" rx="18" fill="url(#grid)"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <g transform="translate(72 66)" fill="none" stroke="#d7b572" stroke-width="2"><circle r="27" opacity=".7"/><path d="M-14-11-7 0 0-11M-7 0v13M4 13v-24L12 2 20-11v24"/><path d="M0-34v5M34 0h-5M0 34v-5M-34 0h5"/></g>
+    <text x="120" y="62" fill="#d7b572" font-size="16" font-weight="700" letter-spacing="2">YOSSEF MOHAMMED ALI</text><text x="120" y="86" fill="#acbdca" font-size="13" letter-spacing="2">PORTFOLIO DELIVERY / 00</text>
+    <text x="44" y="162" fill="#eef3f6" font-size="45" font-weight="700">Infrastructure &amp; DevOps</text><text x="44" y="216" fill="#eef3f6" font-size="45" font-weight="700">Portfolio</text><path d="M44 245H675" stroke="#2b3d50" stroke-width="2"/>
+    <text x="44" y="282" fill="#75dbed" font-size="17" font-family="ui-monospace, 'Courier New', monospace">STATIC DELIVERY / VALIDATION / AZURE</text>
+    <g fill="none" stroke="#75dbed" stroke-width="2"><rect x="796" y="75" width="126" height="58" rx="10" fill="#101d2d"/><rect x="997" y="75" width="152" height="58" rx="10" fill="#101d2d"/><rect x="884" y="202" width="176" height="58" rx="10" fill="#101d2d"/><path d="M922 104h75M859 133v40h113v29M1073 133v40H972"/><circle cx="972" cy="173" r="5" fill="#75dbed"/></g>
+    <text x="859" y="111" fill="#eef3f6" font-size="15" font-weight="700" text-anchor="middle">GITHUB</text><text x="1073" y="111" fill="#eef3f6" font-size="15" font-weight="700" text-anchor="middle">VALIDATE</text><text x="972" y="238" fill="#d7b572" font-size="15" font-weight="700" text-anchor="middle">AZURE STATIC WEB APPS</text>
+    <text x="1154" y="302" fill="#acbdca" font-size="12" text-anchor="end" letter-spacing="1">SOURCE → CHECK → DELIVER</text>
+  </g>
+</svg>

@@ -2,7 +2,7 @@
 
 This roadmap prioritizes evidence for Azure administration, cloud infrastructure, operations, and automation roles. The hub-and-spoke and governance labs are authored, linted, compiled, and CI validated. Authenticated Azure validation and all live execution evidence remain pending for both.
 
-The separate [Samba AD DC lab](https://github.com/yossefseit/samba-ad-dc-lab) is authored and repository-CI validated. It demonstrates an identity-operations foundation, but runtime provisioning, client authentication, recovery, rollback, and teardown evidence are still pending.
+The separate [Samba AD DC Lab](https://github.com/yossefseit/samba-ad-dc-lab) is authored and repository-CI validated. It demonstrates an identity-operations foundation, but runtime provisioning, client authentication, recovery, rollback, and teardown evidence are still pending.
 
 No Azure resource should be deployed without a cost estimate, budget alert, teardown plan, and explicit review of the target subscription or tenant.
 
@@ -24,7 +24,7 @@ Each lab should include:
 
 The acceptance bar is evidence that another engineer can inspect and reproduceâ€”not simply a Portal screenshot.
 
-## 1. Secure Hub-and-Spoke Azure Networking
+## 1. Secure Azure Hub-and-Spoke Lab
 
 **Priority:** Highest
 
@@ -32,7 +32,7 @@ The acceptance bar is evidence that another engineer can inspect and reproduceâ€
 
 **Repository:** [azure-secure-hub-spoke](https://github.com/yossefseit/azure-secure-hub-spoke)
 
-**Portfolio case study:** [Secure Azure Hub-and-Spoke Infrastructure](https://gentle-smoke-06d712d0f.7.azurestaticapps.net/projects/azure-secure-hub-spoke/)
+**Portfolio case study:** [Secure Azure Hub-and-Spoke Lab](https://gentle-smoke-06d712d0f.7.azurestaticapps.net/projects/azure-secure-hub-spoke/)
 
 **Role signal:** Azure networking, security, routing, Infrastructure as Code
 
@@ -65,7 +65,7 @@ The acceptance bar is evidence that another engineer can inspect and reproduceâ€
 - allowed and denied connectivity tests;
 - architecture and teardown documentation.
 
-## 2. Azure Governance Automation
+## 2. Azure Governance Automation Lab
 
 **Priority:** High
 

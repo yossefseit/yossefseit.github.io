@@ -28,6 +28,7 @@ errors: list[str] = []
 checked_references = 0
 
 CASE_STUDY_ARCHITECTURE_IMAGES = {
+    Path("projects/egypt-salary-calculator/index.html"): "salary-architecture.svg",
     Path("projects/azure-governance-automation/index.html"): "azure-governance-automation.svg",
     Path("projects/azure-secure-hub-spoke/index.html"): "azure-secure-hub-spoke.svg",
     Path("projects/samba-ad-dc-lab/index.html"): "samba-ad-dc-architecture.svg",
@@ -332,6 +333,11 @@ def validate_sitemap_and_robots() -> None:
     expected = [
         f"{PRIMARY_ORIGIN}/",
         f"{PRIMARY_ORIGIN}/projects/",
+        f"{PRIMARY_ORIGIN}/infrastructure/",
+        f"{PRIMARY_ORIGIN}/experience/",
+        f"{PRIMARY_ORIGIN}/skills/",
+        f"{PRIMARY_ORIGIN}/about/",
+        f"{PRIMARY_ORIGIN}/projects/egypt-salary-calculator/",
         f"{PRIMARY_ORIGIN}/projects/azure-secure-hub-spoke/",
         f"{PRIMARY_ORIGIN}/projects/azure-governance-automation/",
         f"{PRIMARY_ORIGIN}/projects/samba-ad-dc-lab/",
@@ -351,7 +357,10 @@ def main() -> int:
     html_files = sorted(
         path
         for path in ROOT.rglob("*.html")
-        if path.name != "google44e5d5b1f8d82e66.html" and ".git" not in path.parts
+        if path.name != "google44e5d5b1f8d82e66.html"
+        and ".git" not in path.parts
+        and "content" not in path.parts
+        and "templates" not in path.parts
     )
     for html_file in html_files:
         validate_html(html_file)
@@ -362,24 +371,44 @@ def main() -> int:
     validate_sitemap_and_robots()
 
     required_files = (
-        "assets/cv.pdf",
+        "assets/Yossef_Mohammed_Ali_CV.pdf",
         "assets/og-cover.png",
         "assets/favicon.svg",
         "assets/site.css",
         "assets/site.js",
+        "assets/theme.js",
+        "assets/portfolio-delivery.svg",
+        "assets/salary-architecture.svg",
+        "assets/salary-calculator.webp",
+        "assets/salary-social.png",
         "assets/azure-governance-automation.svg",
+        "assets/governance-social.png",
         "assets/azure-secure-hub-spoke.svg",
-        "assets/azure-secure-hub-spoke.png",
+        "assets/hub-social.png",
         "assets/samba-ad-dc-architecture.svg",
+        "assets/samba-social.png",
+        "about/index.html",
+        "experience/index.html",
+        "infrastructure/index.html",
         "projects/index.html",
+        "projects/egypt-salary-calculator/index.html",
         "projects/azure-governance-automation/index.html",
         "projects/azure-secure-hub-spoke/index.html",
         "projects/samba-ad-dc-lab/index.html",
+        "skills/index.html",
         "infra/main.bicep",
     )
     for relative in required_files:
         if not (ROOT / relative).is_file():
             fail(f"required file is missing: {relative}")
+
+    for html_file in html_files:
+        source = html_file.read_text(encoding="utf-8")
+        if "/assets/cv.pdf" in source:
+            fail(f"{html_file.relative_to(ROOT)}: legacy CV path is not allowed")
+    cv_path = ROOT / "assets/Yossef_Mohammed_Ali_CV.pdf"
+    if cv_path.is_file() and not cv_path.read_bytes().startswith(b"%PDF"):
+        fail("assets/Yossef_Mohammed_Ali_CV.pdf: expected a PDF file")
 
     if errors:
         print(f"Site validation failed with {len(errors)} error(s):", file=sys.stderr)
