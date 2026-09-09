@@ -27,7 +27,7 @@
     <rect x="34" y="298" width="451" height="92" rx="12" fill="#101d2d" stroke="#2b3d50"/>
     <text x="56" y="330" fill="#d7b572" font-size="13" font-weight="700" letter-spacing="1">RETIRED AZURE EVIDENCE</text><text x="56" y="358" fill="#eef3f6" font-size="17" font-weight="700">Bicep records the former Static Web App shape.</text><text x="56" y="379" fill="#acbdca" font-size="13">Historical documentation only; no live Azure resource is claimed.</text>
     <rect x="34" y="451" width="892" height="72" rx="12" fill="#101d2d" stroke="#2b3d50"/>
-    <circle cx="60" cy="487" r="6" fill="#75dbed"/><text x="80" y="483" fill="#eef3f6" font-size="17" font-weight="700">GitHub Pages workflow configured 8 September 2026</text><text x="80" y="506" fill="#acbdca" font-size="14">First deployment and public verification remain pending merge.</text>
+    <circle cx="60" cy="487" r="6" fill="#75dbed"/><text x="80" y="483" fill="#eef3f6" font-size="17" font-weight="700">GitHub Pages deployment verified 9 September 2026</text><text x="80" y="506" fill="#acbdca" font-size="14">Public routes and the unchanged CV verified after deployment.</text>
     <text x="34" y="551" fill="#acbdca" font-size="14">Source: checked-in workflow, artifact staging script, validator and repository architecture notes.</text>
   </g>
 </svg>

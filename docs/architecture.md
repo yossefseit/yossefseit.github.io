@@ -84,11 +84,11 @@ The shared shell supplies:
 
 ## Canonical origin and CV
 
-The production and canonical target is:
+The production and canonical origin is:
 
 `https://yossefseit.github.io/`
 
-Canonical, Open Graph, JSON-LD, robots, and sitemap signals all use that origin. Public verification of the Actions-built release remains pending until the reviewed changes reach `main` and the Pages source is set to GitHub Actions.
+Canonical, Open Graph, JSON-LD, robots, and sitemap signals all use that origin. The first Actions-built release was verified on 9 September 2026 after [run 34370157090](https://github.com/yossefseit/yossefseit.github.io/actions/runs/34370157090) deployed the reviewed migration. The public root CV matches the authoritative PDF exactly.
 
 The public CV URL is:
 

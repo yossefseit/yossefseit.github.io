@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-09-09T20:39:09.302Z",
+  "results": [
+    {
+      "label": "desktop",
+      "rate": {
+        "date": "2026-09-09",
+        "base": "USD",
+        "quote": "EGP",
+        "rate": 51.115
+      },
+      "usd": "\u2248 USD 162.43",
+      "annualConversion": true,
+      "axeViolations": [],
+      "errors": [],
+      "rateRequests": [
+        {
+          "url": "https://api.frankfurter.dev/v2/rate/USD/EGP",
+          "method": "GET",
+          "body": null
+        }
+      ]
+    },
+    {
+      "label": "mobile",
+      "rate": {
+        "date": "2026-09-09",
+        "base": "USD",
+        "quote": "EGP",
+        "rate": 51.115
+      },
+      "usd": "\u2248 USD 162.43",
+      "annualConversion": true,
+      "axeViolations": [],
+      "errors": [],
+      "rateRequests": [
+        {
+          "url": "https://api.frankfurter.dev/v2/rate/USD/EGP",
+          "method": "GET",
+          "body": null
+        }
+      ]
+    }
+  ],
+  "commit": "848273ab1dffd7049778e0e3eef6ea6c74f83759",
+  "workflow": "https://github.com/yossefseit/egypt-salary-calculator/actions/runs/34402180941"
+}

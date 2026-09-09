@@ -1,14 +1,22 @@
 # Validation snapshot
 
-- **Date:** 9 September 2026 (source and build checks completed 8 September; final browser review completed 9 September)
-- **Scope:** Local review of the infrastructure command-centre redesign and GitHub Pages migration
-- **Publication state:** Migration changes remain local; no push, merge, deployment, Azure action, or remote-setting change was performed by this work. The owner separately completed both Pages source settings.
+- **Date:** 9 September 2026
+- **Scope:** Infrastructure command-centre redesign, GitHub Pages migration, and production verification
+- **Publication state:** The reviewed portfolio and Calculator migration was authorized, merged through pull requests, and deployed to GitHub Pages. Azure resources were not provisioned, restarted, or changed.
 
-This record separates current local validation, configured delivery, historical Azure evidence, and public availability.
+This record separates executed checks, dated deployments, current project boundaries, and retired Azure evidence.
 
-## Current local result
+## Published release evidence
 
-The worktree contains ten generated public routes plus the custom 404 document. The current generator, validator, and artifact packager report:
+| Release | Evidence | Verified behavior |
+|---|---|---|
+| Portfolio migration | [PR 13](https://github.com/yossefseit/yossefseit.github.io/pull/13), commit `a73f9140b0dd16ada7959a2cd1a6d41a82d4cd2e`, [Pages run 34370157090](https://github.com/yossefseit/yossefseit.github.io/actions/runs/34370157090) | Successful build/deploy; ten routes, assets, metadata, root CV and custom 404 verified on 9 September |
+| Calculator migration | [PR 5](https://github.com/yossefseit/egypt-salary-calculator/pull/5), commit `1f710b2b5dea7c86df15199ea9dd1f2e7f6e0090`, [Pages run 34370072295](https://github.com/yossefseit/egypt-salary-calculator/actions/runs/34370072295) | Successful 57-test suite, lint, production build and deployment; desktop/mobile EGP 10,000 → EGP 8,302.50 verified |
+| USD correction | [PR 7](https://github.com/yossefseit/egypt-salary-calculator/pull/7), commit `848273ab1dffd7049778e0e3eef6ea6c74f83759`, [Pages run 34402180941](https://github.com/yossefseit/egypt-salary-calculator/actions/runs/34402180941) | 80 tests, lint and build passed; live desktop/mobile USD conversion and annual conversion verified at 20:39 UTC |
+
+A successful deployment is dated evidence, not a continuous availability or uptime claim. The Calculator keeps its detailed [validation ledger](https://github.com/yossefseit/egypt-salary-calculator/blob/main/docs/validation.md), including subsequent exchange-rate changes.
+
+## Website source and configuration checks
 
 ```text
 Verified 10 static pages, sitemap, meta CSP and root CV mirror.
@@ -16,47 +24,28 @@ Site validation passed: 11 HTML documents and 303 local references checked.
 Staged 55 public files in _site (6.5 MiB).
 ```
 
-The structural review covers:
-
-- generated-output freshness;
-- directly linkable pages and sitemap coverage;
-- local links, fragments, images, fonts, and PDF references;
-- one primary heading per document;
-- titles, descriptions, canonical URLs, social metadata, and structured data;
-- the homepage JSON-LD hash authorized by the meta Content Security Policy;
-- JSON and XML parsing;
-- the custom 404 document;
-- the exact public CV route `/Yossef_Mohammed_Ali_CV.pdf`;
-- byte equality between the root CV mirror and the authoritative asset;
-- rejection of legacy CV links and retired hosting URLs in generated HTML.
-
-## Source and configuration checks
-
 | Check | Result |
 |---|---|
-| `python3 scripts/build_site.py --check` | Pass; ten generated pages, sitemap, meta CSP, and root CV mirror match source |
-| `python3 scripts/validate_site.py` | Pass; 11 HTML documents and 303 local references |
-| `python3 scripts/package_site.py` | Pass; 55 files staged in the scoped `_site/` artifact |
-| Node syntax checks for `assets/site.js` and `assets/theme.js` | Pass |
-| Egypt Salary Calculator `npm test` | Pass; 57 tests across two files on 8 September 2026 |
-| Egypt Salary Calculator lint and Vite production build | Pass; project-site asset paths use `/egypt-salary-calculator/` |
-| Egypt Salary Calculator .NET Function build | Pass locally with zero warnings and zero errors; not part of Pages delivery |
-| Actionlint 1.7.12 on both Pages workflows | Pass |
-| Root and authoritative CV SHA-256 | Match: `bf72173f1bd9ad1f9bfda4fb3b1b9c22f2e7762f1f52c09b78cfa66861120dca` |
-| GitHub Markdown API rendering for the redesigned repository READMEs | Pass |
-| `git diff --check` | Pass at the migration review point |
+| Generator freshness and structural validator | Pass; ten generated routes plus `404.html`, links, fragments, metadata, images, fonts and PDF references |
+| Scoped artifact staging | Pass; public routes, assets and root files only; source and documentation excluded |
+| JavaScript syntax, HTML semantics and CSS syntax | Pass |
+| Markdown, spelling and secret scan | Pass in the published workflow |
+| Retained historical Bicep compilation | Pass; compilation only, no Azure authentication or deployment |
+| Actionlint 1.7.12 | Pass on both Pages workflows during migration review |
+| GitHub Markdown rendering | Redesigned README assets and links reviewed through GitHub rendering |
+| `git diff --check` | Pass at the reviewed release |
 
-The reproducible website commands are documented in [Deployment](deployment.md). The Calculator keeps its own [dated validation ledger](https://github.com/yossefseit/egypt-salary-calculator/blob/main/docs/validation.md).
+The reproducible checks and pinned tool versions are described in [Deployment](deployment.md).
 
-## Browser and accessibility review
+## Production browser and accessibility review
 
-The final Chromium review on 9 September exercised the exact `_site/` artifact at 1440 × 1000 and 390 × 844. All 11 documents passed at both viewport widths: one `h1`, no horizontal overflow, decoded local images, correct canonical URLs and root CV links, and zero Axe WCAG A/AA or WCAG 2.1 AA violations.
+The Chromium audit completed on 9 September at 15:27 UTC against the published portfolio. It covered all 11 documents at 1440 × 1000 and 390 × 844: 22 route/viewport combinations. Every document had one `h1`, no horizontal overflow, decoded local images, correct canonical and Open Graph URLs, and the exact root CV links. Axe reported zero WCAG A/AA and WCAG 2.1 A/AA violations.
 
-Keyboard and interaction checks verified command filtering, the empty-result message, Enter navigation, Escape dismissal with focus return, persisted light theme after reload, mobile menu open/close/navigation, reduced-motion preference, and usable mobile navigation with JavaScript disabled. The browser downloaded the root CV and confirmed exact equality with the authoritative PDF. The review found and fixed Escape handling when the command search contained text, a stale Azure delivery label, and crowded labels in the portfolio diagram.
+Interaction checks passed for theme persistence after reload, command filtering, empty results, Enter navigation, Escape dismissal and focus return, mobile menu open/close/navigation, reduced-motion behavior, and mobile navigation with JavaScript disabled. The custom error document returned an actual HTTP 404 for an unknown nested route. No console errors, page errors, missing assets or failed requests occurred during the portfolio audit.
 
-Both desktop and mobile Calculator production previews confirmed the EGP 10,000 → EGP 8,302.50 reference result, no horizontal overflow, and zero Axe violations in the same rule sets. No console errors, page errors, missing assets, or failed requests occurred across the portfolio and Calculator review.
+The initial Calculator release passed desktop and mobile checks for the reference EGP result, annual/manual/reverse modes, persisted theme, project-path assets, and zero Axe violations or horizontal overflow. Its initially unhosted rate adapter left USD enrichment unavailable; the direct-provider correction was subsequently deployed and verified at 20:39 UTC. Both live viewport checks returned a rate of 51.115 EGP per USD dated 9 September and displayed EGP 8,302.50 as approximately USD 162.43. Source/date display and annual conversion passed, with no browser errors, Axe violations or overflow. Only the fixed currency-pair GET was sent, with no salary value or body. See the [sanitized live USD report](evidence/usd-live-2026-09-09.json).
 
-Current review captures:
+Initial migration review captures:
 
 - [landing page, dark desktop](screenshots/pages-landing-desktop.png);
 - [landing page, light desktop](screenshots/pages-landing-light-desktop.png);
@@ -64,78 +53,42 @@ Current review captures:
 - [expanded mobile navigation](screenshots/pages-mobile-navigation.png);
 - [Infrastructure view, desktop](screenshots/pages-infrastructure-desktop.png);
 - [Infrastructure view, mobile](screenshots/pages-infrastructure-mobile.png);
-- [Egypt Salary Calculator case study](screenshots/pages-salary-case-desktop.png).
+- [Calculator case study](screenshots/pages-salary-case-desktop.png).
 
-Python's local HTTP server does not reproduce GitHub Pages response headers, caching, or edge behavior. The repository's meta CSP can be exercised locally; platform headers must be inspected after deployment.
-
-## Content and evidence review
-
-The supplied CV remains the authority for employment, training, education, skills, and contact information. El Mostafa for Master Batch ends in July 2024 here, reconciling the April 2024 date from the older website/profile to the supplied PDF.
-
-| Project | Current wording | Evidence boundary |
-|---|---|---|
-| Egypt Salary Calculator | 57 tests passing; GitHub Pages deployment configured | Fresh local tests/build; Pages source enabled by the owner; the migrated Vite artifact remains unpublished; 15 August 2026 App Service run retained only as dated history |
-| Secure Azure Hub-and-Spoke Lab | Lab: CI validated; Azure deployment pending | Authored Bicep and lifecycle scripts; successful CI evidence; no authenticated deployment or runtime claim |
-| Azure Governance Automation Lab | Lab: CI validated; Azure deployment pending | Authored Bicep, lifecycle scripts, and guard tests; successful CI evidence; no authenticated deployment claim |
-| Samba AD DC Lab | Lab: CI validated; runtime validation pending | Authored automation and runbooks; no provisioning, client-authentication, restore, or teardown claim |
-| GitHub Pages Portfolio | Pages deployment configured; first Actions-built release pending | Generated site, validation, artifact workflow, and local preview; the existing public site is not evidence for the unpublished migration |
-
-Professional experience stays separate from personal projects and labs. Route Academy remains in progress from August 2026 to expected February 2027, and its planned AWS/Kubernetes capstone is future coursework. The separate IT-Gate programs retain their 220-hour and 240-hour records and are not described as vendor certification exams.
+The public response included GitHub's HSTS header with `max-age=31556952` and `Cache-Control: max-age=600` at the audit time. No response CSP, X-Frame-Options or X-Content-Type-Options header was observed. The repository's meta CSP was present and produced no browser violations. These are dated platform observations; the repository does not control GitHub Pages response headers.
 
 ## CV verification
 
-The authoritative local file is:
+The authoritative file remains `assets/Yossef_Mohammed_Ali_CV.pdf`. The generator produces a byte-identical root mirror without editing the original PDF.
+
+Every website action uses `/Yossef_Mohammed_Ali_CV.pdf`; repository documentation uses [the absolute public CV URL](https://yossefseit.github.io/Yossef_Mohammed_Ali_CV.pdf). The public response returned HTTP 200 with `application/pdf` and matched both local files exactly:
 
 ```text
-assets/Yossef_Mohammed_Ali_CV.pdf
+SHA-256: bf72173f1bd9ad1f9bfda4fb3b1b9c22f2e7762f1f52c09b78cfa66861120dca
 ```
 
-The generator creates a byte-identical public mirror at:
+Follow [Replace the CV](deployment.md#replace-the-cv) after exporting from Overleaf. Keep both generated and authoritative files in the reviewed commit.
 
-```text
-Yossef_Mohammed_Ali_CV.pdf
-```
+## Content and evidence boundaries
 
-Every local website action uses `/Yossef_Mohammed_Ali_CV.pdf`; the updated local GitHub READMEs use `https://yossefseit.github.io/Yossef_Mohammed_Ali_CV.pdf`. The public root URL returned 404 on 9 September because this local mirror has not been published.
+The supplied CV remains the authority for employment, training, education, skills and contact information. El Mostafa for Master Batch ends in July 2024, reconciling the April 2024 date from the older website/profile to the supplied PDF. Professional experience stays separate from personal projects and labs.
 
-## Public state on 9 September 2026
-
-The owner completed **Settings → Pages → Source → GitHub Actions** for both repositories. Read-only GitHub Pages API checks confirmed `build_type: workflow`, `status: built`, and the expected `html_url` values. No remote changes were made during this verification.
-
-| Public URL | Observed result |
+| Project | Evidence boundary |
 |---|---|
-| [Portfolio](https://yossefseit.github.io/) | HTTP 200; still contains the former Azure links and `/assets/` CV link. Remote `main` remains at `c9d4e346af3970f9708fa4cf9360f120826029cf`. |
-| [Calculator](https://yossefseit.github.io/egypt-salary-calculator/) | HTTP 200 for the document, but its raw `/src/main.tsx` request returns 404. Browser review confirms an empty application root and no `h1`; the migrated application is not live. |
-| [Root CV](https://yossefseit.github.io/Yossef_Mohammed_Ali_CV.pdf) | HTTP 404; the reviewed root PDF mirror remains local. |
+| Egypt Salary Calculator | Deployed to GitHub Pages; executed test and runtime evidence in its validation ledger; reference rates are optional and dated |
+| Secure Azure Hub-and-Spoke Lab | Lab: CI validated; Azure deployment pending |
+| Azure Governance Automation Lab | Lab: CI validated; Azure deployment pending |
+| Samba AD DC Lab | Lab: CI validated; runtime validation pending |
+| GitHub Pages Portfolio | Deployment and public browser audit verified on 9 September 2026 |
 
-The Calculator's [successful Pages run 34335934625](https://github.com/yossefseit/egypt-salary-calculator/actions/runs/34335934625) on 9 September used the older commit `1241689611f72dd55f3f575cb41ccbac43200041`. That successful deployment did not publish the local migration or its Vite build. A successful Pages job and an HTTP 200 response alone do not validate the application.
+Route Academy remains in progress from August 2026 to expected February 2027. The planned AWS/Kubernetes capstone is future coursework. The distinct IT-Gate programs retain their 220-hour and 240-hour records and are not described as vendor certification exams.
 
-## Historical Azure evidence
+## Migration observations and historical Azure evidence
 
-The former Static Web Apps release was deployed by [GitHub Actions run 31267818137](https://github.com/yossefseit/yossefseit.github.io/actions/runs/31267818137) at commit `a631f31490372367e5f81c006d6ec273910b1248` on 8 August 2026. That run and the retained Bicep/portal evidence describe a retired host. They do not establish current availability and are absent from the active delivery path.
+Before the migration, the user site still served the previous Azure URLs and `/assets/` CV link. The Calculator's [older Pages run 34335934625](https://github.com/yossefseit/egypt-salary-calculator/actions/runs/34335934625) published commit `1241689611f72dd55f3f575cb41ccbac43200041`, whose raw `/src/main.tsx` entry returned 404. The new root CV was also absent. The reviewed Pages artifact deployments resolved those release defects.
 
-The former Calculator App Service deployment is retained as [dated run 31909528455](https://github.com/yossefseit/egypt-salary-calculator/actions/runs/31909528455) from 15 August 2026. It does not establish the GitHub Pages demo's current availability.
+The former Static Web Apps release is retained as [run 31267818137](https://github.com/yossefseit/yossefseit.github.io/actions/runs/31267818137) from 8 August 2026, commit `a631f31490372367e5f81c006d6ec273910b1248`. The retired Calculator App Service deployment is [run 31909528455](https://github.com/yossefseit/egypt-salary-calculator/actions/runs/31909528455) from 15 August 2026. Neither run establishes current Azure availability.
 
-## Remaining publication requirements
+## Repeat after future releases
 
-Both Pages source settings are complete. The remaining steps are:
-
-1. review and authorize publication of the local migration;
-2. publish the reviewed changes through the branch and pull-request flow to `main`;
-3. verify both workflow runs against the migrated commits;
-4. run the production checks below, including the built Calculator assets and root CV.
-
-The workflows do not use automatic Pages enablement because it would require a separate administrative token. The owner has already supplied the required settings through GitHub; no further settings action is pending.
-
-## Checks required after publication
-
-- all ten portfolio routes, the custom 404, and the Calculator project route;
-- the root CV URL and PDF checksum;
-- canonical, Open Graph, JSON-LD, robots, and sitemap URLs;
-- GitHub Pages response headers and local meta-CSP behavior, without claiming repository control over platform headers;
-- project, profile, pipeline, contact, and fragment links;
-- dark/light themes, mobile navigation, command palette, and Calculator interactions;
-- accessibility and horizontal overflow at desktop and mobile widths;
-- the exact Pages workflow run and deployed commit for each site.
-
-No resource was provisioned, restarted, deployed, or deleted by this local migration work.
+Verify the deployed commit and successful Pages run, all routes and assets, root CV checksum, metadata, theme/navigation/command interactions, keyboard accessibility, mobile layout, and Calculator EGP/USD behavior. Keep the observed rate date visible and distinguish a reference-rate outage from the salary engine's availability.
