@@ -21,7 +21,7 @@ A successful deployment is dated evidence, not a continuous availability or upti
 ```text
 Verified 10 static pages, sitemap, meta CSP and root CV mirror.
 Site validation passed: 11 HTML documents and 303 local references checked.
-Staged 55 public files in _site (6.5 MiB).
+Staged 56 public files in _site (6.6 MiB).
 ```
 
 | Check | Result |
