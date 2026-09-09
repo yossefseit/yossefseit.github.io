@@ -21,13 +21,13 @@ Completed by the repository owner and verified on 9 September 2026 for both `yos
 
 `Settings → Pages → Build and deployment → Source → GitHub Actions`.
 
-The GitHub Pages API reports `build_type: workflow`, `status: built`, and the expected public URL for both repositories. No further Pages source change is required. These settings and the API build status do not establish that the unpublished migration is live; the current public state is recorded in [Validation](validation.md#public-state-on-9-september-2026).
+The GitHub Pages API reports `build_type: workflow`, `status: built`, and the expected public URL for both repositories. No further Pages source change is required. Successful deployment runs and the dated production checks are recorded in [Validation](validation.md#published-release-evidence).
 
-The workflow deliberately does not set `enablement: true` on `actions/configure-pages`; automated enablement requires a separate token with administrative Pages access. The owner changed the settings; the local migration work made no remote changes.
+The workflow deliberately does not set `enablement: true` on `actions/configure-pages`; automated enablement requires a separate token with administrative Pages access. The owner changed the settings before authorizing the reviewed release through pull requests.
 
-## Repository links for publication
+## Published repository links
 
-GitHub's repository About links are separate from tracked README content. During the reviewed publication, update their website fields to match the new routes:
+GitHub's repository About links are separate from tracked README content. The reviewed publication uses these website fields:
 
 | Repository | Website field |
 |---|---|
@@ -38,9 +38,9 @@ GitHub's repository About links are separate from tracked README content. During
 | `azure-governance-automation` | `https://yossefseit.github.io/projects/azure-governance-automation/` |
 | `samba-ad-dc-lab` | `https://yossefseit.github.io/projects/samba-ad-dc-lab/` |
 
-The portfolio repository description should read: “Personal infrastructure and DevOps portfolio with evidence-led case studies, accessible static pages, and validated GitHub Pages delivery.” The Calculator description should read: “Arabic-first Egyptian gross-to-net and net-to-gross salary calculator, with browser-local calculations and GitHub Pages delivery.” These replace the former hosting claims without changing the Azure lab descriptions.
+The portfolio repository description is: “Personal infrastructure and DevOps portfolio with evidence-led case studies, accessible static pages, and validated GitHub Pages delivery.” The Calculator description is: “Arabic-first Egyptian gross-to-net and net-to-gross salary calculator, with browser-local calculations and GitHub Pages delivery.” These replace the former hosting claims without changing the Azure lab descriptions.
 
-All eight owned repositories were audited for documentation links. The six public repositories contain the coordinated updates; the two private repositories contain no README or documentation files requiring changes. Remote About fields still await the reviewed publication. Both Pages source settings are already complete.
+All eight owned repositories were audited for documentation links. The six public repositories contain the coordinated updates; the two private repositories contain no README or documentation files requiring changes. Remote About fields and both Pages source settings were updated and verified during publication.
 
 ## Local preview
 

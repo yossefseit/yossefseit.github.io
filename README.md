@@ -12,7 +12,7 @@ A static portfolio designed as an infrastructure command centre: compact applica
 [GitHub profile](https://github.com/yossefseit) ·
 [Download CV](https://yossefseit.github.io/Yossef_Mohammed_Ali_CV.pdf)
 
-> GitHub Pages delivery is configured. The first run and public verification of this release remain pending until the reviewed changes reach `main`.
+> Deployed to GitHub Pages and verified on 9 September 2026. [Successful portfolio deployment](https://github.com/yossefseit/yossefseit.github.io/actions/runs/34370157090) · [Validation record](docs/validation.md).
 
 ![Dark desktop view of the infrastructure command-centre portfolio prepared for GitHub Pages](docs/screenshots/pages-landing-desktop.png)
 
@@ -39,13 +39,13 @@ The CV is the authority for employment titles, dates, education, and training st
 
 | Project | Current status | Evidence |
 |---|---|---|
-| [Egypt Salary Calculator](https://yossefseit.github.io/projects/egypt-salary-calculator/) | 57 tests passing; GitHub Pages deployment configured | [Demo target](https://yossefseit.github.io/egypt-salary-calculator/) · [Source](https://github.com/yossefseit/egypt-salary-calculator) · [Pages workflow](https://github.com/yossefseit/egypt-salary-calculator/blob/main/.github/workflows/deploy-pages.yml) · [Historical Azure run](https://github.com/yossefseit/egypt-salary-calculator/actions/runs/31909528455) |
+| [Egypt Salary Calculator](https://yossefseit.github.io/projects/egypt-salary-calculator/) | 80 tests passing; deployed to GitHub Pages | [Live calculator](https://yossefseit.github.io/egypt-salary-calculator/) · [Source](https://github.com/yossefseit/egypt-salary-calculator) · [Pages deployment](https://github.com/yossefseit/egypt-salary-calculator/actions/runs/34402180941) · [Historical Azure run](https://github.com/yossefseit/egypt-salary-calculator/actions/runs/31909528455) |
 | [Secure Azure Hub-and-Spoke Lab](https://yossefseit.github.io/projects/azure-secure-hub-spoke/) | Lab: CI validated; Azure deployment pending | [Source](https://github.com/yossefseit/azure-secure-hub-spoke) · [CI evidence](https://github.com/yossefseit/azure-secure-hub-spoke/actions/runs/30944553717) |
 | [Azure Governance Automation Lab](https://yossefseit.github.io/projects/azure-governance-automation/) | Lab: CI validated; Azure deployment pending | [Source](https://github.com/yossefseit/azure-governance-automation) · [CI evidence](https://github.com/yossefseit/azure-governance-automation/actions/runs/31267342614) |
 | [Samba AD DC Lab](https://yossefseit.github.io/projects/samba-ad-dc-lab/) | Lab: CI validated; runtime validation pending | [Source](https://github.com/yossefseit/samba-ad-dc-lab) · [Workflows](https://github.com/yossefseit/samba-ad-dc-lab/actions) |
-| GitHub Pages Portfolio | Pages deployment configured; first production run pending | This repository, its [workflow](.github/workflows/deploy-pages.yml), artifact staging script, and [delivery notes](docs/deployment.md) |
+| GitHub Pages Portfolio | Deployed to GitHub Pages; verified 9 September 2026 | This repository, its [workflow](.github/workflows/deploy-pages.yml), artifact staging script, and [delivery notes](docs/deployment.md) |
 
-The Salary Calculator's current status describes its checked workflow configuration. Its successful August 2026 App Service run remains dated historical evidence and does not establish current demo availability. The Azure and Samba lab statuses distinguish authored, CI-validated work from pending authenticated or runtime validation.
+The Salary Calculator's status is backed by the successful 9 September 2026 Pages run and live desktop/mobile verification. Its successful August 2026 App Service run remains dated historical evidence and does not establish current demo availability. The Azure and Samba lab statuses distinguish authored, CI-validated work from pending authenticated or runtime validation.
 
 ## Public routes
 
@@ -155,7 +155,7 @@ The generator creates the root public copy and the validator requires it to be b
 
 The canonical origin is `https://yossefseit.github.io/`. A validated push to `main` uploads a scoped artifact and deploys it through the `github-pages` environment. The deploy job receives only `pages: write` and `id-token: write`; no Azure token is used.
 
-Repository administrators must select **Settings → Pages → Build and deployment → Source: GitHub Actions** once before the custom workflow can publish. The repository setting is external to this code change.
+For a new repository, select **Settings → Pages → Build and deployment → Source: GitHub Actions** before publishing. This setting was completed by the owner and verified for both sites on 9 September 2026.
 
 GitHub Pages does not support repository-defined response headers. Each HTML document therefore includes a deny-by-default meta Content Security Policy and a referrer policy. A meta policy cannot set HSTS, framing controls, MIME controls, Permissions Policy, COOP, CORP, response caching, or other HTTP headers. External profile, repository, and workflow links are ordinary anchors; the site loads no third-party script or frame.
 
