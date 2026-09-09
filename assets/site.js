@@ -93,7 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   input.addEventListener('input', filter);
   input.addEventListener('keydown', event => {
-    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
+      dialog.close();
+    } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault(); select(index + (event.key === 'ArrowDown' ? 1 : -1));
     } else if (event.key === 'Enter') {
       event.preventDefault(); visible()[index]?.querySelector('a').click();
