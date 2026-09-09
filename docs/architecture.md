@@ -5,7 +5,7 @@
 This repository serves two connected purposes:
 
 1. a recruiter-facing portfolio for cloud infrastructure, DevOps, and IT infrastructure roles;
-2. a small, inspectable Azure Static Web Apps delivery project.
+2. a small, inspectable GitHub Pages delivery project.
 
 The application is static. It has no server, database, API, analytics, user authentication, or frontend framework.
 
@@ -14,31 +14,31 @@ flowchart TD
     subgraph Authoring["Authoring"]
         Content["Page fragments"]
         Template["Shared application shell"]
+        CVSource["Authoritative CV asset"]
         Generator["Python static-site generator"]
         Content --> Generator
         Template --> Generator
+        CVSource --> Generator
     end
 
     subgraph Review["Generated and reviewed source"]
         Generator --> Pages["Ten tracked HTML routes"]
-        Generator --> Metadata["Sitemap and JSON-LD CSP hash"]
+        Generator --> Metadata["Sitemap, JSON-LD, and meta CSP"]
+        Generator --> CVMirror["Root public CV mirror"]
         Pages --> Validator["Structural and link validation"]
         Metadata --> Validator
+        CVMirror --> Validator
     end
 
     subgraph Delivery["GitHub Actions"]
-        Validator --> Identity["Short-lived GitHub identity token"]
-        Identity --> Upload["Azure Static Web Apps deploy action"]
+        Validator --> Stage["Scoped _site artifact"]
+        Stage --> Upload["GitHub Pages artifact"]
+        Upload --> Deploy["github-pages environment"]
     end
 
-    subgraph Azure["Azure"]
-        Upload --> SWA["Azure Static Web Apps · Free tier"]
-        SWA --> Edge["Managed TLS and static delivery"]
-    end
-
-    Edge --> Visitors["Recruiters and technical reviewers"]
-    Pages -.-> GitHubPages["GitHub Pages mirror"]
-    Generator -.-> IaC["Bicep resource definition"]
+    Deploy --> PagesHost["GitHub Pages · managed HTTPS"]
+    PagesHost --> Visitors["Recruiters and technical reviewers"]
+    RetiredIaC["Retired Azure Bicep evidence · outside active delivery"]
 ```
 
 ## Authoring and generation
@@ -48,13 +48,13 @@ The source model keeps repeated presentation in one place while preserving plain
 - `templates/page.html` defines the document head, application shell, navigation, footer, and command dialog.
 - `content/*.html` contains route-specific copy, diagrams, evidence, and case-study sections.
 - `scripts/build_site.py` combines those sources with shared navigation, project data, metadata, and structured data.
-- Generated `index.html` files are tracked and uploaded directly.
-- The same generator writes `sitemap.xml` and synchronizes the inline JSON-LD hash in `staticwebapp.config.json`.
-- `404.html` is maintained separately as the custom unknown-route document.
+- The generator writes the ten tracked HTML routes and `sitemap.xml`.
+- The generator mirrors `assets/Yossef_Mohammed_Ali_CV.pdf` to the root public filename without changing the authoritative asset.
+- `404.html` is maintained separately for GitHub Pages' custom-error convention.
 
-`python3 scripts/build_site.py --check` renders expected output in memory and fails when any tracked generated file is stale. The delivery workflow runs this check before structural validation or deployment.
+`python3 scripts/build_site.py --check` renders expected output in memory and fails when tracked generated output is stale. For the binary CV, it compares bytes rather than decoding the document as text.
 
-The generator currently owns these routes:
+The generator owns these routes:
 
 - `/`
 - `/projects/`
@@ -80,116 +80,70 @@ The shared shell supplies:
 - semantic landmarks, one primary heading per page, visible focus, and reduced-motion behavior;
 - project-specific Open Graph images and accessible architecture artwork.
 
-`assets/theme.js` applies a stored theme early enough to avoid a visible theme switch. `assets/site.js` progressively adds the mobile menu, theme control, and command palette. Navigation and primary content remain available without JavaScript.
+`assets/theme.js` applies a stored theme before the main stylesheet renders. `assets/site.js` progressively adds the mobile menu, theme control, and command palette. Navigation and primary content remain available without JavaScript.
 
-The mobile layout preserves readable labels and constrains scalable diagrams so the document does not create horizontal overflow. Architecture images link to their full SVG form for closer inspection.
+## Canonical origin and CV
 
-## Primary origin
+The production and canonical target is:
 
-The production and canonical origin is:
+`https://yossefseit.github.io/`
 
-`https://gentle-smoke-06d712d0f.7.azurestaticapps.net/`
+Canonical, Open Graph, JSON-LD, robots, and sitemap signals all use that origin. Public verification of the Actions-built release remains pending until the reviewed changes reach `main` and the Pages source is set to GitHub Actions.
 
-GitHub Pages can serve the same repository as a secondary mirror. Canonical, Open Graph, JSON-LD, robots, and sitemap signals select the Azure origin. Disabling GitHub Pages remains an external repository-setting task.
+The public CV URL is:
 
-The exact CV route is:
+`https://yossefseit.github.io/Yossef_Mohammed_Ali_CV.pdf`
 
-`/assets/Yossef_Mohammed_Ali_CV.pdf`
+Generated website links use `/Yossef_Mohammed_Ali_CV.pdf`. GitHub-facing documentation uses the absolute URL. The structural validator requires the root file to be byte-identical to `assets/Yossef_Mohammed_Ali_CV.pdf`.
 
-The local redesign uses that path consistently. It becomes available at the canonical origin when the redesign and supplied PDF are published.
+## GitHub Pages workflow
 
-## Azure Static Web Apps
+The workflow watches pull requests to `main`, pushes to `main`, and manual dispatches. It separates validation and delivery:
 
-Azure Static Web Apps supplies:
+1. **Validate and package static site** checks generation drift, local references, metadata, JSON-LD, the meta Content Security Policy, JavaScript, HTML, CSS, Markdown, spelling, the retired Bicep definition, and tracked secrets. It stages only the public surface and uploads a Pages artifact.
+2. **Deploy to GitHub Pages** runs only for `main` outside pull-request events. It downloads the named Pages artifact through `actions/deploy-pages` and publishes through the `github-pages` environment.
 
-- managed HTTPS/TLS;
-- globally distributed static delivery;
-- GitHub Actions integration;
-- staging environments for pull requests;
-- a Free tier suitable for this portfolio.
+The deploy job receives `pages: write` and `id-token: write`. The short-lived OIDC token binds the deployment to the GitHub Pages environment. No Azure token, cloud service-principal secret, or personal access token is required by the workflow.
 
-The workflow monitors `main` pushes and pull-request open, synchronize, and reopen events. Pull request #7 verified preview creation for a trusted same-repository branch. Azure ties preview environments to pull requests and manages their cleanup. Dependabot and fork pull requests run validation without attempting a secret-backed preview deployment.
+Third-party actions are pinned to full commit SHAs. Checkout does not persist credentials. Each job declares its required permissions and timeout. One concurrency group serializes Pages releases, and `cancel-in-progress: false` prevents a newer run from interrupting an active production deployment.
 
-Concurrency groups use the branch reference for pushes and the pull-request number for previews. A pull-request deployment therefore does not cancel an unrelated `main` production deployment.
+Repository administrators must select **Settings → Pages → Build and deployment → Source: GitHub Actions** once. `actions/configure-pages` does not use automatic enablement because that path requires a separate administrative token. The repository setting cannot be established by this local change.
 
-## Validation and delivery
+## Public artifact boundary
 
-The workflow has two jobs with separate responsibilities:
+`scripts/package_site.py` recreates `_site/` and copies only:
 
-1. **Validate static site** — checks generated-file freshness, local references, anchors, metadata, structured data, JSON and XML, the CSP relationship, sitemap coverage, the custom 404, JavaScript, HTML, CSS, Markdown, spelling, Bicep, and tracked secrets.
-2. **Deploy to Azure Static Web Apps** — runs only after validation succeeds for a deployable event.
+- the landing page, custom 404, robots, sitemap, and Google verification file;
+- the byte-identical root CV mirror;
+- generated route directories;
+- browser assets and supplied public documents.
 
-Third-party actions are pinned to full commit SHAs. Checkout does not persist credentials. Each job declares only its required permissions and has a timeout.
-
-The deployment action receives the Static Web Apps deployment token from GitHub Actions secrets and a short-lived GitHub identity token. Pull request #8 confirmed that upload fails without `github_id_token`, although the pinned action metadata does not declare that runtime-consumed input and GitHub therefore emits an annotation. The unsupported `skip_api_build` input remains removed.
-
-No secret value is present in the repository.
-
-## No application build on Azure
-
-The repository already contains deployable HTML, CSS, JavaScript, images, fonts, and documents. The workflow uses:
-
-```yaml
-app_location: /
-api_location: ""
-output_location: ""
-skip_app_build: true
-```
-
-The Python generation step runs before review and commits its output. Azure then uploads the repository without Oryx framework detection or a synthetic package build.
-
-## Infrastructure as Code boundary
-
-`infra/main.bicep` defines the intended Static Web App shape:
-
-- resource-group deployment scope;
-- confirmed target resource group `rg-portfolio`;
-- confirmed resource name `portfolio-yossef`;
-- ARM location `eastus2` and permitted alternative regions;
-- Free or Standard SKU;
-- root application path;
-- no API or output directory;
-- GitHub workflow generation disabled;
-- staging environments enabled.
-
-The production resource was initially connected through the Azure Portal. Bicep was added later to record its intended state. A resource-owner-supplied [redacted Portal overview](screenshots/azure-static-web-app-overview-redacted.png) confirms that `portfolio-yossef` is ready in production on the Free plan with the documented default hostname. The Portal displays the globally delivered service as **Global**; the resource JSON reports the ARM deployment location as `eastus2`, which is the value used by Bicep.
-
-There is no authenticated Bicep deployment or `what-if` result in this repository. The supported claim is **Bicep resource definition**, rather than production provisioned by Bicep.
-
-The template deliberately omits `repositoryUrl` and `repositoryToken`, and `skipGithubActionWorkflowGeneration` remains enabled. The checked-in workflow owns delivery and must not be generated or rewritten by the resource template.
+The script adds `.nojekyll` inside the artifact. Source fragments, templates, scripts, workflow files, documentation, screenshots, and retired Bicep are excluded from the hosted surface. `actions/upload-pages-artifact` also rejects symbolic and hard links in its deployment archive.
 
 ## Browser security model
 
-`staticwebapp.config.json` applies:
+GitHub Pages does not accept a repository file for custom HTTP response headers. Each HTML document therefore includes:
 
-- a deny-by-default Content Security Policy;
+- a deny-by-default meta Content Security Policy;
 - self-hosted scripts, styles, fonts, and images;
-- one SHA-256 authorization for the inline JSON-LD structured-data block;
+- one SHA-256 authorization for the homepage JSON-LD block;
 - blocked frames, objects, media, workers, connections, and form submissions;
-- HSTS, MIME sniffing protection, referrer controls, and framing protection;
-- COOP and CORP isolation headers;
-- a restrictive Permissions Policy.
+- a `strict-origin-when-cross-origin` referrer policy.
+
+The generator computes the JSON-LD source hash, and the structural validator independently verifies it. The 404 document has the same source restrictions without an inline-data hash.
+
+A meta Content Security Policy begins enforcement only after the browser parses the element. It cannot express `frame-ancestors` and cannot provide HSTS, MIME sniffing controls, Permissions Policy, COOP, CORP, or other response headers. Those limits are stated directly rather than presenting the Pages host as equivalent to the retired Azure header configuration.
 
 External profile, repository, and workflow links are ordinary anchors. The site loads no third-party script or embedded frame.
 
-When homepage structured data changes, the generator computes the matching CSP source hash. The structural validator independently checks that relationship.
+## Caching and error handling
 
-## Caching
+GitHub Pages owns response caching. The repository cannot set an exact `Cache-Control` rule for the stable CV filename, so a replacement may remain in a browser or edge cache temporarily even after a successful release.
 
-Cache rules use different policies for different content:
+GitHub Pages uses `404.html` for unknown paths. The document is marked `noindex, follow` and declares no canonical URL. Production verification must confirm both the custom content and an actual `404` response after publication.
 
-- `/assets/Yossef_Mohammed_Ali_CV.pdf` always revalidates, allowing a later CV replacement at the stable public path;
-- academy PDF assets use a one-day revalidating cache;
-- other unversioned assets use a one-hour revalidating cache.
+## Retired Azure host
 
-Long-lived immutable caching should wait until asset filenames are content-hashed.
+The previous Static Web Apps workflow and `staticwebapp.config.json` have been removed because the Azure resource is no longer the hosting target. No current page, metadata record, sitemap entry, or delivery step points to the retired hostname.
 
-## Error handling
-
-Azure rewrites 404 responses to `/404.html`. The same file follows GitHub Pages' custom-404 convention and is marked `noindex, follow`.
-
-## Public surface
-
-Azure uploads from the repository root. The repository is public, and its documentation, Bicep, generator, and validator contain no confidential values. This layout preserves compatibility with the current GitHub Pages mirror and avoids a second build artifact.
-
-A dedicated output directory could narrow the published surface after the mirror is retired, but it would require coordinated workflow and hosting changes.
+`infra/main.bicep` and `docs/screenshots/azure-static-web-app-overview-redacted.png` remain as historical portfolio evidence. The Bicep file records the former resource shape; it does not participate in GitHub Pages delivery and does not imply that an Azure resource remains deployed. The workflow compiles it only to keep the retained example syntactically valid.

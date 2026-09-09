@@ -16,5 +16,8 @@ Thumbs.db
 __pycache__/
 *.py[cod]
 
+# GitHub Pages artifact staging
+_site/
+
 # Node (only relevant if build tooling is ever added)
 node_modules/

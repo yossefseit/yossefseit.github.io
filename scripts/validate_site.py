@@ -15,7 +15,8 @@ from xml.etree import ElementTree
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PRIMARY_ORIGIN = "https://gentle-smoke-06d712d0f.7.azurestaticapps.net"
+PRIMARY_ORIGIN = "https://yossefseit.github.io"
+CV_ROUTE = "/Yossef_Mohammed_Ali_CV.pdf"
 LOCAL_ATTRIBUTES = {
     "a": ("href",),
     "img": ("src",),
@@ -52,6 +53,7 @@ class SiteHTMLParser(HTMLParser):
         self.viewport = ""
         self.canonical = ""
         self.metadata: dict[str, str] = {}
+        self.http_equiv: dict[str, str] = {}
         self.images: list[dict[str, str]] = []
         self._capture_title = False
         self._json_ld_buffer: list[str] | None = None
@@ -76,6 +78,8 @@ class SiteHTMLParser(HTMLParser):
             self.description = attrs.get("content", "").strip()
         elif tag == "meta" and attrs.get("name", "").lower() == "viewport":
             self.viewport = attrs.get("content", "").strip()
+        elif tag == "meta" and attrs.get("http-equiv"):
+            self.http_equiv[attrs["http-equiv"].lower()] = attrs.get("content", "").strip()
         elif tag == "meta" and (attrs.get("name") or attrs.get("property")):
             metadata_key = (attrs.get("name") or attrs.get("property") or "").lower()
             self.metadata[metadata_key] = attrs.get("content", "").strip()
@@ -215,11 +219,37 @@ def validate_html(source: Path) -> None:
         if parser.metadata.get("og:url") != expected_canonical:
             fail(f"{relative}: og:url should be {expected_canonical}")
 
+    csp = parser.http_equiv.get("content-security-policy", "")
+    if not csp:
+        fail(f"{relative}: missing meta Content Security Policy")
+    else:
+        if "'unsafe-inline'" in csp or "'unsafe-eval'" in csp:
+            fail(f"{relative}: meta CSP contains an unsafe script/style directive")
+        for directive in (
+            "default-src",
+            "script-src",
+            "style-src",
+            "object-src",
+            "base-uri",
+            "form-action",
+        ):
+            if directive not in csp:
+                fail(f"{relative}: meta CSP is missing {directive}")
+        if "frame-ancestors" in csp:
+            fail(f"{relative}: frame-ancestors is ineffective in a meta CSP")
+
     for block_number, block in enumerate(parser.json_ld_blocks, start=1):
         try:
             json.loads(block)
         except json.JSONDecodeError as exc:
             fail(f"{relative}: invalid JSON-LD block {block_number}: {exc}")
+
+    if relative == Path("index.html") and parser.json_ld_blocks:
+        digest = base64.b64encode(
+            hashlib.sha256(parser.json_ld_blocks[0].encode("utf-8")).digest()
+        ).decode("ascii")
+        if f"'sha256-{digest}'" not in csp:
+            fail("index.html: meta CSP hash does not match the JSON-LD block")
 
     architecture_filename = CASE_STUDY_ARCHITECTURE_IMAGES.get(relative)
     if architecture_filename:
@@ -275,51 +305,6 @@ def validate_css(source: Path) -> None:
             fail(f"{source.relative_to(ROOT)}: url() references missing file {raw_reference}")
 
 
-def validate_configuration() -> None:
-    config_path = ROOT / "staticwebapp.config.json"
-    try:
-        config = json.loads(config_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        fail(f"staticwebapp.config.json: invalid JSON: {exc}")
-        return
-
-    headers = {key.lower(): value for key, value in config.get("globalHeaders", {}).items()}
-    csp = headers.get("content-security-policy", "")
-    if "'unsafe-inline'" in csp or "'unsafe-eval'" in csp:
-        fail("staticwebapp.config.json: CSP contains an unsafe script/style directive")
-    for directive in ("default-src", "script-src", "style-src", "object-src", "frame-ancestors"):
-        if directive not in csp:
-            fail(f"staticwebapp.config.json: CSP is missing {directive}")
-
-    index_source = (ROOT / "index.html").read_text(encoding="utf-8")
-    json_ld_match = re.search(
-        r'<script type="application/ld\+json">([\s\S]*?)</script>',
-        index_source,
-    )
-    if not json_ld_match:
-        fail("index.html: JSON-LD block was not found for CSP validation")
-    else:
-        digest = base64.b64encode(
-            hashlib.sha256(json_ld_match.group(1).encode("utf-8")).digest()
-        ).decode("ascii")
-        expected_hash = f"'sha256-{digest}'"
-        if expected_hash not in csp:
-            fail("staticwebapp.config.json: CSP hash does not match the JSON-LD block")
-    for header in (
-        "content-security-policy",
-        "permissions-policy",
-        "referrer-policy",
-        "strict-transport-security",
-        "x-content-type-options",
-    ):
-        if header not in headers:
-            fail(f"staticwebapp.config.json: missing security header {header}")
-
-    override = config.get("responseOverrides", {}).get("404", {})
-    if override.get("rewrite") != "/404.html":
-        fail("staticwebapp.config.json: 404 response must rewrite to /404.html")
-
-
 def validate_sitemap_and_robots() -> None:
     sitemap_path = ROOT / "sitemap.xml"
     try:
@@ -361,17 +346,18 @@ def main() -> int:
         and ".git" not in path.parts
         and "content" not in path.parts
         and "templates" not in path.parts
+        and "_site" not in path.parts
     )
     for html_file in html_files:
         validate_html(html_file)
     for css_file in sorted((ROOT / "assets").glob("*.css")):
         validate_css(css_file)
 
-    validate_configuration()
     validate_sitemap_and_robots()
 
     required_files = (
         "assets/Yossef_Mohammed_Ali_CV.pdf",
+        "Yossef_Mohammed_Ali_CV.pdf",
         "assets/og-cover.png",
         "assets/favicon.svg",
         "assets/site.css",
@@ -397,6 +383,7 @@ def main() -> int:
         "projects/samba-ad-dc-lab/index.html",
         "skills/index.html",
         "infra/main.bicep",
+        ".github/workflows/deploy-pages.yml",
     )
     for relative in required_files:
         if not (ROOT / relative).is_file():
@@ -404,11 +391,20 @@ def main() -> int:
 
     for html_file in html_files:
         source = html_file.read_text(encoding="utf-8")
-        if "/assets/cv.pdf" in source:
+        if "/assets/cv.pdf" in source or "/assets/Yossef_Mohammed_Ali_CV.pdf" in source:
             fail(f"{html_file.relative_to(ROOT)}: legacy CV path is not allowed")
+        if html_file != ROOT / "404.html" and f'href="{CV_ROUTE}"' not in source:
+            fail(f"{html_file.relative_to(ROOT)}: exact root CV route is missing")
     cv_path = ROOT / "assets/Yossef_Mohammed_Ali_CV.pdf"
+    public_cv_path = ROOT / CV_ROUTE.lstrip("/")
     if cv_path.is_file() and not cv_path.read_bytes().startswith(b"%PDF"):
         fail("assets/Yossef_Mohammed_Ali_CV.pdf: expected a PDF file")
+    if public_cv_path.is_file() and not public_cv_path.read_bytes().startswith(b"%PDF"):
+        fail("Yossef_Mohammed_Ali_CV.pdf: expected a PDF file")
+    if cv_path.is_file() and public_cv_path.is_file() and cv_path.read_bytes() != public_cv_path.read_bytes():
+        fail("root CV mirror differs from assets/Yossef_Mohammed_Ali_CV.pdf")
+    if (ROOT / "staticwebapp.config.json").exists():
+        fail("retired staticwebapp.config.json must not remain in the GitHub Pages surface")
 
     if errors:
         print(f"Site validation failed with {len(errors)} error(s):", file=sys.stderr)

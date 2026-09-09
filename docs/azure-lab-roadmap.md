@@ -32,7 +32,7 @@ The acceptance bar is evidence that another engineer can inspect and reproduceâ€
 
 **Repository:** [azure-secure-hub-spoke](https://github.com/yossefseit/azure-secure-hub-spoke)
 
-**Portfolio case study:** [Secure Azure Hub-and-Spoke Lab](https://gentle-smoke-06d712d0f.7.azurestaticapps.net/projects/azure-secure-hub-spoke/)
+**Portfolio case study:** [Secure Azure Hub-and-Spoke Lab](https://yossefseit.github.io/projects/azure-secure-hub-spoke/)
 
 **Role signal:** Azure networking, security, routing, Infrastructure as Code
 
@@ -73,7 +73,7 @@ The acceptance bar is evidence that another engineer can inspect and reproduceâ€
 
 **Repository:** [azure-governance-automation](https://github.com/yossefseit/azure-governance-automation)
 
-**Portfolio case study:** [Azure Governance Automation Lab](https://gentle-smoke-06d712d0f.7.azurestaticapps.net/projects/azure-governance-automation/)
+**Portfolio case study:** [Azure Governance Automation Lab](https://yossefseit.github.io/projects/azure-governance-automation/)
 
 **Role signal:** Azure Policy, RBAC, Cost Management, subscription governance, Infrastructure as Code
 

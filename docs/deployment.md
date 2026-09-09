@@ -6,35 +6,55 @@ Use a feature branch and pull request for normal changes:
 
 1. edit source content or shared components;
 2. regenerate tracked output with `python3 scripts/build_site.py`;
-3. run the local checks;
+3. run the local checks and inspect the site at desktop and mobile widths;
 4. push the branch and open a pull request to `main`;
-5. confirm validation and, for a trusted same-repository branch, the Azure preview job;
-6. review navigation, interactions, content, and responsive layout at the preview URL;
+5. confirm the validation and Pages artifact job succeeds;
+6. review the code, generated diff, screenshots, and local preview;
 7. merge only after review;
-8. confirm the `main` deployment and required public routes;
-9. confirm Azure removes the pull-request preview environment.
+8. confirm the `github-pages` deployment job and production checks.
 
-The trusted same-repository preview upload was verified by pull request #7. Azure Static Web Apps ties the preview lifecycle to the pull request and manages its deletion when the pull request closes. Dependabot and fork pull requests run validation only because GitHub does not expose the deployment secret to those events.
+Pull requests produce a deployable artifact but do not publish a preview site. The workflow restricts deployment to `main`. GitHub Pages does not provide the former Static Web Apps pull-request preview lifecycle.
 
-## Edit and preview locally
+## Repository Pages settings
 
-Page-specific content lives in `content/*.html`. The shared document head, application shell, navigation, footer, and command dialog live in `templates/page.html`. Shared project data, metadata, and route definitions live in `scripts/build_site.py`.
+Completed by the repository owner and verified on 9 September 2026 for both `yossefseit.github.io` and `egypt-salary-calculator`:
 
-Generate and validate after editing any of those sources:
+`Settings → Pages → Build and deployment → Source → GitHub Actions`.
+
+The GitHub Pages API reports `build_type: workflow`, `status: built`, and the expected public URL for both repositories. No further Pages source change is required. These settings and the API build status do not establish that the unpublished migration is live; the current public state is recorded in [Validation](validation.md#public-state-on-9-september-2026).
+
+The workflow deliberately does not set `enablement: true` on `actions/configure-pages`; automated enablement requires a separate token with administrative Pages access. The owner changed the settings; the local migration work made no remote changes.
+
+## Repository links for publication
+
+GitHub's repository About links are separate from tracked README content. During the reviewed publication, update their website fields to match the new routes:
+
+| Repository | Website field |
+|---|---|
+| `yossefseit.github.io` | `https://yossefseit.github.io/` |
+| `yossefseit` | `https://yossefseit.github.io/` |
+| `egypt-salary-calculator` | `https://yossefseit.github.io/egypt-salary-calculator/` |
+| `azure-secure-hub-spoke` | `https://yossefseit.github.io/projects/azure-secure-hub-spoke/` |
+| `azure-governance-automation` | `https://yossefseit.github.io/projects/azure-governance-automation/` |
+| `samba-ad-dc-lab` | `https://yossefseit.github.io/projects/samba-ad-dc-lab/` |
+
+The portfolio repository description should read: “Personal infrastructure and DevOps portfolio with evidence-led case studies, accessible static pages, and validated GitHub Pages delivery.” The Calculator description should read: “Arabic-first Egyptian gross-to-net and net-to-gross salary calculator, with browser-local calculations and GitHub Pages delivery.” These replace the former hosting claims without changing the Azure lab descriptions.
+
+All eight owned repositories were audited for documentation links. The six public repositories contain the coordinated updates; the two private repositories contain no README or documentation files requiring changes. Remote About fields still await the reviewed publication. Both Pages source settings are already complete.
+
+## Local preview
+
+Generate, validate, stage, and serve from the repository root:
 
 ```bash
 python3 scripts/build_site.py
 python3 scripts/build_site.py --check
 python3 scripts/validate_site.py
-```
-
-Serve the repository root:
-
-```bash
+python3 scripts/package_site.py
 python3 -m http.server 8000
 ```
 
-Open `http://localhost:8000/`. Review at least:
+Open `http://localhost:8000/`. Review:
 
 - the landing, Projects, Infrastructure, Experience, Skills, and About routes;
 - all four directly linkable project case studies;
@@ -44,13 +64,13 @@ Open `http://localhost:8000/`. Review at least:
 - keyboard focus and Escape behavior;
 - reduced-motion behavior;
 - the custom 404 page;
-- `/assets/Yossef_Mohammed_Ali_CV.pdf`.
+- `/Yossef_Mohammed_Ali_CV.pdf`.
 
-The dependency-free validator checks generated routes, local links, fragments, image sources, required metadata, heading structure, structured data, sitemap entries, new-tab protection, JSON and XML, the 404 document, the CV signature and path, and the relationship between JSON-LD and the Content Security Policy.
+`scripts/package_site.py` creates `_site/` for workflow parity. To inspect the exact artifact surface instead, run the local server from `_site/` after staging it.
 
 ## Full repository checks
 
-The deployment workflow runs these checks before upload:
+The workflow runs these checks before artifact upload:
 
 ```bash
 python3 scripts/build_site.py --check
@@ -63,138 +83,107 @@ npx --yes cspell@10.0.1 --config .cspell.json "**/*.{html,md}"
 az bicep build --file infra/main.bicep --stdout > /dev/null
 ```
 
-HTML validation covers:
-
-```text
-index.html
-404.html
-about/index.html
-experience/index.html
-infrastructure/index.html
-projects/index.html
-projects/egypt-salary-calculator/index.html
-projects/azure-governance-automation/index.html
-projects/azure-secure-hub-spoke/index.html
-projects/samba-ad-dc-lab/index.html
-skills/index.html
-```
-
-Use the pinned tool versions in the workflow when reproducing CI results. Run browser accessibility and layout checks after visual or interaction changes. Record only results that actually ran.
+HTML validation covers all ten generated routes and `404.html`. Use the pinned tool versions from the workflow when reproducing CI results. Run browser accessibility and layout checks after visual or interaction changes. Record only results that actually ran.
 
 ## Replace the CV
 
-Every CV action uses this exact path:
+Every GitHub-facing CV link uses:
 
 ```text
-/assets/Yossef_Mohammed_Ali_CV.pdf
+https://yossefseit.github.io/Yossef_Mohammed_Ali_CV.pdf
 ```
 
-After exporting from Overleaf, overwrite `assets/Yossef_Mohammed_Ali_CV.pdf` without renaming it. Keep the case and underscores unchanged. Then run the generator drift check and site validator. The validator confirms the file is a PDF and rejects links to the legacy CV route.
+The authoritative repository file remains:
 
-`staticwebapp.config.json` sets `Cache-Control: no-cache, must-revalidate` for the exact CV route. Do not replace that rule with a long immutable cache while the filename remains stable.
+```text
+assets/Yossef_Mohammed_Ali_CV.pdf
+```
+
+After exporting from Overleaf, overwrite that asset without changing its filename or case. Then run:
+
+```bash
+python3 scripts/build_site.py
+python3 scripts/build_site.py --check
+python3 scripts/validate_site.py
+```
+
+The generator writes `Yossef_Mohammed_Ali_CV.pdf` at the repository root. The validator checks the PDF signature and requires both files to be byte-identical. Commit both files together.
+
+GitHub Pages does not expose a repository-defined cache rule for the stable CV filename. A browser or edge may retain an older response temporarily after replacement.
 
 ## GitHub Actions flow
 
-For a `main` push or trusted same-repository pull request:
+For a pull request or `main` update:
 
 1. `actions/checkout` checks out the triggering commit without persisted credentials.
-2. The workflow checks generated output and validates the static site.
-3. CI checks JavaScript, HTML, CSS, Markdown, spelling, Bicep, and tracked secrets.
-4. `actions/github-script` requests a short-lived GitHub identity token.
-5. `Azure/static-web-apps-deploy` receives that token and the repository's Static Web Apps deployment secret.
-6. Azure uploads `app_location` directly because `skip_app_build` is enabled.
+2. The build job verifies generated output and validates the static site.
+3. CI checks JavaScript, HTML, CSS, Markdown, spelling, the retained historical Bicep definition, and tracked secrets.
+4. `scripts/package_site.py` stages only the public site in `_site/` and adds `.nojekyll`.
+5. `actions/configure-pages` reads the Pages configuration without trying to enable it.
+6. `actions/upload-pages-artifact` creates the supported Pages artifact.
+7. For `main` only, `actions/deploy-pages` publishes through the `github-pages` environment.
 
-All actions are pinned to full commit SHAs. The deployment token is referenced by secret name only.
+All actions are pinned to full commit SHAs. The build job has read-only repository access. The deployment job receives `pages: write` and `id-token: write`, allowing GitHub to issue a short-lived OIDC token bound to the release. No cloud deployment secret is required.
 
-The pinned Azure action metadata does not list `github_id_token`, so GitHub annotates it as an unexpected input. Pull request #8 tested removal and the upload failed; restoring the token restored the successful authentication path. The workflow documents this known annotation. The unsupported `skip_api_build` input remains removed.
+One `pages` concurrency group covers the workflow, with `cancel-in-progress: false`, so an active production release is allowed to finish before another begins.
 
-The workflow does not run a separate close job. Pull request #7 showed that a redundant `action: close` request could return `BadRequest: No matching static site found` after a successful preview deployment. Microsoft [documents pull-request environments](https://learn.microsoft.com/en-us/azure/static-web-apps/review-publish-pull-requests) as automatically deleted when the pull request closes, so the workflow relies on that lifecycle. Confirm cleanup in the Azure portal after closing a pull request.
+## Artifact contents
 
-## Why Azure skips the application build
+The staged artifact contains only the public website:
 
-The repository has no `package.json` or compiled frontend output. Its HTML, CSS, JavaScript, fonts, images, and documents are already deployable. The workflow uses:
+- root HTML, robots, sitemap, verification file, and root CV;
+- generated route directories;
+- `assets/`, including the supplied public academy documents;
+- `.nojekyll`.
 
-```yaml
-app_location: /
-api_location: ""
-output_location: ""
-skip_app_build: true
-```
+It excludes source fragments, templates, scripts, workflow definitions, repository documentation, screenshots, and the retired Azure Bicep file. The upload action also requires an archive without symbolic or hard links.
 
-This bypasses Oryx framework detection. The earlier detection failure was:
+## Security boundary
 
-```text
-Could not find build or build:azure script
-```
+GitHub Pages cannot read `staticwebapp.config.json` and does not offer a repository mechanism for arbitrary response headers. That retired configuration was removed.
 
-The Python generator is an authoring and validation step. Its generated files are tracked before Azure receives them, so no build runs in the hosting action.
+Every HTML document includes a deny-by-default meta Content Security Policy. The generator authorizes the homepage JSON-LD with its exact SHA-256 hash, and the validator independently checks it. A meta policy cannot provide HSTS, `frame-ancestors`, MIME controls, Permissions Policy, COOP, CORP, response cache rules, or equivalent HTTP response protections. Production verification should inspect the actual headers GitHub supplies without claiming repository control over them.
 
-## Azure resource history
+## Retired Azure evidence
 
-The Static Web App was initially connected to GitHub through the Azure Portal. That process created the deployment integration and repository secret. `infra/main.bicep` was added later to represent the intended resource configuration in code.
+`infra/main.bicep` and the redacted portal screenshot remain historical documentation of the former Static Web App. The Pages workflow compiles the Bicep file to keep the retained example valid but never authenticates to Azure or deploys it.
 
-Before using the template to manage production, perform authenticated validation in a verified subscription:
-
-```bash
-az bicep build --file infra/main.bicep
-az deployment group validate \
-  --resource-group rg-portfolio \
-  --template-file infra/main.bicep \
-  --parameters \
-    staticWebAppName=portfolio-yossef \
-    location=eastus2 \
-    skuName=Free
-az deployment group what-if \
-  --resource-group rg-portfolio \
-  --template-file infra/main.bicep \
-  --parameters \
-    staticWebAppName=portfolio-yossef \
-    location=eastus2 \
-    skuName=Free
-```
-
-These values come from the resource JSON and the resource owner's [redacted Portal overview](screenshots/azure-static-web-app-overview-redacted.png). The Portal labels the service location **Global**, while ARM reports the deployable resource location as `eastus2`.
-
-These authenticated commands are not part of the local documentation workflow. Review `what-if` before any production change, with attention to the repository association, `main` branch, deployment authorization, and workflow-generation settings. Do not run `az deployment group create` until the result is understood and approved.
-
-## Secret handling
-
-- Keep the deployment token only in GitHub Actions secrets.
-- Never print or store a token in shell history, an issue, an artifact, or a log.
-- Reset the Azure token and replace the GitHub secret if exposure is suspected.
-- Do not add Azure credentials, service principal secrets, private keys, or connection strings to the repository.
+No Azure resource is assumed to exist. Do not run an Azure deployment or restart a retired service as part of this website release.
 
 ## Production verification
 
 After a reviewed production deployment, check the canonical origin:
 
 ```bash
-curl -fsSI https://gentle-smoke-06d712d0f.7.azurestaticapps.net/
-curl -fsSI https://gentle-smoke-06d712d0f.7.azurestaticapps.net/assets/Yossef_Mohammed_Ali_CV.pdf
-curl -fsS https://gentle-smoke-06d712d0f.7.azurestaticapps.net/robots.txt
-curl -fsS https://gentle-smoke-06d712d0f.7.azurestaticapps.net/sitemap.xml
+curl -fsSI https://yossefseit.github.io/
+curl -fsSI https://yossefseit.github.io/Yossef_Mohammed_Ali_CV.pdf
+curl -fsS https://yossefseit.github.io/robots.txt
+curl -fsS https://yossefseit.github.io/sitemap.xml
 ```
 
 Confirm:
 
 - status `200` for all ten routes and required assets;
-- the exact CV URL returns the expected PDF;
-- the configured CSP, HSTS, referrer, permissions, MIME, and cross-origin headers;
-- an unknown nested route returns a real `404` with the custom document;
-- canonical and social metadata use the confirmed Azure origin;
+- the exact CV URL returns the expected PDF checksum;
+- an unknown nested route returns an actual `404` with the custom document;
+- canonical, Open Graph, JSON-LD, robots, and sitemap URLs use `https://yossefseit.github.io/`;
 - project, profile, pipeline, contact, and fragment links work;
-- theme, navigation, and command-palette interactions work under the production CSP;
+- theme, navigation, and command-palette interactions work under the meta CSP;
 - there are no browser console errors or horizontal overflow at desktop and mobile widths;
-- the GitHub Actions run succeeded for the deployed commit.
+- the GitHub Actions run succeeded for the deployed commit;
+- the Salary Calculator project site is checked separately after its own Pages workflow publishes.
+
+Inspect the response headers GitHub Pages actually supplies, while preserving the distinction between platform behavior and repository-configured policy.
 
 ## Rollback
 
-No automatic rollback is configured. If a deployment introduces a regression:
+No automatic rollback is configured. If a release introduces a regression:
 
 1. identify the last known-good commit;
 2. revert the faulty commit on a new branch;
 3. regenerate the site and run validation;
-4. review the pull-request preview;
-5. merge the revert through the normal workflow.
+4. review the revert locally and in the pull request;
+5. merge through the normal workflow;
+6. verify the deployment job and production origin.
 
 Avoid rewriting `main` history.

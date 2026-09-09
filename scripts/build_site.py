@@ -9,8 +9,8 @@ import json
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
-ORIGIN = 'https://gentle-smoke-06d712d0f.7.azurestaticapps.net'
-CV = '/assets/Yossef_Mohammed_Ali_CV.pdf'
+ORIGIN = 'https://yossefseit.github.io'
+CV = '/Yossef_Mohammed_Ali_CV.pdf'
 GITHUB = 'https://github.com/yossefseit'
 ICONS = {
  'overview':'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
@@ -36,7 +36,7 @@ def icon(name):
 def ext(url,label,cls=''):
  return f'<a href="{escape(url)}" class="{cls}">{label}{icon("external")}</a>'
 PROJECTS = [
- dict(slug='egypt-salary-calculator',name='Egypt Salary Calculator',category='01 / Application delivery',problem='Make gross-to-net salary calculations transparent, then deliver the application through a tested Azure pipeline.',stack=['React','TypeScript','App Service','GitHub Actions','OIDC'],status='57 tests passing; deployment recorded',image='salary-calculator.webp',alt='Local Egypt Salary Calculator application showing salary inputs and a calculated breakdown',pipeline='https://github.com/yossefseit/egypt-salary-calculator/actions/runs/31909528455'),
+ dict(slug='egypt-salary-calculator',name='Egypt Salary Calculator',category='01 / Application delivery',problem='Make gross-to-net salary calculations transparent, then ship a tested static application through GitHub Pages.',stack=['React','TypeScript','GitHub Pages','GitHub Actions'],status='57 tests passing; GitHub Pages deployment configured',image='salary-calculator.webp',alt='Local Egypt Salary Calculator application showing salary inputs and a calculated breakdown',pipeline='https://github.com/yossefseit/egypt-salary-calculator/blob/main/.github/workflows/deploy-pages.yml',pipeline_label='Pipeline config'),
  dict(slug='azure-secure-hub-spoke',name='Secure Azure Hub-and-Spoke Lab',category='02 / Network architecture',problem='Define segmented Azure networks and private Blob access with explicit routing, DNS and lifecycle controls.',stack=['Azure networking','Bicep','Private Link','Bash'],status='Lab: CI validated; Azure deployment pending',image='hub-card.svg',alt='Hub peered with separate application and data spokes; direct cross-spoke transit is blocked',pipeline='https://github.com/yossefseit/azure-secure-hub-spoke/actions/runs/30944553717'),
  dict(slug='azure-governance-automation',name='Azure Governance Automation Lab',category='03 / Governance as code',problem='Make subscription guardrails repeatable through audit-first policy, scoped access, budgets and protected cleanup.',stack=['Azure Policy','RBAC','Bicep','PowerShell'],status='Lab: CI validated; Azure deployment pending',image='governance-card.svg',alt='Azure subscription with policy, access, budget and resource-lock controls',pipeline='https://github.com/yossefseit/azure-governance-automation/actions/runs/31267342614')
 ]
@@ -47,7 +47,7 @@ def project_cards():
   cards.append(f'''<article class="project-card{' project-featured' if i==0 else ''}">
   <div class="project-art"><img src="/assets/{p['image']}" width="960" height="500" {'fetchpriority="high"' if i==0 else 'loading="lazy"'} alt="{p['alt']}"></div>
   <div class="project-content"><p class="eyebrow">{p['category']}</p><h3>{p['name']}</h3><p>{p['problem']}</p><div class="stack">{stack}</div><span class="status">{p['status']}</span>
-  <div class="project-links"><a href="/projects/{p['slug']}/">Case study {icon('arrow')}</a>{ext(GITHUB+'/'+p['slug'],'Code')}{ext(p['pipeline'],'Pipeline evidence')}</div></div></article>''')
+  <div class="project-links"><a href="/projects/{p['slug']}/">Case study {icon('arrow')}</a>{ext(GITHUB+'/'+p['slug'],'Code')}{ext(p['pipeline'],p.get('pipeline_label','Pipeline evidence'))}</div></div></article>''')
  return '<div class="project-grid">'+''.join(cards)+'</div>'
 NAV=[('overview','Overview','/'),('projects','Projects','/projects/'),('infrastructure','Infrastructure','/infrastructure/'),('experience','Experience','/experience/'),('skills','Skills','/skills/'),('about','About & contact','/about/')]
 PAGES=[
@@ -57,7 +57,7 @@ PAGES=[
  ('/experience/','experience','Experience','Experience & training | Yossef Mohammed Ali','Professional infrastructure experience at Electrolux, Aegis and El Mostafa, alongside ongoing DevOps training, completed academy programs and education.','experience.html','og-cover.png'),
  ('/skills/','skills','Skills','Skills & engineering practice | Yossef Mohammed Ali','Cloud, automation, delivery, systems and reliability skills: Azure project work, enterprise infrastructure operations and ongoing AWS, Terraform and Kubernetes learning.','skills.html','og-cover.png'),
  ('/about/','about','About & contact','About & contact | Yossef Mohammed Ali','Meet Yossef Mohammed Ali, a Cairo-based infrastructure professional building cloud delivery skills. Connect by email, LinkedIn or GitHub, or download the CV.','about.html','og-cover.png'),
- ('/projects/egypt-salary-calculator/','projects','Salary calculator','Egypt Salary Calculator | Yossef Mohammed Ali','A React and TypeScript salary calculator delivered to Azure App Service with GitHub Actions, 57 verified tests and historical OIDC deployment evidence.','salary.html','salary-social.png'),
+ ('/projects/egypt-salary-calculator/','projects','Salary calculator','Egypt Salary Calculator | Yossef Mohammed Ali','A React and TypeScript salary calculator configured for GitHub Pages, with 57 verified tests and clearly dated historical App Service evidence.','salary.html','salary-social.png'),
  ('/projects/azure-secure-hub-spoke/','projects','Hub-and-spoke lab','Secure Azure Hub-and-Spoke Lab | Yossef Mohammed Ali','A Bicep lab for segmented Azure networks, private Blob access and guarded lifecycle scripts. CI validated; Azure deployment and runtime validation pending.','hub.html','hub-social.png'),
  ('/projects/azure-governance-automation/','projects','Governance lab','Azure Governance Automation Lab | Yossef Mohammed Ali','Audit-first subscription governance in Bicep: Azure Policy, RBAC, budgets and locks with guarded lifecycle scripts. CI validated; Azure deployment pending.','governance.html','governance-social.png'),
  ('/projects/samba-ad-dc-lab/','projects','Samba identity lab','Samba AD DC Lab | Yossef Mohammed Ali','An isolated Ubuntu Samba identity lab with guarded Bash stages for DNS, Kerberos, signed time and backup. CI validated; runtime and recovery evidence pending.','samba.html','samba-social.png'),
@@ -71,7 +71,13 @@ def build_page(route,active,label,title,description,fragment,social):
  body=(ROOT/'content'/fragment).read_text().replace('{{PROJECT_CARDS}}',project_cards()).replace('{{CV}}',CV).replace('{{ORIGIN}}',ORIGIN)
  body=re.sub(r'\{\{ICON:(\w+)\}\}',lambda m:icon(m[1]),body)
  schema=f'<script type="application/ld+json">{JSON_LD}</script>' if route=='/' else ''
- values={'title':escape(title),'description':escape(description),'canonical':ORIGIN+route,'label':escape(label),'social':ORIGIN+'/assets/'+social,'social_alt':escape('Yossef Mohammed Ali — Cloud Infrastructure & DevOps Engineer' if social=='og-cover.png' else title.split(' | ')[0]+' — architecture and implementation'),'schema':schema,'nav':nav,'commands':command_html,'body':body,'cv':CV,'github':GITHUB,'og_type':'article' if route.count('/')>2 else 'website','social_type':'image/png','social_width':'1200','social_height':'630'}
+ digest=base64.b64encode(hashlib.sha256(JSON_LD.encode()).digest()).decode()
+ csp=("default-src 'none'; script-src 'self' 'sha256-"+digest+"'; script-src-attr 'none'; "
+      "style-src 'self'; style-src-attr 'none'; img-src 'self' data:; font-src 'self'; "
+      "connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; "
+      "worker-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'; "
+      "upgrade-insecure-requests")
+ values={'title':escape(title),'description':escape(description),'canonical':ORIGIN+route,'label':escape(label),'social':ORIGIN+'/assets/'+social,'social_alt':escape('Yossef Mohammed Ali — Cloud Infrastructure & DevOps Engineer' if social=='og-cover.png' else title.split(' | ')[0]+' — architecture and implementation'),'schema':schema,'nav':nav,'commands':command_html,'body':body,'cv':CV,'github':GITHUB,'csp':csp,'og_type':'article' if route.count('/')>2 else 'website','social_type':'image/png','social_width':'1200','social_height':'630'}
  template=(ROOT/'templates/page.html').read_text()
  for key,value in values.items():template=template.replace('{{'+key+'}}',value)
  if re.search(r'\{\{.+?\}\}',template):raise ValueError('Unresolved template token in '+route)
@@ -84,20 +90,18 @@ def outputs():
   result[path]=build_page(*page)
  sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+''.join(f'  <url><loc>{ORIGIN}{p[0]}</loc></url>\n' for p in PAGES)+'</urlset>\n'
  result[ROOT/'sitemap.xml']=sitemap
- config=json.loads((ROOT/'staticwebapp.config.json').read_text())
- digest=base64.b64encode(hashlib.sha256(JSON_LD.encode()).digest()).decode()
- config['globalHeaders']['content-security-policy']=re.sub(r"'sha256-[^']+'",f"'sha256-{digest}'",config['globalHeaders']['content-security-policy'])
- config['routes']=[route for route in config['routes'] if route.get('route')!='/assets/cv.pdf']
- if not any(r['route']==CV for r in config['routes']):config['routes'].insert(0,{'route':CV,'headers':{'cache-control':'no-cache, must-revalidate'}})
- result[ROOT/'staticwebapp.config.json']=json.dumps(config,indent=2)+'\n'
+ result[ROOT/'Yossef_Mohammed_Ali_CV.pdf']=(ROOT/'assets/Yossef_Mohammed_Ali_CV.pdf').read_bytes()
  return result
 
 def main():
  parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--check',action='store_true');args=parser.parse_args();out=outputs();stale=[]
  for path,value in out.items():
   if args.check:
-   if not path.exists() or path.read_text()!=value:stale.append(str(path.relative_to(ROOT)))
-  else:path.parent.mkdir(parents=True,exist_ok=True);path.write_text(value)
+   current=path.read_bytes() if isinstance(value,bytes) and path.exists() else path.read_text() if path.exists() else None
+   if current!=value:stale.append(str(path.relative_to(ROOT)))
+  else:
+   path.parent.mkdir(parents=True,exist_ok=True)
+   path.write_bytes(value) if isinstance(value,bytes) else path.write_text(value)
  if stale:raise SystemExit('Generated files differ. Run python3 scripts/build_site.py: '+', '.join(stale))
- print(('Verified' if args.check else 'Rendered')+f' {len(PAGES)} static pages, sitemap and CSP configuration.')
+ print(('Verified' if args.check else 'Rendered')+f' {len(PAGES)} static pages, sitemap, meta CSP and root CV mirror.')
 if __name__=='__main__':main()

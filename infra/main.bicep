@@ -1,12 +1,12 @@
 targetScope = 'resourceGroup'
 
-metadata existingAzureResource = {
+// Historical snapshot only. The resource is retired and this file is not deployed by Pages.
+metadata retiredAzureResource = {
   resourceGroup: 'rg-portfolio'
   resourceName: 'portfolio-yossef'
   resourceLocation: 'eastus2'
   portalDisplayLocation: 'Global'
   sku: 'Free'
-  defaultHostname: 'gentle-smoke-06d712d0f.7.azurestaticapps.net'
   sourceProvider: 'GitHub'
   sourceRepository: 'https://github.com/yossefseit/yossefseit.github.io'
   sourceBranch: 'main'

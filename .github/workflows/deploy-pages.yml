@@ -1,0 +1,92 @@
+name: Validate and deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: read
+
+jobs:
+  build:
+    name: Validate and package static site
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Run dependency-free site checks
+        run: |
+          python3 scripts/build_site.py --check
+          python3 scripts/validate_site.py
+      - name: Check JavaScript syntax
+        run: |
+          node --check assets/theme.js
+          node --check assets/site.js
+      - name: Validate HTML semantics
+        run: >-
+          npx --yes html-validate@11.6.2
+          index.html
+          404.html
+          about/index.html
+          experience/index.html
+          infrastructure/index.html
+          projects/index.html
+          projects/egypt-salary-calculator/index.html
+          projects/azure-governance-automation/index.html
+          projects/azure-secure-hub-spoke/index.html
+          projects/samba-ad-dc-lab/index.html
+          skills/index.html
+      - name: Validate CSS syntax
+        run: npx --yes csstree-validator@4.0.1 assets/site.css
+      - name: Compile retired Azure resource definition
+        run: |
+          az bicep install --version v0.46.1
+          az bicep build --file infra/main.bicep --stdout > /dev/null
+      - name: Check Markdown
+        run: npx --yes markdownlint-cli2@0.23.2 "**/*.md"
+      - name: Check spelling
+        run: npx --yes cspell@10.0.1 --config .cspell.json "**/*.{html,md}"
+      - name: Scan repository for secrets
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Stage the public site
+        run: python3 scripts/package_site.py
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: _site
+          include-hidden-files: true
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
